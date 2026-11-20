@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° Global Macro, War, Institutional & AI Signal Terminal</title>
+  <title>XAUUSD 360° Global Macro, Real-Time Market & AI Signal Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -49,9 +49,9 @@
         <div>
           <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
             XAUUSD 360° GLOBAL INTELLIGENCE
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">ALL-FACTOR AI</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">LIVE MARKET</span>
           </h1>
-          <p class="text-xs text-slate-400">SPDR • JPMorgan • ตัวเลขเศรษฐกิจ • สงคราม/การค้า • โรคระบาด • ก่อการร้าย</p>
+          <p class="text-xs text-slate-400">ราคาสด XAUUSD • DXY • US10Y • USOIL พร้อมวิเคราะห์ข่าวรอบโลก</p>
         </div>
       </div>
 
@@ -66,7 +66,114 @@
     </div>
   </header>
 
+  <!-- Real-Time Market Ticker Strip (TradingView) -->
+  <div class="bg-bbBlack border-b border-bbBorder">
+    <div class="max-w-7xl mx-auto px-2 py-1">
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+          "symbols": [
+            { "proName": "OANDA:XAUUSD", "title": "Gold (XAU/USD)" },
+            { "proName": "CAPITALCOM:DXY", "title": "US Dollar Index (DXY)" },
+            { "proName": "TVC:US10Y", "title": "US 10Y Yield" },
+            { "proName": "TVC:USOIL", "title": "WTI Crude Oil (US Oil)" }
+          ],
+          "showSymbolLogo": true,
+          "isTransparent": true,
+          "displayMode": "adaptive",
+          "colorTheme": "dark",
+          "locale": "th_TH"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+
   <main class="max-w-7xl w-full mx-auto px-4 py-5 flex-1 space-y-5">
+
+    <!-- Real-Time 4-Asset Cards (XAUUSD, DXY, US10Y, USOIL) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <!-- 1. XAUUSD -->
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {
+            "symbol": "OANDA:XAUUSD",
+            "width": "100%",
+            "height": "100%",
+            "locale": "th_TH",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true,
+            "largeChartUrl": ""
+          }
+          </script>
+        </div>
+      </div>
+
+      <!-- 2. DXY -->
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {
+            "symbol": "CAPITALCOM:DXY",
+            "width": "100%",
+            "height": "100%",
+            "locale": "th_TH",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true,
+            "largeChartUrl": ""
+          }
+          </script>
+        </div>
+      </div>
+
+      <!-- 3. US 10Y Yield -->
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {
+            "symbol": "TVC:US10Y",
+            "width": "100%",
+            "height": "100%",
+            "locale": "th_TH",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true,
+            "largeChartUrl": ""
+          }
+          </script>
+        </div>
+      </div>
+
+      <!-- 4. US Oil (WTI) -->
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+          {
+            "symbol": "TVC:USOIL",
+            "width": "100%",
+            "height": "100%",
+            "locale": "th_TH",
+            "dateRange": "1D",
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "autosize": true,
+            "largeChartUrl": ""
+          }
+          </script>
+        </div>
+      </div>
+    </section>
 
     <!-- AI XAUUSD Signal & 6-Factor Matrix -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
@@ -112,7 +219,7 @@
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span>*ให้น้ำหนักข่าวตามความรุนแรงต่อทองคำจริง</span>
+          <span>*เทียบกราฟ DXY / US10Y / USOIL ด้านบนควบคู่กับข่าว</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
@@ -255,19 +362,13 @@
   </div>
 
   <script>
-    // รวมฟีดครบทุกมิติ: สถาบัน (SPDR/JPMorgan), ตัวเลขเศรษฐกิจ (แทน Investing/ForexFactory แบบไม่ติดบล็อก), สงคราม/การค้า, โรคระบาด, ก่อการร้าย และข่าวไทย
     const RSS_FEEDS = [
-      // 1. สถาบันการเงิน & กองทุนทองคำ
       { name: 'SPDR & JPMorgan Gold', topic: 'inst', url: 'https://news.google.com/rss/search?q=(%22SPDR+Gold%22+OR+%22JPMorgan+gold%22+OR+%22BlackRock+gold%22+OR+%22central+bank+gold%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-      // 2. ตัวเลขเศรษฐกิจสำคัญ & ปฏิทินข่าว (NFP, CPI, FED, Forex Factory / Investing)
       { name: 'Economic Data & FED', topic: 'macro', url: 'https://news.google.com/rss/search?q=(%22Forex+Factory%22+OR+%22Investing.com+gold%22+OR+%22Nonfarm+Payrolls%22+OR+%22US+CPI%22+OR+%22FOMC%22+OR+%22XAUUSD%22)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
       { name: 'FXStreet Gold & Macro', topic: 'macro', url: 'https://www.fxstreet.com/rss/news', lang: 'en' },
       { name: 'CNBC Economy', topic: 'macro', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258', lang: 'en' },
-      // 3. สงคราม & สงครามการค้า
       { name: 'War & Trade War', topic: 'war', url: 'https://news.google.com/rss/search?q=(%22trade+war%22+OR+%22tariffs%22+OR+%22Middle+East+war%22+OR+%22missile+strike%22+OR+%22sanctions%22+gold)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-      // 4. โรคระบาดระดับโลก & เหตุก่อการร้าย
       { name: 'Pandemic & Terrorism', topic: 'crisis', url: 'https://news.google.com/rss/search?q=(%22WHO+outbreak%22+OR+%22pandemic+virus%22+OR+%22terrorist+attack%22+OR+%22global+health+emergency%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-      // 5. ข่าวภาษาไทย (ทองคำ เศรษฐกิจ สงคราม)
       { name: 'ข่าวทองคำ & โลก (ไทย)', topic: 'thai', url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+สงครามการค้า+OR+โรคระบาด)+when:3d&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
     ];
 
@@ -276,7 +377,6 @@
     let autoTranslate = true;
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
 
-    // คีย์เวิร์ดแยกตามหมวดหมู่และน้ำหนักผลกระทบต่อทองคำ
     const RULES = {
       instBull: ['spdr gold inflows', 'spdr adds', 'jpmorgan bullish gold', 'jpmorgan raises gold', 'central bank buys', 'pboc buys gold', 'gold etf inflows', 'ซื้อทองคำเพิ่ม', 'กองทุนเข้าซื้อทอง'],
       instBear: ['spdr outflows', 'spdr sells', 'jpmorgan cuts gold', 'jpmorgan bearish gold', 'gold etf outflows', 'เทขายทองคำ', 'spdr ขาย'],
@@ -294,13 +394,11 @@
       let detectedTopics = new Set([defaultTopic]);
       let reasons = [];
 
-      // ตรวจจับหมวดหมู่จากเนื้อหาข่าวจริง
       if (/spdr|jpmorgan|jp morgan|blackrock|goldman|etf|central bank|pboc|กองทุน|ธนาคารกลาง/.test(lower)) detectedTopics.add('inst');
       if (/fed|fomc|cpi|ppi|nfp|payroll|gdp|yield|dollar|dxy|inflation|forex|ดอกเบี้ย|เงินเฟ้อ|ตัวเลขเศรษฐกิจ/.test(lower)) detectedTopics.add('macro');
       if (/war|tariff|trade war|missile|military|sanction|ukraine|israel|iran|china|taiwan|สงคราม|ภาษี|คว่ำบาตร/.test(lower)) detectedTopics.add('war');
       if (/virus|pandemic|outbreak|who|epidemic|terror|attack|bomb|hostage|ไวรัส|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('crisis');
 
-      // คำนวณคะแนนความรุนแรง
       RULES.instBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('แรงซื้อสถาบัน/SPDR/JPM'); } });
       RULES.instBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('แรงขายสถาบัน/SPDR/JPM'); } });
 
@@ -312,7 +410,6 @@
 
       RULES.crisisBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.5; reasons.push('ภาวะวิกฤตโรคระบาด/ก่อการร้าย (Safe Haven)'); } });
 
-      // ตรวจจับทิศทางราคาทองโดยตรงในพาดหัว
       if (/gold rises|gold surges|gold jumps|gold climbs|gold rallies|ทองพุ่ง|ทองขึ้น/.test(lower)) bullScore += 1.5;
       if (/gold falls|gold drops|gold slides|gold plunges|gold slips|ทองร่วง|ทองลง/.test(lower)) bearScore += 1.5;
 
@@ -420,7 +517,6 @@
         }
       }));
 
-      // ลบข่าวซ้ำตามพาดหัว
       const seen = new Set();
       collected = collected.filter(item => {
         const key = item.titleEn.slice(0, 45).toLowerCase();
