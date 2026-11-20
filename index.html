@@ -44,7 +44,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Floating Alert Container (ป้ายเด้งแจ้งเตือนข่าวด่วน/สัญญาณเปลี่ยน) -->
+  <!-- Floating Alert Container -->
   <div id="alertContainer" class="fixed top-16 right-3 z-50 flex flex-col gap-2 max-w-sm w-[calc(100%-1.5rem)] pointer-events-none"></div>
 
   <!-- Top Header -->
@@ -58,16 +58,15 @@
           <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
             XAUUSD 360° AUTO-TERMINAL
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> AUTO
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> AUTO (UTC+7)
             </span>
           </h1>
-          <p class="text-[11px] text-slate-400">สแกนข่าวอัตโนมัติ + แจ้งเตือนเมื่อมีข่าวสำคัญหรือสัญญาณเปลี่ยน</p>
+          <p class="text-[11px] text-slate-400">สแกนข่าวอัตโนมัติ (เวลาไทย) + แจ้งเตือนเมื่อมีข่าวสำคัญหรือสัญญาณเปลี่ยน</p>
         </div>
       </div>
 
       <!-- Auto-Refresh & Sound Controls -->
       <div class="flex flex-wrap items-center gap-1.5">
-        <!-- Interval Selector -->
         <div class="flex items-center bg-bbBlack border border-bbBorder rounded-lg px-2 py-1 text-xs">
           <span class="text-slate-400 mr-1.5 hidden sm:inline">รีเฟรชทุก:</span>
           <select id="refreshIntervalSelect" onchange="changeRefreshInterval()" class="bg-transparent text-bbGoldLight font-mono font-semibold focus:outline-none cursor-pointer">
@@ -79,17 +78,14 @@
           <span id="countdownText" class="ml-2 text-[11px] font-mono text-slate-400 tabular-nums w-10 text-right">03:00</span>
         </div>
 
-        <!-- Sound Toggle -->
         <button id="soundToggleBtn" onclick="toggleSound()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition" title="เปิด/ปิดเสียงแจ้งเตือน">
           🔔 เสียง: เปิด
         </button>
 
-        <!-- Translate Toggle -->
         <button id="toggleTranslateBtn" onclick="toggleAutoTranslate()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-bbGoldLight border border-amber-500/40 hover:bg-amber-500/25 transition">
           🌐 แปลไทย
         </button>
 
-        <!-- Manual Scan -->
         <button onclick="manualRefresh()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbGold text-black font-semibold hover:bg-bbGoldLight transition flex items-center gap-1">
           <span id="refreshIcon">↻</span> สแกนทันที
         </button>
@@ -397,8 +393,7 @@
     let autoTranslate = true;
     let soundEnabled = true;
 
-    // Auto-refresh timer state
-    let refreshSeconds = 180; // ค่าเริ่มต้น 3 นาที
+    let refreshSeconds = 180;
     let remainingSeconds = 180;
     let timerHandle = null;
 
@@ -414,7 +409,28 @@
       crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
     };
 
-    // เสียงแจ้งเตือนแบบ Web Audio API (ไม่ต้องโหลดไฟล์เสียงภายนอก)
+    // แปลงเวลาข่าวให้เป็นเขตเวลาประเทศไทย (Asia/Bangkok / UTC+7) พร้อมวันที่เสมอ
+    function formatThaiDateTime(pubDateStr) {
+      if (!pubDateStr) return '';
+      let parsed = new Date(pubDateStr);
+      if (isNaN(parsed.getTime())) {
+        const normalized = pubDateStr.includes('Z') || /[+-]\d{2}:?\d{2}$/.test(pubDateStr)
+          ? pubDateStr
+          : pubDateStr.replace(' ', 'T') + 'Z';
+        parsed = new Date(normalized);
+      }
+      if (isNaN(parsed.getTime())) return '';
+
+      return parsed.toLocaleString('th-TH', {
+        timeZone: 'Asia/Bangkok',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }) + ' น.';
+    }
+
     function playAlertBeep(isUrgent = false) {
       if (!soundEnabled) return;
       try {
@@ -633,7 +649,6 @@
         }
       }));
 
-      // กรองข่าวซ้ำ
       const seen = new Set();
       collected = collected.filter(item => {
         if (seen.has(item.uniqueKey)) return false;
@@ -643,7 +658,6 @@
 
       collected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-      // ตรวจจับข่าวใหม่ที่เพิ่งเข้ามาในการรีเฟรชรอบนี้
       const newlyArrived = collected.filter(item => item.isNew);
       collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
 
@@ -653,7 +667,6 @@
       updateSignalDashboard();
       renderNews();
 
-      // แปลข่าวใหม่หรือข่าวบนสุดก่อน
       if (autoTranslate) {
         for (let i = 0; i < Math.min(allArticles.length, 30); i++) {
           const art = allArticles[i];
@@ -665,7 +678,6 @@
         }
       }
 
-      // แจ้งเตือนเมื่อมีข่าวสำคัญเข้าใหม่
       if (!isFirstLoad && newlyArrived.length > 0) {
         const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
         const alertTitle = highImpactNew.analysis.type === 'bullish'
@@ -681,8 +693,14 @@
 
       isFirstLoad = false;
       icon.classList.remove('animate-spin');
-      const now = new Date();
-      document.getElementById('lastUpdateText').textContent = `อัปเดต ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+      const nowThai = new Date().toLocaleTimeString('th-TH', {
+        timeZone: 'Asia/Bangkok',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      document.getElementById('lastUpdateText').textContent = `อัปเดต ${nowThai} น.`;
     }
 
     function updateSignalDashboard() {
@@ -754,7 +772,6 @@
         reasoning.textContent = `แรงซื้อ (${bullPct}%) และแรงขาย (${bearPct}%) คานอำนาจกันอยู่ ตลาดกำลังชั่งน้ำหนักระหว่างตัวเลขเศรษฐกิจกับความเสี่ยงภูมิรัฐศาสตร์ แนะนำเทรดในกรอบแนวรับ-แนวต้าน`;
       }
 
-      // แจ้งเตือนเมื่อทิศทางสัญญาณเปลี่ยน
       if (lastSignalState && lastSignalState !== currentSignalState) {
         showToastAlert(
           `⚡ สัญญาณ XAUUSD เปลี่ยนเป็น ${currentSignalState}`,
@@ -843,7 +860,7 @@
       grid.innerHTML = filtered.map(art => {
         const displayTitle = autoTranslate ? art.titleTh : art.titleEn;
         const displayDesc = autoTranslate ? art.descTh : art.descEn;
-        const timeStr = art.pubDate ? new Date(art.pubDate).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : '';
+        const timeStr = formatThaiDateTime(art.pubDate);
 
         return `
           <article class="bg-bbPanel border ${art.isNew ? 'border-amber-400/70 shadow-lg shadow-amber-500/10' : 'border-bbBorder'} hover:border-amber-500/40 rounded-xl p-4 flex flex-col justify-between transition">
@@ -858,7 +875,7 @@
                 </span>
               </div>
 
-              <div class="text-[11px] font-mono text-slate-500 mb-1.5">${art.source} • ${timeStr}</div>
+              <div class="text-[11px] font-mono text-slate-500 mb-1.5">${art.source}${timeStr ? ` • ${timeStr}` : ''}</div>
 
               <h3 class="text-sm sm:text-base font-bold text-white leading-snug mb-1.5">
                 ${displayTitle}
@@ -925,7 +942,6 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
-    // เริ่มต้นดึงข่าวและเริ่มตัวนับถอยหลังอัตโนมัติ
     fetchAllFeeds();
     startCountdownTimer();
   </script>
