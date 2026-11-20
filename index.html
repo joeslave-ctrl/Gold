@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° M5 Candle-Synced News & AI Signal Terminal</title>
+  <title>XAUUSD 360° M5-Synced News & Trade Plan Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -61,7 +61,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> M5 SYNC (UTC+7)
             </span>
           </h1>
-          <p class="text-[11px] text-slate-400">ซิงก์เวลารีเฟรชตรงกับจังหวะปิดแท่งเทียน 5 นาที (M5) ของ XAUUSD เป๊ะๆ</p>
+          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">ซิงก์เวลารีเฟรชตรงกับจังหวะปิดแท่งเทียน M5 ของ XAUUSD</p>
         </div>
       </div>
 
@@ -195,25 +195,6 @@
       </div>
     </section>
 
-    <!-- XAUUSD M5 Candle Sync & Snapshot Bar -->
-    <section class="bg-bbPanel border border-bbBorder rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div class="flex flex-wrap items-center gap-3">
-        <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold">
-          🕯️ XAUUSD M5 CANDLE SYNC
-        </span>
-        <div>
-          <span class="text-xs text-slate-400">ราคาอ้างอิงแท่งล่าสุด: </span>
-          <span id="xauSpotPriceText" class="text-base font-mono font-bold text-white tabular-nums">กำลังดึงราคา...</span>
-          <span id="xauCycleDiffText" class="ml-2 text-xs font-mono font-semibold text-slate-400 tabular-nums">(--)</span>
-        </div>
-      </div>
-      <div class="text-[11px] text-slate-300 flex flex-wrap items-center gap-2 font-mono">
-        <span id="nextCandleCloseText" class="text-bbGoldLight">ปิดแท่ง M5 ถัดไป: --:-- น.</span>
-        <span class="text-slate-600">|</span>
-        <span id="xauPrevPriceText" class="text-slate-400">แท่งก่อน: --</span>
-      </div>
-    </section>
-
     <!-- AI XAUUSD Signal & 6-Factor Matrix -->
     <section id="summarySection" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
       <div id="probabilityCard" class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300">
@@ -320,6 +301,85 @@
       </div>
     </section>
 
+    <!-- Trade Setup & SL/TP Helper Panel (Buy & Sell Plan Calculator) -->
+    <section class="bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 space-y-4">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-bbBorder pb-3">
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">XAUUSD BUY / SELL SL & TP PLANNER</span>
+          <h3 class="text-base font-bold text-white">ตัวช่วยวางแผนเข้าไม้ (Buy / Sell) พร้อมคำนวณโซน SL & TP</h3>
+          <p class="text-[11px] text-slate-400">กรอกราคาอ้างอิงจากกราฟและระยะ SL ($ USD) เพื่อดูแผนอ้างอิงทั้ง 2 ฝั่งคู่กับ % แนวโน้มข่าว (เพื่อประกอบการตัดสินใจ ไม่ใช่สัญญาณสำเร็จรูป)</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 text-xs">
+          <div class="bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5">
+            <label for="refPriceInput" class="text-[10px] text-slate-400 block">ราคาอ้างอิง XAUUSD</label>
+            <input id="refPriceInput" type="number" step="0.01" value="2650.00" oninput="calculateTradeLevels()" class="w-24 bg-transparent font-mono font-bold text-white focus:outline-none tabular-nums" />
+          </div>
+
+          <div class="bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5">
+            <label for="slDistanceInput" class="text-[10px] text-slate-400 block">ระยะ SL ($ USD)</label>
+            <input id="slDistanceInput" type="number" step="0.5" min="1" value="8.0" oninput="calculateTradeLevels()" class="w-16 bg-transparent font-mono font-bold text-rose-400 focus:outline-none tabular-nums" />
+          </div>
+
+          <div id="favoredSideBadge" class="px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30">
+            รอคำนวณมุมมอง...
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+        <!-- BUY Plan Card -->
+        <div id="buyPlanBox" class="p-3.5 rounded-xl bg-bbCard border border-emerald-500/30 space-y-2 transition">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-sm text-emerald-400">🟢 แผนฝั่ง BUY (อิงแนวโน้มขึ้น)</span>
+            <span id="buyWeightTag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">50%</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 font-mono pt-1">
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">SL (ตัดขาดทุน)</span>
+              <span id="buySlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
+            </div>
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">TP1 (RR 1:1.5)</span>
+              <span id="buyTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
+            </div>
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">TP2 (RR 1:2.5)</span>
+              <span id="buyTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            ใช้พิจารณาเมื่อราคาพักตัวลงใกล้แนวรับและมีแรงซื้อกลับตัว ควรปรับ SL ให้อยู่ใต้โครงสร้างแนวรับจริงบนกราฟ
+          </p>
+        </div>
+
+        <!-- SELL Plan Card -->
+        <div id="sellPlanBox" class="p-3.5 rounded-xl bg-bbCard border border-rose-500/30 space-y-2 transition">
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-sm text-rose-400">🔴 แผนฝั่ง SELL (อิงแนวโน้มลง)</span>
+            <span id="sellWeightTag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-rose-500/15 text-rose-300">50%</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 font-mono pt-1">
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">SL (ตัดขาดทุน)</span>
+              <span id="sellSlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
+            </div>
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">TP1 (RR 1:1.5)</span>
+              <span id="sellTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
+            </div>
+            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">TP2 (RR 1:2.5)</span>
+              <span id="sellTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-relaxed">
+            ใช้พิจารณาเมื่อราคาดีดขึ้นทดสอบแนวต้านแล้วชะลอตัว/ไม่ผ่าน ควรปรับ SL ให้อยู่เหนือแนวต้านจริงบนกราฟ
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Category Filter Tabs & Search -->
     <section class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-bbPanel border border-bbBorder p-3 rounded-xl">
       <div class="flex flex-wrap gap-1.5" id="categoryTabs">
@@ -421,13 +481,9 @@
     let autoTranslate = true;
     let soundEnabled = true;
 
-    // ค่าเริ่มต้น 300 วินาที = ซิงก์กับแท่งเทียน M5 (5 นาที) ของ XAUUSD
     let refreshSeconds = 300;
     let timerHandle = null;
     let lastTriggeredCandleSlot = null;
-
-    let prevXauSnapshotPrice = parseFloat(localStorage.getItem('xau_prev_5m_price') || '0') || null;
-    let latestXauSnapshotPrice = null;
 
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
     const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
@@ -452,11 +508,62 @@
       crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
     };
 
-    // คำนวณเวลาที่เหลือจนถึงตอนปิดแท่งเทียน M5 (หรือ M1/M3/M15) ของตลาด Forex / XAUUSD เป๊ะๆ
+    function calculateTradeLevels() {
+      const refPrice = parseFloat(document.getElementById('refPriceInput').value) || 0;
+      const slDist = Math.max(0.5, parseFloat(document.getElementById('slDistanceInput').value) || 8);
+
+      document.getElementById('buyWeightTag').textContent = `โอกาสขึ้น ${latestBullPct}%`;
+      document.getElementById('sellWeightTag').textContent = `โอกาสลง ${latestBearPct}%`;
+
+      const favoredBadge = document.getElementById('favoredSideBadge');
+      const buyBox = document.getElementById('buyPlanBox');
+      const sellBox = document.getElementById('sellPlanBox');
+
+      if (latestBullPct - latestBearPct >= 6) {
+        favoredBadge.textContent = `โฟกัสฝั่ง BUY (${latestBullPct}% vs ${latestBearPct}%)`;
+        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-emerald-500/15 text-emerald-400 border border-emerald-500/40';
+        buyBox.className = 'p-3.5 rounded-xl bg-bbCard border-2 border-emerald-500/70 space-y-2 transition';
+        sellBox.className = 'p-3.5 rounded-xl bg-bbCard border border-rose-500/20 opacity-80 space-y-2 transition';
+      } else if (latestBearPct - latestBullPct >= 6) {
+        favoredBadge.textContent = `โฟกัสฝั่ง SELL (${latestBearPct}% vs ${latestBullPct}%)`;
+        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-rose-500/15 text-rose-400 border border-rose-500/40';
+        sellBox.className = 'p-3.5 rounded-xl bg-bbCard border-2 border-rose-500/70 space-y-2 transition';
+        buyBox.className = 'p-3.5 rounded-xl bg-bbCard border border-emerald-500/20 opacity-80 space-y-2 transition';
+      } else {
+        favoredBadge.textContent = `สองฝั่งใกล้เคียงกัน (${latestBullPct}% / ${latestBearPct}%)`;
+        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30';
+        buyBox.className = 'p-3.5 rounded-xl bg-bbCard border border-emerald-500/30 space-y-2 transition';
+        sellBox.className = 'p-3.5 rounded-xl bg-bbCard border border-rose-500/30 space-y-2 transition';
+      }
+
+      if (refPrice <= 0) {
+        ['buySlPrice', 'buyTp1Price', 'buyTp2Price', 'sellSlPrice', 'sellTp1Price', 'sellTp2Price'].forEach(id => {
+          document.getElementById(id).textContent = '--';
+        });
+        return;
+      }
+
+      const buySl = refPrice - slDist;
+      const buyTp1 = refPrice + slDist * 1.5;
+      const buyTp2 = refPrice + slDist * 2.5;
+
+      const sellSl = refPrice + slDist;
+      const sellTp1 = refPrice - slDist * 1.5;
+      const sellTp2 = refPrice - slDist * 2.5;
+
+      document.getElementById('buySlPrice').textContent = buySl.toFixed(2);
+      document.getElementById('buyTp1Price').textContent = buyTp1.toFixed(2);
+      document.getElementById('buyTp2Price').textContent = buyTp2.toFixed(2);
+
+      document.getElementById('sellSlPrice').textContent = sellSl.toFixed(2);
+      document.getElementById('sellTp1Price').textContent = sellTp1.toFixed(2);
+      document.getElementById('sellTp2Price').textContent = sellTp2.toFixed(2);
+    }
+
     function syncCandleClock() {
       if (refreshSeconds <= 0) {
         document.getElementById('countdownText').textContent = 'OFF';
-        document.getElementById('nextCandleCloseText').textContent = 'ปิดการซิงก์อัตโนมัติ';
+        document.getElementById('candleSyncSubtext').textContent = 'ปิดการซิงก์รอบแท่งเทียนอัตโนมัติ';
         return;
       }
 
@@ -464,14 +571,12 @@
       const intervalMs = refreshSeconds * 1000;
       const currentSlot = Math.floor(nowMs / intervalMs);
       const nextCloseMs = (currentSlot + 1) * intervalMs;
-      const remainingMs = nextCloseMs - nowMs;
-      const remainingSec = Math.ceil(remainingMs / 1000);
+      const remainingSec = Math.ceil((nextCloseMs - nowMs) / 1000);
 
       const mins = Math.floor(remainingSec / 60).toString().padStart(2, '0');
       const secs = (remainingSec % 60).toString().padStart(2, '0');
       document.getElementById('countdownText').textContent = `${mins}:${secs}`;
 
-      // แสดงเวลาปิดแท่งเทียนรอบถัดไปตามเวลาไทย (เช่น 14:30:00 น.)
       const nextCloseThai = new Date(nextCloseMs).toLocaleTimeString('th-TH', {
         timeZone: 'Asia/Bangkok',
         hour: '2-digit',
@@ -480,9 +585,8 @@
         hour12: false
       });
       const tfLabel = refreshSeconds === 300 ? 'M5' : refreshSeconds === 900 ? 'M15' : refreshSeconds === 180 ? 'M3' : 'M1';
-      document.getElementById('nextCandleCloseText').textContent = `ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น.`;
+      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. (เวลาไทย)`;
 
-      // เมื่อเวลาเดินข้ามเข้าสู่แท่งเทียนใหม่ (00:00) ให้รีเฟรชและคำนวณ % ทันที!
       if (lastTriggeredCandleSlot !== null && currentSlot > lastTriggeredCandleSlot) {
         lastTriggeredCandleSlot = currentSlot;
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -507,45 +611,6 @@
     function manualRefresh() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       fetchAllFeeds(true);
-    }
-
-    async function fetchXauFiveMinSnapshot(isCycleRefresh = false) {
-      try {
-        const res = await fetch(`https://open.er-api.com/v6/latest/USD?_t=${Date.now()}`);
-        const data = await res.json();
-        const xauPerUsd = data?.rates?.XAU;
-
-        if (xauPerUsd && xauPerUsd > 0) {
-          const currentGoldUsd = 1 / xauPerUsd;
-          if (latestXauSnapshotPrice !== null && isCycleRefresh) {
-            prevXauSnapshotPrice = latestXauSnapshotPrice;
-            localStorage.setItem('xau_prev_5m_price', String(prevXauSnapshotPrice));
-          }
-          latestXauSnapshotPrice = currentGoldUsd;
-
-          document.getElementById('xauSpotPriceText').textContent = `$${currentGoldUsd.toFixed(2)}`;
-
-          const diffEl = document.getElementById('xauCycleDiffText');
-          const prevEl = document.getElementById('xauPrevPriceText');
-
-          if (prevXauSnapshotPrice !== null) {
-            const diff = currentGoldUsd - prevXauSnapshotPrice;
-            const pct = (diff / prevXauSnapshotPrice) * 100;
-            const sign = diff >= 0 ? '+' : '';
-            diffEl.textContent = `${sign}${diff.toFixed(2)} (${sign}${pct.toFixed(2)}%)`;
-            diffEl.className = diff >= 0
-              ? 'ml-2 text-xs font-mono font-semibold text-emerald-400 tabular-nums'
-              : 'ml-2 text-xs font-mono font-semibold text-rose-400 tabular-nums';
-            prevEl.textContent = `แท่งก่อน: $${prevXauSnapshotPrice.toFixed(2)}`;
-          } else {
-            diffEl.textContent = '(บันทึกจุดเริ่มต้นแท่งแรก)';
-            diffEl.className = 'ml-2 text-xs font-mono font-semibold text-slate-400 tabular-nums';
-            prevEl.textContent = 'แท่งก่อน: รอปิดแท่งถัดไป';
-          }
-        }
-      } catch (e) {
-        document.getElementById('xauSpotPriceText').textContent = 'ดูบนกราฟ TradingView';
-      }
     }
 
     function formatThaiDateTime(pubDateStr) {
@@ -730,8 +795,6 @@
         document.getElementById('newAlertStatusText').textContent = '⏳ ปิดแท่งเทียนแล้ว กำลังรีเฟรชและคำนวณ % ใหม่...';
       }
 
-      await fetchXauFiveMinSnapshot(isCycleRefresh);
-
       let collected = [];
 
       await Promise.allSettled(RSS_FEEDS.map(async (feed) => {
@@ -801,7 +864,6 @@
 
       if (isCycleRefresh) {
         highlightSummaryCard();
-        const priceLabel = latestXauSnapshotPrice ? ` • XAUUSD $${latestXauSnapshotPrice.toFixed(2)}` : '';
         if (newlyArrived.length > 0) {
           const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
           const alertTitle = highImpactNew.analysis.type === 'bullish'
@@ -809,13 +871,13 @@
             : highImpactNew.analysis.type === 'bearish'
               ? `🔴 ปิดแท่งเทียน: พบข่าวใหม่กดดันทองลง! (${latestBullPct}% vs ${latestBearPct}%)`
               : `⚡ ปิดแท่งเทียน: พบข่าวเข้าใหม่ ${newlyArrived.length} รายการ`;
-          showToastAlert(alertTitle, `${highImpactNew.titleTh}${priceLabel}`, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
+          showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
           playAlertBeep(true);
           document.getElementById('newAlertStatusText').textContent = `ซิงก์ปิดแท่ง ${nowThai} น. • พบข่าวใหม่ ${newlyArrived.length} ข่าว`;
         } else {
           showToastAlert(
             `🕯️ ปิดแท่งเทียนรอบ ${nowThai} น. เรียบร้อย`,
-            `โอกาสทองคำล่าสุด: ขึ้น ${latestBullPct}% vs ลง ${latestBearPct}%${priceLabel}`,
+            `โอกาสทองคำล่าสุด: ขึ้น ${latestBullPct}% vs ลง ${latestBearPct}%`,
             'info'
           );
           document.getElementById('newAlertStatusText').textContent = `ซิงก์ปิดแท่ง ${nowThai} น. • ข้อมูลตรงรอบแท่งเทียนแล้ว`;
@@ -933,6 +995,8 @@
       updateRadarTile('fTradeText', 'fTradeTag', stats.trade);
       updateRadarTile('fHealthText', 'fHealthTag', stats.health);
       updateRadarTile('fTerrorText', 'fTerrorTag', stats.terror);
+
+      calculateTradeLevels();
     }
 
     function updateRadarTile(textId, tagId, stat) {
@@ -1087,6 +1151,7 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
+    calculateTradeLevels();
     fetchAllFeeds(false);
     startCountdownTimer();
   </script>
