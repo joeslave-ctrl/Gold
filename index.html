@@ -71,11 +71,11 @@
           <span class="text-slate-400 mr-1.5 hidden sm:inline">รีเฟรชทุก:</span>
           <select id="refreshIntervalSelect" onchange="changeRefreshInterval()" class="bg-transparent text-bbGoldLight font-mono font-semibold focus:outline-none cursor-pointer">
             <option value="60" class="bg-bbPanel">1 นาที (ข่าวแรง)</option>
-            <option value="180" selected class="bg-bbPanel">3 นาที (แนะนำ)</option>
-            <option value="300" class="bg-bbPanel">5 นาที (ประหยัด)</option>
+            <option value="180" class="bg-bbPanel">3 นาที (ปานกลาง)</option>
+            <option value="300" selected class="bg-bbPanel">5 นาที (ประหยัด)</option>
             <option value="0" class="bg-bbPanel">ปิดออโต้</option>
           </select>
-          <span id="countdownText" class="ml-2 text-[11px] font-mono text-slate-400 tabular-nums w-10 text-right">03:00</span>
+          <span id="countdownText" class="ml-2 text-[11px] font-mono text-slate-400 tabular-nums w-10 text-right">05:00</span>
         </div>
 
         <button id="soundToggleBtn" onclick="toggleSound()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition" title="เปิด/ปิดเสียงแจ้งเตือน">
@@ -195,8 +195,8 @@
     </section>
 
     <!-- AI XAUUSD Signal & 6-Factor Matrix -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-      <div class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
+    <section id="summarySection" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div id="probabilityCard" class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
             <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">NEWS PROBABILITY & TRADE BIAS ENGINE</span>
@@ -236,7 +236,7 @@
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span id="newAlertStatusText">คัดกรองข่าวค่าเงินย่อยออกอัตโนมัติ</span>
+          <span id="newAlertStatusText">ตั้งค่าเริ่มต้น: รีเฟรชอัตโนมัติทุก 5 นาที (ประหยัด)</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
@@ -391,15 +391,20 @@
     ];
 
     let allArticles = [];
-    let knownArticleKeys = new Set();
-    let isFirstLoad = true;
+    // เก็บประวัติข่าวที่เคยเห็นลง localStorage เพื่อให้รีเฟรชหน้าแล้วยังจำข่าวใหม่ได้แม่นยำ
+    const savedKeys = JSON.parse(localStorage.getItem('xau_known_keys') || '[]');
+    let knownArticleKeys = new Set(savedKeys);
+    let isFirstVisitEver = savedKeys.length === 0;
     let lastSignalState = '';
+    let latestBullPct = 50;
+    let latestBearPct = 50;
     let currentCategory = 'all';
     let autoTranslate = true;
     let soundEnabled = true;
 
-    let refreshSeconds = 180;
-    let remainingSeconds = 180;
+    // ตั้งค่าเริ่มต้น (Default) เป็น 300 วินาที = 5 นาที (ประหยัด)
+    let refreshSeconds = 300;
+    let remainingSeconds = 300;
     let timerHandle = null;
 
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
@@ -472,7 +477,7 @@
         bullish: 'border-emerald-500 bg-emerald-950/95 text-emerald-100',
         bearish: 'border-rose-500 bg-rose-950/95 text-rose-100',
         urgent: 'border-amber-400 bg-slate-900/95 text-amber-100',
-        info: 'border-bbBorder bg-bbPanel/95 text-slate-100'
+        info: 'border-sky-400 bg-bbPanel/95 text-slate-100'
       };
 
       const toast = document.createElement('div');
@@ -485,7 +490,16 @@
         <p class="text-[11px] opacity-90 mt-1 leading-snug">${message}</p>
       `;
       container.prepend(toast);
-      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 10000);
+      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 9000);
+    }
+
+    function highlightSummaryCard() {
+      const card = document.getElementById('probabilityCard');
+      if (!card) return;
+      card.classList.add('ring-2', 'ring-bbGold', 'bg-slate-900');
+      setTimeout(() => {
+        card.classList.remove('ring-2', 'ring-bbGold', 'bg-slate-900');
+      }, 1800);
     }
 
     function toggleSound() {
@@ -508,7 +522,9 @@
         remainingSeconds--;
         if (remainingSeconds <= 0) {
           remainingSeconds = refreshSeconds;
-          fetchAllFeeds();
+          // เมื่อครบ 5 นาที เลื่อนจอขึ้นบนสุดเพื่อให้ดูสรุป % ทันที แล้วรีเฟรชข้อมูลใหม่ทั้งหมด
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          fetchAllFeeds(true);
         }
         updateCountdownDisplay();
       }, 1000);
@@ -528,7 +544,8 @@
 
     function manualRefresh() {
       if (refreshSeconds > 0) remainingSeconds = refreshSeconds;
-      fetchAllFeeds();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      fetchAllFeeds(true);
     }
 
     function classifyAndScore(text, defaultTopic) {
@@ -626,9 +643,13 @@
       return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
     }
 
-    async function fetchAllFeeds() {
+    async function fetchAllFeeds(isCycleRefresh = false) {
       const icon = document.getElementById('refreshIcon');
       icon.classList.add('animate-spin', 'inline-block');
+
+      if (isCycleRefresh) {
+        document.getElementById('newAlertStatusText').textContent = '⏳ กำลังรีเฟรชและคำนวณ % รอบใหม่...';
+      }
 
       let collected = [];
 
@@ -651,7 +672,7 @@
               collected.push({
                 id: Math.random().toString(36).slice(2),
                 uniqueKey,
-                isNew: !isFirstLoad && !knownArticleKeys.has(uniqueKey),
+                isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
                 source: feed.name,
                 lang: feed.lang,
                 titleEn,
@@ -680,12 +701,48 @@
 
       const newlyArrived = collected.filter(item => item.isNew);
       collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
+      localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-250)));
 
       allArticles = collected;
       document.getElementById('newCountBadge').textContent = newlyArrived.length;
 
       updateSignalDashboard();
       renderNews();
+
+      const nowThai = new Date().toLocaleTimeString('th-TH', {
+        timeZone: 'Asia/Bangkok',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      document.getElementById('lastUpdateText').textContent = `อัปเดต ${nowThai} น.`;
+
+      // แจ้งเตือนชัดเจนทุกครั้งที่รีเฟรชรอบใหม่เสร็จ เพื่อให้เห็นความเคลื่อนไหวแน่นอน
+      if (isCycleRefresh) {
+        highlightSummaryCard();
+        if (newlyArrived.length > 0) {
+          const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
+          const alertTitle = highImpactNew.analysis.type === 'bullish'
+            ? `🟢 รีเฟรชเสร็จ: พบข่าวใหม่หนุนทองขึ้น! (${latestBullPct}% vs ${latestBearPct}%)`
+            : highImpactNew.analysis.type === 'bearish'
+              ? `🔴 รีเฟรชเสร็จ: พบข่าวใหม่กดดันทองลง! (${latestBullPct}% vs ${latestBearPct}%)`
+              : `⚡ รีเฟรชเสร็จ: พบข่าวเข้าใหม่ ${newlyArrived.length} รายการ`;
+          showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
+          playAlertBeep(true);
+          document.getElementById('newAlertStatusText').textContent = `อัปเดตรอบ ${nowThai} น. • พบข่าวใหม่ ${newlyArrived.length} ข่าว`;
+        } else {
+          showToastAlert(
+            `🔄 สแกนรอบ ${nowThai} น. เรียบร้อย`,
+            `โอกาสทองคำล่าสุด: ขึ้น ${latestBullPct}% vs ลง ${latestBearPct}% (ยังไม่มีข่าวใหม่เพิ่มในรอบนี้)`,
+            'info'
+          );
+          document.getElementById('newAlertStatusText').textContent = `อัปเดตรอบ ${nowThai} น. • ข้อมูลเป็นปัจจุบันแล้ว`;
+        }
+      }
+
+      isFirstVisitEver = false;
+      icon.classList.remove('animate-spin');
 
       if (autoTranslate) {
         for (let i = 0; i < Math.min(allArticles.length, 32); i++) {
@@ -697,30 +754,6 @@
           }
         }
       }
-
-      if (!isFirstLoad && newlyArrived.length > 0) {
-        const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
-        const alertTitle = highImpactNew.analysis.type === 'bullish'
-          ? '🟢 ข่าวใหม่หนุนทองขึ้น!'
-          : highImpactNew.analysis.type === 'bearish'
-            ? '🔴 ข่าวใหม่กดดันทองลง!'
-            : `⚡ ข่าวด่วนเข้าใหม่ ${newlyArrived.length} รายการ`;
-
-        showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
-        playAlertBeep(highImpactNew.analysis.type !== 'neutral');
-        document.getElementById('newAlertStatusText').textContent = `พบข่าวเข้าใหม่ ${newlyArrived.length} ข่าวเมื่อสักครู่`;
-      }
-
-      isFirstLoad = false;
-      icon.classList.remove('animate-spin');
-      const nowThai = new Date().toLocaleTimeString('th-TH', {
-        timeZone: 'Asia/Bangkok',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-      document.getElementById('lastUpdateText').textContent = `อัปเดต ${nowThai} น.`;
     }
 
     function updateSignalDashboard() {
@@ -754,6 +787,8 @@
       const sum = totalBull + totalBear;
       const bullPct = Math.round((totalBull / sum) * 100);
       const bearPct = 100 - bullPct;
+      latestBullPct = bullPct;
+      latestBearPct = bearPct;
 
       document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวตรงจุด`;
       document.getElementById('bullPercentText').textContent = `${bullPct}%`;
@@ -761,7 +796,6 @@
       document.getElementById('bullBar').style.width = `${bullPct}%`;
       document.getElementById('bearBar').style.width = `${bearPct}%`;
 
-      // รวบรวมรายชื่อหมวดที่หนุนขึ้นจริง และกดดันลงจริง ตามเรดาร์ 6 ปัจจัย
       const allPillars = Object.values(stats);
       const bullPillars = allPillars.filter(s => s.score > 0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
       const bearPillars = allPillars.filter(s => s.score < -0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
@@ -810,14 +844,6 @@
         tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: สัญญาณข่าวยังก้ำกึ่ง แนะนำรอความชัดเจนจากการเบรกกรอบแนวรับ-แนวต้าน หรือรอตัวเลขเศรษฐกิจสำคัญออกก่อนเข้าเทรด`;
       }
 
-      if (lastSignalState && lastSignalState !== currentSignalState) {
-        showToastAlert(
-          `⚡ แนวโน้ม XAUUSD เปลี่ยนเป็น ${currentSignalState}`,
-          `โอกาสขึ้น ${bullPct}% vs โอกาสลง ${bearPct}%`,
-          bullPct > bearPct ? 'bullish' : 'bearish'
-        );
-        playAlertBeep(true);
-      }
       lastSignalState = currentSignalState;
 
       updateRadarTile('fInstText', 'fInstTag', stats.inst);
@@ -868,7 +894,7 @@
       autoTranslate = !autoTranslate;
       const btn = document.getElementById('toggleTranslateBtn');
       btn.textContent = autoTranslate ? '🌐 แปลไทย' : '🌐 EN เดิม';
-      if (autoTranslate) fetchAllFeeds();
+      if (autoTranslate) fetchAllFeeds(false);
       else renderNews();
     }
 
@@ -980,7 +1006,7 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
-    fetchAllFeeds();
+    fetchAllFeeds(false);
     startCountdownTimer();
   </script>
 </body>
