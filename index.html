@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° Auto-Monitor & Live Alert Terminal</title>
+  <title>XAUUSD 360° Breaking News, Macro & AI Signal Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,12 +56,12 @@
         </div>
         <div>
           <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
-            XAUUSD 360° AUTO-TERMINAL
+            XAUUSD 360° BREAKING & MACRO TERMINAL
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> AUTO (UTC+7)
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> LIVE (UTC+7)
             </span>
           </h1>
-          <p class="text-[11px] text-slate-400">สแกนข่าวอัตโนมัติ (เวลาไทย) + แจ้งเตือนเมื่อมีข่าวสำคัญหรือสัญญาณเปลี่ยน</p>
+          <p class="text-[11px] text-slate-400">สแกนข่าวด่วนรอบโลก • ตัวเลข PPI/PMI/FOMC/Nonfarm • SPDR/JPMorgan</p>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
 
   <main class="max-w-7xl w-full mx-auto px-4 py-5 flex-1 space-y-5">
 
-    <!-- Real-Time 4-Asset Cards (XAUUSD, DXY, US10Y, USOIL) -->
+    <!-- Real-Time 4-Asset Cards -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
@@ -199,26 +199,26 @@
       <div class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">MULTI-FACTOR GOLD PROBABILITY ENGINE</span>
-            <h2 class="text-lg font-bold text-white">ความน่าจะเป็นทิศทางตลาดทองคำ (XAUUSD)</h2>
+            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">NEWS PROBABILITY & TRADE BIAS ENGINE</span>
+            <h2 class="text-lg font-bold text-white">โอกาสความเป็นไปได้ของทิศทางทองคำ (XAUUSD)</h2>
           </div>
           <span id="analyzedCountBadge" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-bbBorder">
-            สแกน 0 ข่าวล่าสุด
+            สแกน 0 ข่าวตรงจุด
           </span>
         </div>
 
         <div class="my-2">
           <div class="flex justify-between items-end mb-2">
             <div>
-              <span class="text-xs text-emerald-400 font-semibold block">แนวโน้มขึ้น (BULLISH / BUY)</span>
+              <span class="text-xs text-emerald-400 font-semibold block">โอกาสโน้มเอียงขึ้น (BULLISH)</span>
               <span id="bullPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-emerald-400 tabular-nums">50%</span>
             </div>
             <div class="text-center px-3 py-1.5 rounded-lg bg-slate-900 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">สัญญาณเทรดรวม</span>
+              <span class="text-[10px] text-slate-400 block">มุมมองเชิงข่าว</span>
               <span id="signalBadge" class="text-xs sm:text-sm font-mono font-bold text-amber-400">ANALYZING...</span>
             </div>
             <div class="text-right">
-              <span class="text-xs text-rose-400 font-semibold block">แนวโน้มลง (BEARISH / SELL)</span>
+              <span class="text-xs text-rose-400 font-semibold block">โอกาสโน้มเอียงลง (BEARISH)</span>
               <span id="bearPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-rose-400 tabular-nums">50%</span>
             </div>
           </div>
@@ -229,13 +229,14 @@
           </div>
         </div>
 
-        <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed">
-          <div class="font-semibold text-bbGoldLight mb-1">🧠 สรุปการวิเคราะห์เชิงลึก (ทุกมิติ):</div>
-          <p id="aiReasoningText">กำลังรวบรวมข้อมูลจาก SPDR, JPMorgan, ตัวเลขเศรษฐกิจ, ข่าวสงคราม, สงครามการค้า, โรคระบาด และเหตุก่อการร้าย...</p>
+        <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
+          <div class="font-semibold text-bbGoldLight">🧠 บทวิเคราะห์แนวโน้มเชิงข่าว (อ้างอิงเรดาร์จริง):</div>
+          <p id="aiReasoningText">กำลังสแกนข่าวด่วนรอบโลก, ตัวเลข PPI/PMI/FOMC/Nonfarm, SPDR, JPMorgan, สงคราม และโรคระบาด...</p>
+          <p id="tradeIdeaText" class="text-xs text-amber-300/90 pt-1 border-t border-bbBorder/70">💡 แนวทางประกอบแผนเทรด: รอสัญญาณยืนยันบนกราฟราคาและตั้ง Stop Loss ทุกครั้ง</p>
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span id="newAlertStatusText">ระบบเฝ้าระวังข่าวใหม่อัตโนมัติทำงานอยู่</span>
+          <span id="newAlertStatusText">คัดกรองข่าวค่าเงินย่อยออกอัตโนมัติ</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
@@ -258,7 +259,7 @@
 
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
-              <span class="text-slate-400 block text-[11px]">📅 ตัวเลขเศรษฐกิจ / FED / DXY</span>
+              <span class="text-slate-400 block text-[11px]">📅 PPI / PMI / FOMC / Nonfarm</span>
               <span id="fMacroText" class="font-semibold text-slate-200">รอข้อมูล...</span>
             </div>
             <span id="fMacroTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
@@ -266,7 +267,7 @@
 
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
-              <span class="text-slate-400 block text-[11px]">⚔️ สงคราม & ภูมิรัฐศาสตร์</span>
+              <span class="text-slate-400 block text-[11px]">⚔️ สงคราม & ข่าวด่วนโลก</span>
               <span id="fWarText" class="font-semibold text-slate-200">รอข้อมูล...</span>
             </div>
             <span id="fWarTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
@@ -308,6 +309,9 @@
         <button onclick="setCategory('new')" data-cat="new" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-amber-400 border border-bbBorder">
           ✨ ข่าวเข้าใหม่ (<span id="newCountBadge">0</span>)
         </button>
+        <button onclick="setCategory('breaking')" data-cat="breaking" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-sky-400 border border-bbBorder">
+          ⚡ ข่าวด่วนรอบโลก
+        </button>
         <button onclick="setCategory('bullish')" data-cat="bullish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-emerald-400 border border-bbBorder">
           🟢 หนุนทองขึ้น
         </button>
@@ -318,7 +322,7 @@
           🏦 SPDR / JPM
         </button>
         <button onclick="setCategory('macro')" data-cat="macro" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          📅 เศรษฐกิจ/FED
+          📅 PPI/PMI/FOMC/NFP
         </button>
         <button onclick="setCategory('war')" data-cat="war" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
           ⚔️ สงคราม/การค้า
@@ -332,14 +336,14 @@
       </div>
 
       <div class="relative w-full lg:w-56">
-        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา SPDR, JPM, CPI, War..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
+        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา PPI, PMI, FOMC, NFP..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
 
     <!-- News Feed Grid -->
     <section id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="col-span-full text-center py-12 text-slate-400 text-sm">
-        กำลังดึงข้อมูลข่าว SPDR, JPMorgan, ตัวเลขเศรษฐกิจ, สงคราม, โรคระบาด และก่อการร้าย...
+        กำลังสแกนข่าวด่วนรอบโลก, ตัวเลข PPI/PMI/FOMC/Nonfarm, SPDR, JPMorgan, สงคราม และโรคระบาด...
       </div>
     </section>
 
@@ -376,13 +380,14 @@
 
   <script>
     const RSS_FEEDS = [
-      { name: 'SPDR & JPMorgan Gold', topic: 'inst', url: 'https://news.google.com/rss/search?q=(%22SPDR+Gold%22+OR+%22JPMorgan+gold%22+OR+%22BlackRock+gold%22+OR+%22central+bank+gold%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-      { name: 'Economic Data & FED', topic: 'macro', url: 'https://news.google.com/rss/search?q=(%22Forex+Factory%22+OR+%22Investing.com+gold%22+OR+%22Nonfarm+Payrolls%22+OR+%22US+CPI%22+OR+%22FOMC%22+OR+%22XAUUSD%22)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'Breaking World News', topic: 'breaking', url: 'https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'PPI / PMI / FOMC / NFP', topic: 'macro', url: 'https://news.google.com/rss/search?q=(%22Nonfarm+Payrolls%22+OR+%22NFP%22+OR+%22FOMC%22+OR+%22US+PPI%22+OR+%22US+PMI%22+OR+%22US+CPI%22+OR+%22XAUUSD%22+OR+%22gold+price%22)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'CNBC Economy & Markets', topic: 'macro', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258', lang: 'en' },
       { name: 'FXStreet Gold & Macro', topic: 'macro', url: 'https://www.fxstreet.com/rss/news', lang: 'en' },
-      { name: 'CNBC Economy', topic: 'macro', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258', lang: 'en' },
-      { name: 'War & Trade War', topic: 'war', url: 'https://news.google.com/rss/search?q=(%22trade+war%22+OR+%22tariffs%22+OR+%22Middle+East+war%22+OR+%22missile+strike%22+OR+%22sanctions%22+gold)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'SPDR & JPMorgan Gold', topic: 'inst', url: 'https://news.google.com/rss/search?q=(%22SPDR+Gold%22+OR+%22JPMorgan+gold%22+OR+%22BlackRock+gold%22+OR+%22central+bank+gold%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'War & Trade War', topic: 'war', url: 'https://news.google.com/rss/search?q=(%22trade+war%22+OR+%22tariffs%22+OR+%22Middle+East+war%22+OR+%22missile+strike%22+OR+%22military+escalation%22)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
       { name: 'Pandemic & Terrorism', topic: 'crisis', url: 'https://news.google.com/rss/search?q=(%22WHO+outbreak%22+OR+%22pandemic+virus%22+OR+%22terrorist+attack%22+OR+%22global+health+emergency%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
-      { name: 'ข่าวทองคำ & โลก (ไทย)', topic: 'thai', url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+สงครามการค้า+OR+โรคระบาด)+when:3d&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
+      { name: 'ข่าวด่วนทองคำ & โลก (ไทย)', topic: 'thai', url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+ตัวเลขเศรษฐกิจ+OR+สงคราม+OR+ข่าวด่วนโลก)+when:2d&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
     ];
 
     let allArticles = [];
@@ -398,18 +403,28 @@
     let timerHandle = null;
 
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
+    const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
 
     const RULES = {
       instBull: ['spdr gold inflows', 'spdr adds', 'jpmorgan bullish gold', 'jpmorgan raises gold', 'central bank buys', 'pboc buys gold', 'gold etf inflows', 'ซื้อทองคำเพิ่ม', 'กองทุนเข้าซื้อทอง'],
       instBear: ['spdr outflows', 'spdr sells', 'jpmorgan cuts gold', 'jpmorgan bearish gold', 'gold etf outflows', 'เทขายทองคำ', 'spdr ขาย'],
-      macroBull: ['rate cut', 'cut rates', 'dovish', 'cpi falls', 'inflation cools', 'weak dollar', 'dollar falls', 'yields fall', 'unemployment rises', 'nfp misses', 'ลดดอกเบี้ย', 'เงินเฟ้อชะลอ', 'ดอลลาร์อ่อน'],
-      macroBear: ['rate hike', 'hike rates', 'hawkish', 'higher for longer', 'hot inflation', 'cpi rises', 'ppi rises', 'strong dollar', 'dollar surges', 'yields surge', 'payrolls beat', 'nfp beats', 'ขึ้นดอกเบี้ย', 'คงดอกเบี้ย', 'ดอลลาร์แข็ง', 'เงินเฟ้อพุ่ง'],
-      warBull: ['war', 'missile', 'airstrike', 'invasion', 'escalation', 'conflict', 'trade war', 'tariffs', 'sanctions', 'geopolitical tension', 'สงคราม', 'โจมตี', 'ขีปนาวุธ', 'สงครามการค้า', 'กำแพงภาษี'],
+      macroBull: [
+        'rate cut', 'cut rates', 'dovish', 'fomc dovish', 'cpi falls', 'cpi cools', 'ppi falls', 'ppi cools',
+        'pmi falls', 'pmi misses', 'pmi contracts', 'weak dollar', 'dollar falls', 'dollar slips', 'yields fall',
+        'unemployment rises', 'nfp misses', 'nonfarm misses', 'payrolls miss', 'jobs miss', 'gdp slows',
+        'ลดดอกเบี้ย', 'เงินเฟ้อชะลอ', 'ดอลลาร์อ่อน', 'จ้างงานต่ำกว่าคาด', 'pmi ต่ำกว่าคาด'
+      ],
+      macroBear: [
+        'rate hike', 'hike rates', 'hawkish', 'fomc hawkish', 'higher for longer', 'hot inflation', 'cpi rises', 'cpi beats',
+        'ppi rises', 'ppi beats', 'pmi rises', 'pmi beats', 'pmi expands', 'strong dollar', 'dollar surges', 'yields surge',
+        'payrolls beat', 'nfp beats', 'nonfarm beats', 'jobs beat', 'gdp beats',
+        'ขึ้นดอกเบี้ย', 'คงดอกเบี้ย', 'ดอลลาร์แข็ง', 'เงินเฟ้อพุ่ง', 'จ้างงานสูงกว่าคาด', 'pmi สูงกว่าคาด'
+      ],
+      warBull: ['war', 'missile', 'airstrike', 'invasion', 'escalation', 'conflict', 'trade war', 'tariffs', 'sanctions', 'geopolitical tension', 'breaking:', 'สงคราม', 'โจมตี', 'ขีปนาวุธ', 'สงครามการค้า', 'กำแพงภาษี'],
       warBear: ['ceasefire', 'peace deal', 'truce', 'tariff delay', 'trade deal reached', 'หยุดยิง', 'เจรจาสันติภาพ', 'บรรลุข้อตกลงการค้า'],
       crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
     };
 
-    // แปลงเวลาข่าวให้เป็นเขตเวลาประเทศไทย (Asia/Bangkok / UTC+7) พร้อมวันที่เสมอ
     function formatThaiDateTime(pubDateStr) {
       if (!pubDateStr) return '';
       let parsed = new Date(pubDateStr);
@@ -524,39 +539,41 @@
       let reasons = [];
 
       if (/spdr|jpmorgan|jp morgan|blackrock|goldman|etf|central bank|pboc|กองทุน|ธนาคารกลาง/.test(lower)) detectedTopics.add('inst');
-      if (/fed|fomc|cpi|ppi|nfp|payroll|gdp|yield|dollar|dxy|inflation|forex|ดอกเบี้ย|เงินเฟ้อ|ตัวเลขเศรษฐกิจ/.test(lower)) detectedTopics.add('macro');
+      if (/fed|fomc|cpi|ppi|pmi|nfp|nonfarm|payroll|gdp|yield|dxy|us dollar|inflation|ดอกเบี้ย|เงินเฟ้อ|ตัวเลขเศรษฐกิจ/.test(lower)) detectedTopics.add('macro');
       if (/war|tariff|trade war|missile|military|sanction|ukraine|israel|iran|china|taiwan|สงคราม|ภาษี|คว่ำบาตร/.test(lower)) detectedTopics.add('war');
       if (/virus|pandemic|outbreak|who|epidemic|terror|attack|bomb|hostage|ไวรัส|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('crisis');
+      if (defaultTopic === 'breaking' || /breaking|urgent|alert|emergency|ข่าวด่วน/.test(lower)) detectedTopics.add('breaking');
 
       RULES.instBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('แรงซื้อสถาบัน/SPDR/JPM'); } });
       RULES.instBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('แรงขายสถาบัน/SPDR/JPM'); } });
 
-      RULES.macroBull.forEach(k => { if (lower.includes(k)) { bullScore += 1.8; reasons.push('ตัวเลขเศรษฐกิจ/FED หนุนทอง'); } });
-      RULES.macroBear.forEach(k => { if (lower.includes(k)) { bearScore += 1.8; reasons.push('ตัวเลขเศรษฐกิจ/FED กดดันทอง'); } });
+      RULES.macroBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('ตัวเลข PPI/PMI/FOMC/NFP หนุนทอง'); } });
+      RULES.macroBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('ตัวเลข PPI/PMI/FOMC/NFP กดดันทอง'); } });
 
-      RULES.warBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.2; reasons.push('ความเสี่ยงสงคราม/สงครามการค้า'); } });
+      RULES.warBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.2; reasons.push('ความเสี่ยงสงคราม/ข่าวด่วนโลก'); } });
       RULES.warBear.forEach(k => { if (lower.includes(k)) { bearScore += 1.8; reasons.push('สถานการณ์สงคราม/การค้าผ่อนคลาย'); } });
 
       RULES.crisisBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.5; reasons.push('ภาวะวิกฤตโรคระบาด/ก่อการร้าย (Safe Haven)'); } });
 
-      if (/gold rises|gold surges|gold jumps|gold climbs|gold rallies|ทองพุ่ง|ทองขึ้น/.test(lower)) bullScore += 1.5;
-      if (/gold falls|gold drops|gold slides|gold plunges|gold slips|ทองร่วง|ทองลง/.test(lower)) bearScore += 1.5;
+      if (/gold rises|gold surges|gold jumps|gold climbs|gold rallies|xau\/usd rises|xauusd rises|ทองพุ่ง|ทองขึ้น/.test(lower)) bullScore += 1.5;
+      if (/gold falls|gold drops|gold slides|gold plunges|gold slips|xau\/usd falls|xauusd falls|ทองร่วง|ทองลง/.test(lower)) bearScore += 1.5;
 
       const uniqueReasons = [...new Set(reasons)];
       const topicLabels = {
+        breaking: '⚡ ข่าวด่วนรอบโลก',
         inst: '🏦 สถาบัน/SPDR/JPM',
-        macro: '📅 ตัวเลขเศรษฐกิจ/FED',
+        macro: '📅 PPI/PMI/FOMC/NFP',
         war: '⚔️ สงคราม/การค้า',
         crisis: '🚨 โรคระบาด/ก่อการร้าย',
         thai: '🇹🇭 ข่าวไทย'
       };
-      const primaryTopic = [...detectedTopics].find(t => t !== 'thai') || defaultTopic;
+      const primaryTopic = [...detectedTopics].find(t => t !== 'thai' && t !== 'breaking') || defaultTopic;
 
       if (bullScore > bearScore) {
         return {
           type: 'bullish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
+          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
           label: '🟢 หนุนทองขึ้น (Bullish)',
           badgeClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
           score: bullScore - bearScore,
@@ -566,7 +583,7 @@
         return {
           type: 'bearish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
+          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
           label: '🔴 กดดันทองลง (Bearish)',
           badgeClass: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
           score: -(bearScore - bullScore),
@@ -576,7 +593,7 @@
         return {
           type: 'neutral',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
+          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
           label: '🟡 จับตาดู (Neutral)',
           badgeClass: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
           score: 0,
@@ -625,6 +642,9 @@
             data.items.slice(0, 7).forEach(item => {
               const titleEn = cleanHtml(item.title);
               const descEn = cleanHtml(item.description).slice(0, 240);
+
+              if (IRRELEVANT_NOISE.test(titleEn)) return;
+
               const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
               const uniqueKey = titleEn.slice(0, 50).toLowerCase();
 
@@ -668,7 +688,7 @@
       renderNews();
 
       if (autoTranslate) {
-        for (let i = 0; i < Math.min(allArticles.length, 30); i++) {
+        for (let i = 0; i < Math.min(allArticles.length, 32); i++) {
           const art = allArticles[i];
           if (art.lang === 'en' && art.titleTh === art.titleEn) {
             art.titleTh = await translateToThai(art.titleEn);
@@ -684,7 +704,7 @@
           ? '🟢 ข่าวใหม่หนุนทองขึ้น!'
           : highImpactNew.analysis.type === 'bearish'
             ? '🔴 ข่าวใหม่กดดันทองลง!'
-            : `📰 พบข่าวใหม่ ${newlyArrived.length} รายการ`;
+            : `⚡ ข่าวด่วนเข้าใหม่ ${newlyArrived.length} รายการ`;
 
         showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
         playAlertBeep(highImpactNew.analysis.type !== 'neutral');
@@ -708,12 +728,12 @@
       let totalBear = 1;
 
       const stats = {
-        inst: { count: 0, score: 0 },
-        macro: { count: 0, score: 0 },
-        war: { count: 0, score: 0 },
-        trade: { count: 0, score: 0 },
-        health: { count: 0, score: 0 },
-        terror: { count: 0, score: 0 }
+        inst: { name: 'SPDR/JPMorgan', count: 0, score: 0 },
+        macro: { name: 'PPI/PMI/FOMC/NFP', count: 0, score: 0 },
+        war: { name: 'สงคราม & ข่าวด่วนโลก', count: 0, score: 0 },
+        trade: { name: 'สงครามการค้า & ภาษี', count: 0, score: 0 },
+        health: { name: 'โรคระบาด & ไวรัส', count: 0, score: 0 },
+        terror: { name: 'ก่อการร้าย & วิกฤต', count: 0, score: 0 }
       };
 
       allArticles.forEach(art => {
@@ -735,47 +755,65 @@
       const bullPct = Math.round((totalBull / sum) * 100);
       const bearPct = 100 - bullPct;
 
-      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวล่าสุด`;
+      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวตรงจุด`;
       document.getElementById('bullPercentText').textContent = `${bullPct}%`;
       document.getElementById('bearPercentText').textContent = `${bearPct}%`;
       document.getElementById('bullBar').style.width = `${bullPct}%`;
       document.getElementById('bearBar').style.width = `${bearPct}%`;
 
+      // รวบรวมรายชื่อหมวดที่หนุนขึ้นจริง และกดดันลงจริง ตามเรดาร์ 6 ปัจจัย
+      const allPillars = Object.values(stats);
+      const bullPillars = allPillars.filter(s => s.score > 0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
+      const bearPillars = allPillars.filter(s => s.score < -0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
+
       const signalBadge = document.getElementById('signalBadge');
       const reasoning = document.getElementById('aiReasoningText');
+      const tradeIdea = document.getElementById('tradeIdeaText');
       let currentSignalState = '';
 
+      const bullTextList = bullPillars.length ? bullPillars.join(', ') : 'ข่าวหนุนทองคำบางส่วน';
+      const bearTextList = bearPillars.length ? bearPillars.join(', ') : 'ข่าวกดดันทองคำบางส่วน';
+
       if (bullPct >= 62) {
-        currentSignalState = 'STRONG BUY';
-        signalBadge.textContent = 'STRONG BUY (เน้นย่อซื้อ)';
+        currentSignalState = 'BULLISH HIGH (โอกาสขึ้นเด่น)';
+        signalBadge.textContent = 'BULLISH HIGH (โอกาสขึ้นสูง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
-        reasoning.textContent = `ปัจจัยบวกหนุนทองคำชัดเจน (${bullPct}% ต่อ ${bearPct}%) จากแรงซื้อกองทุนสถาบัน (SPDR/JPMorgan) ตัวเลขเศรษฐกิจที่หนุนการลดดอกเบี้ย หรือความเสี่ยงวิกฤตสงคราม/โรคระบาด/ก่อการร้าย แนะนำรอย่อตัวตามแนวรับเพื่อหาจังหวะ Buy`;
+        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้นอยู่ที่ ${bullPct}% ต่อ ${bearPct}% โดยแรงหนุนหลักมาจาก ${bullTextList}` +
+          (bearPillars.length ? ` ขณะที่ยังมีแรงกดดันถ่วงดุลจาก ${bearTextList}` : '');
+        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสโน้มเอียงขึ้นสูง ควรรอย่อตัว (Pullback) ใกล้แนวรับและรอแท่งเทียนกลับตัวขึ้นก่อนเข้า Buy พร้อมวาง Stop Loss ใต้แนวรับ`;
       } else if (bullPct >= 54) {
-        currentSignalState = 'BUY BIAS';
-        signalBadge.textContent = 'BUY BIAS (โน้มเอียงขึ้น)';
+        currentSignalState = 'BULLISH MODERATE (เอียงขึ้น)';
+        signalBadge.textContent = 'BULLISH BIAS (เอียงขึ้น)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-300';
-        reasoning.textContent = `น้ำหนักข่าวฝั่งบวก (${bullPct}%) เหนือกว่าฝั่งลบ (${bearPct}%) มีแรงหนุนจากปัจจัยมหภาคหรือความเสี่ยงภูมิรัฐศาสตร์ ทองคำมีโอกาสแกว่งตัวขึ้นทดสอบแนวต้าน`;
+        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้นนำเล็กน้อยที่ ${bullPct}% ต่อ ${bearPct}% หนุนโดย ${bullTextList}` +
+          (bearPillars.length ? ` โดยมีปัจจัยกดดันจาก ${bearTextList} คอยจำกัดกรอบการขึ้นเป็นระยะ` : '');
+        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสขึ้นมีมากกว่าเล็กน้อย เน้นเล่นสั้นตามจังหวะย่อตัวไม่หลุดแนวรับ ระวังแรงขายทำกำไรใกล้แนวต้าน`;
       } else if (bearPct >= 62) {
-        currentSignalState = 'STRONG SELL';
-        signalBadge.textContent = 'STRONG SELL (เน้นเด้งขาย)';
+        currentSignalState = 'BEARISH HIGH (โอกาสลงเด่น)';
+        signalBadge.textContent = 'BEARISH HIGH (โอกาสลงสูง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
-        reasoning.textContent = `แรงกดดันขาลงรุนแรง (${bearPct}% ต่อ ${bullPct}%) จากตัวเลขเศรษฐกิจที่หนุนดอกเบี้ยสูง ดอลลาร์แข็งค่า หรือกองทุนสถาบันลดการถือครอง แนะนำรอจังหวะราคาดีดตัวไม่ผ่านแนวต้านเพื่อหาจังหวะ Sell`;
+        reasoning.textContent = `ความเป็นไปได้ฝั่งลงอยู่ที่ ${bearPct}% ต่อ ${bullPct}% โดยมีแรงกดดันหลักมาจาก ${bearTextList}` +
+          (bullPillars.length ? ` แม้จะมีแรงพยุงบางส่วนจาก ${bullTextList}` : '');
+        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสโน้มเอียงลงสูง ควรรอจังหวะราคาเด้งขึ้นทดสอบแนวต้านแล้วไม่ผ่านก่อนเข้า Sell พร้อมวาง Stop Loss เหนือแนวต้าน`;
       } else if (bearPct >= 54) {
-        currentSignalState = 'SELL BIAS';
-        signalBadge.textContent = 'SELL BIAS (โน้มเอียงลง)';
+        currentSignalState = 'BEARISH MODERATE (เอียงลง)';
+        signalBadge.textContent = 'BEARISH BIAS (เอียงลง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-300';
-        reasoning.textContent = `แรงกดดันฝั่งขาลงมีมากกว่าเล็กน้อย (${bearPct}% ต่อ ${bullPct}%) ทองคำอาจเผชิญแรงขายเมื่อดีดตัวขึ้น แนะนำระวังการไล่ซื้อและเน้นเล่นสั้นตามกรอบแนวต้าน`;
+        reasoning.textContent = `ความเป็นไปได้ฝั่งลงนำเล็กน้อยที่ ${bearPct}% ต่อ ${bullPct}% กดดันโดย ${bearTextList}` +
+          (bullPillars.length ? ` โดยมีแรงหนุนบางส่วนจาก ${bullTextList} คอยพยุงราคาไว้` : '');
+        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: แรงกดดันฝั่งลงมีมากกว่าเล็กน้อย เน้นรอจังหวะเด้งขายตามแนวต้านและไม่ไล่ราคาตอนย่อลงลึก`;
       } else {
-        currentSignalState = 'SIDEWAYS';
-        signalBadge.textContent = 'SIDEWAYS / WAIT';
+        currentSignalState = 'BALANCED / SIDEWAYS';
+        signalBadge.textContent = 'BALANCED (โอกาสใกล้เคียงกัน)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-amber-400';
-        reasoning.textContent = `แรงซื้อ (${bullPct}%) และแรงขาย (${bearPct}%) คานอำนาจกันอยู่ ตลาดกำลังชั่งน้ำหนักระหว่างตัวเลขเศรษฐกิจกับความเสี่ยงภูมิรัฐศาสตร์ แนะนำเทรดในกรอบแนวรับ-แนวต้าน`;
+        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้น (${bullPct}%) และฝั่งลง (${bearPct}%) ใกล้เคียงกันมาก เนื่องจาก ${bullTextList} กำลังหักล้างกับ ${bearTextList}`;
+        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: สัญญาณข่าวยังก้ำกึ่ง แนะนำรอความชัดเจนจากการเบรกกรอบแนวรับ-แนวต้าน หรือรอตัวเลขเศรษฐกิจสำคัญออกก่อนเข้าเทรด`;
       }
 
       if (lastSignalState && lastSignalState !== currentSignalState) {
         showToastAlert(
-          `⚡ สัญญาณ XAUUSD เปลี่ยนเป็น ${currentSignalState}`,
-          `สัดส่วนปัจจุบัน: ขึ้น ${bullPct}% vs ลง ${bearPct}%`,
+          `⚡ แนวโน้ม XAUUSD เปลี่ยนเป็น ${currentSignalState}`,
+          `โอกาสขึ้น ${bullPct}% vs โอกาสลง ${bearPct}%`,
           bullPct > bearPct ? 'bullish' : 'bearish'
         );
         playAlertBeep(true);
@@ -842,7 +880,7 @@
         if (currentCategory === 'new' && !art.isNew) return false;
         if (currentCategory === 'bullish' && art.analysis.type !== 'bullish') return false;
         if (currentCategory === 'bearish' && art.analysis.type !== 'bearish') return false;
-        if (['inst', 'macro', 'war', 'crisis', 'thai'].includes(currentCategory)) {
+        if (['breaking', 'inst', 'macro', 'war', 'crisis', 'thai'].includes(currentCategory)) {
           if (!art.analysis.topics.includes(currentCategory)) return false;
         }
         if (query) {
