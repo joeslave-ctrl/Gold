@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° Global Macro, Real-Time Market & AI Signal Terminal</title>
+  <title>XAUUSD 360° Auto-Monitor & Live Alert Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,32 +35,63 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #090b0f; }
     ::-webkit-scrollbar-thumb { background: #242c3d; border-radius: 3px; }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast-enter { animation: slideInRight 0.35s ease-out forwards; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
+  <!-- Floating Alert Container (ป้ายเด้งแจ้งเตือนข่าวด่วน/สัญญาณเปลี่ยน) -->
+  <div id="alertContainer" class="fixed top-16 right-3 z-50 flex flex-col gap-2 max-w-sm w-[calc(100%-1.5rem)] pointer-events-none"></div>
+
   <!-- Top Header -->
-  <header class="sticky top-0 z-40 bg-bbPanel/95 backdrop-blur border-b border-bbBorder px-4 py-3">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+  <header class="sticky top-0 z-40 bg-bbPanel/95 backdrop-blur border-b border-bbBorder px-4 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
       <div class="flex items-center gap-2.5">
         <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-bbGold font-mono font-bold text-lg">
           Au
         </div>
         <div>
-          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
-            XAUUSD 360° GLOBAL INTELLIGENCE
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">LIVE MARKET</span>
+          <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
+            XAUUSD 360° AUTO-TERMINAL
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> AUTO
+            </span>
           </h1>
-          <p class="text-xs text-slate-400">ราคาสด XAUUSD • DXY • US10Y • USOIL พร้อมวิเคราะห์ข่าวรอบโลก</p>
+          <p class="text-[11px] text-slate-400">สแกนข่าวอัตโนมัติ + แจ้งเตือนเมื่อมีข่าวสำคัญหรือสัญญาณเปลี่ยน</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <button id="toggleTranslateBtn" onclick="toggleAutoTranslate()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-bbGoldLight border border-amber-500/40 hover:bg-amber-500/25 transition">
-          🌐 แปลไทย: เปิด
+      <!-- Auto-Refresh & Sound Controls -->
+      <div class="flex flex-wrap items-center gap-1.5">
+        <!-- Interval Selector -->
+        <div class="flex items-center bg-bbBlack border border-bbBorder rounded-lg px-2 py-1 text-xs">
+          <span class="text-slate-400 mr-1.5 hidden sm:inline">รีเฟรชทุก:</span>
+          <select id="refreshIntervalSelect" onchange="changeRefreshInterval()" class="bg-transparent text-bbGoldLight font-mono font-semibold focus:outline-none cursor-pointer">
+            <option value="60" class="bg-bbPanel">1 นาที (ข่าวแรง)</option>
+            <option value="180" selected class="bg-bbPanel">3 นาที (แนะนำ)</option>
+            <option value="300" class="bg-bbPanel">5 นาที (ประหยัด)</option>
+            <option value="0" class="bg-bbPanel">ปิดออโต้</option>
+          </select>
+          <span id="countdownText" class="ml-2 text-[11px] font-mono text-slate-400 tabular-nums w-10 text-right">03:00</span>
+        </div>
+
+        <!-- Sound Toggle -->
+        <button id="soundToggleBtn" onclick="toggleSound()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition" title="เปิด/ปิดเสียงแจ้งเตือน">
+          🔔 เสียง: เปิด
         </button>
-        <button onclick="fetchAllFeeds()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition flex items-center gap-1.5">
-          <span id="refreshIcon">↻</span> สแกนข่าวทั้งหมด
+
+        <!-- Translate Toggle -->
+        <button id="toggleTranslateBtn" onclick="toggleAutoTranslate()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-bbGoldLight border border-amber-500/40 hover:bg-amber-500/25 transition">
+          🌐 แปลไทย
+        </button>
+
+        <!-- Manual Scan -->
+        <button onclick="manualRefresh()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbGold text-black font-semibold hover:bg-bbGoldLight transition flex items-center gap-1">
+          <span id="refreshIcon">↻</span> สแกนทันที
         </button>
       </div>
     </div>
@@ -94,7 +125,6 @@
 
     <!-- Real-Time 4-Asset Cards (XAUUSD, DXY, US10Y, USOIL) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-      <!-- 1. XAUUSD -->
       <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
@@ -107,14 +137,12 @@
             "dateRange": "1D",
             "colorTheme": "dark",
             "isTransparent": true,
-            "autosize": true,
-            "largeChartUrl": ""
+            "autosize": true
           }
           </script>
         </div>
       </div>
 
-      <!-- 2. DXY -->
       <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
@@ -127,14 +155,12 @@
             "dateRange": "1D",
             "colorTheme": "dark",
             "isTransparent": true,
-            "autosize": true,
-            "largeChartUrl": ""
+            "autosize": true
           }
           </script>
         </div>
       </div>
 
-      <!-- 3. US 10Y Yield -->
       <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
@@ -147,14 +173,12 @@
             "dateRange": "1D",
             "colorTheme": "dark",
             "isTransparent": true,
-            "autosize": true,
-            "largeChartUrl": ""
+            "autosize": true
           }
           </script>
         </div>
       </div>
 
-      <!-- 4. US Oil (WTI) -->
       <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
@@ -167,8 +191,7 @@
             "dateRange": "1D",
             "colorTheme": "dark",
             "isTransparent": true,
-            "autosize": true,
-            "largeChartUrl": ""
+            "autosize": true
           }
           </script>
         </div>
@@ -177,7 +200,6 @@
 
     <!-- AI XAUUSD Signal & 6-Factor Matrix -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-      <!-- Left: Probability Gauge & Trade Bias -->
       <div class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
@@ -189,7 +211,6 @@
           </span>
         </div>
 
-        <!-- Probability Bar -->
         <div class="my-2">
           <div class="flex justify-between items-end mb-2">
             <div>
@@ -212,14 +233,13 @@
           </div>
         </div>
 
-        <!-- AI Reasoning Summary -->
         <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed">
           <div class="font-semibold text-bbGoldLight mb-1">🧠 สรุปการวิเคราะห์เชิงลึก (ทุกมิติ):</div>
           <p id="aiReasoningText">กำลังรวบรวมข้อมูลจาก SPDR, JPMorgan, ตัวเลขเศรษฐกิจ, ข่าวสงคราม, สงครามการค้า, โรคระบาด และเหตุก่อการร้าย...</p>
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span>*เทียบกราฟ DXY / US10Y / USOIL ด้านบนควบคู่กับข่าว</span>
+          <span id="newAlertStatusText">ระบบเฝ้าระวังข่าวใหม่อัตโนมัติทำงานอยู่</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
@@ -232,7 +252,6 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
-          <!-- 1. Institutions -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">🏦 SPDR / JPMorgan / กองทุน</span>
@@ -241,7 +260,6 @@
             <span id="fInstTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 2. Macro & Economic Calendar -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">📅 ตัวเลขเศรษฐกิจ / FED / DXY</span>
@@ -250,7 +268,6 @@
             <span id="fMacroTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 3. War & Geopolitics -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">⚔️ สงคราม & ภูมิรัฐศาสตร์</span>
@@ -259,7 +276,6 @@
             <span id="fWarTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 4. Trade War & Tariffs -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">🚢 สงครามการค้า & ภาษี Tariffs</span>
@@ -268,7 +284,6 @@
             <span id="fTradeTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 5. Pandemic & Global Health -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">🦠 โรคระบาดระดับโลก & ไวรัส</span>
@@ -277,7 +292,6 @@
             <span id="fHealthTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 6. Terrorism & Black Swan -->
           <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
             <div>
               <span class="text-slate-400 block text-[11px]">🚨 ก่อการร้าย & วิกฤตฉุกเฉิน</span>
@@ -295,6 +309,9 @@
         <button onclick="setCategory('all')" data-cat="all" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black">
           ทั้งหมด
         </button>
+        <button onclick="setCategory('new')" data-cat="new" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-amber-400 border border-bbBorder">
+          ✨ ข่าวเข้าใหม่ (<span id="newCountBadge">0</span>)
+        </button>
         <button onclick="setCategory('bullish')" data-cat="bullish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-emerald-400 border border-bbBorder">
           🟢 หนุนทองขึ้น
         </button>
@@ -302,10 +319,10 @@
           🔴 กดดันทองลง
         </button>
         <button onclick="setCategory('inst')" data-cat="inst" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          🏦 SPDR / JPMorgan
+          🏦 SPDR / JPM
         </button>
         <button onclick="setCategory('macro')" data-cat="macro" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          📅 ตัวเลขเศรษฐกิจ
+          📅 เศรษฐกิจ/FED
         </button>
         <button onclick="setCategory('war')" data-cat="war" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
           ⚔️ สงคราม/การค้า
@@ -318,7 +335,7 @@
         </button>
       </div>
 
-      <div class="relative w-full lg:w-60">
+      <div class="relative w-full lg:w-56">
         <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา SPDR, JPM, CPI, War..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
@@ -373,8 +390,18 @@
     ];
 
     let allArticles = [];
+    let knownArticleKeys = new Set();
+    let isFirstLoad = true;
+    let lastSignalState = '';
     let currentCategory = 'all';
     let autoTranslate = true;
+    let soundEnabled = true;
+
+    // Auto-refresh timer state
+    let refreshSeconds = 180; // ค่าเริ่มต้น 3 นาที
+    let remainingSeconds = 180;
+    let timerHandle = null;
+
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
 
     const RULES = {
@@ -386,6 +413,92 @@
       warBear: ['ceasefire', 'peace deal', 'truce', 'tariff delay', 'trade deal reached', 'หยุดยิง', 'เจรจาสันติภาพ', 'บรรลุข้อตกลงการค้า'],
       crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
     };
+
+    // เสียงแจ้งเตือนแบบ Web Audio API (ไม่ต้องโหลดไฟล์เสียงภายนอก)
+    function playAlertBeep(isUrgent = false) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = isUrgent ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(isUrgent ? 880 : 660, ctx.currentTime);
+        if (isUrgent) {
+          osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.15);
+        }
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      } catch (e) {}
+    }
+
+    function showToastAlert(title, message, type = 'info') {
+      const container = document.getElementById('alertContainer');
+      const colors = {
+        bullish: 'border-emerald-500 bg-emerald-950/95 text-emerald-100',
+        bearish: 'border-rose-500 bg-rose-950/95 text-rose-100',
+        urgent: 'border-amber-400 bg-slate-900/95 text-amber-100',
+        info: 'border-bbBorder bg-bbPanel/95 text-slate-100'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `toast-enter pointer-events-auto p-3.5 rounded-xl border-l-4 shadow-2xl backdrop-blur ${colors[type] || colors.info}`;
+      toast.innerHTML = `
+        <div class="flex items-start justify-between gap-2">
+          <div class="text-xs font-bold">${title}</div>
+          <button onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-white text-xs">✕</button>
+        </div>
+        <p class="text-[11px] opacity-90 mt-1 leading-snug">${message}</p>
+      `;
+      container.prepend(toast);
+      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 10000);
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      btn.textContent = soundEnabled ? '🔔 เสียง: เปิด' : '🔕 เสียง: ปิด';
+      if (soundEnabled) playAlertBeep(false);
+    }
+
+    function startCountdownTimer() {
+      if (timerHandle) clearInterval(timerHandle);
+      if (refreshSeconds <= 0) {
+        document.getElementById('countdownText').textContent = 'OFF';
+        return;
+      }
+      remainingSeconds = refreshSeconds;
+      updateCountdownDisplay();
+
+      timerHandle = setInterval(() => {
+        remainingSeconds--;
+        if (remainingSeconds <= 0) {
+          remainingSeconds = refreshSeconds;
+          fetchAllFeeds();
+        }
+        updateCountdownDisplay();
+      }, 1000);
+    }
+
+    function updateCountdownDisplay() {
+      if (refreshSeconds <= 0) return;
+      const mins = Math.floor(remainingSeconds / 60).toString().padStart(2, '0');
+      const secs = (remainingSeconds % 60).toString().padStart(2, '0');
+      document.getElementById('countdownText').textContent = `${mins}:${secs}`;
+    }
+
+    function changeRefreshInterval() {
+      refreshSeconds = parseInt(document.getElementById('refreshIntervalSelect').value, 10);
+      startCountdownTimer();
+    }
+
+    function manualRefresh() {
+      if (refreshSeconds > 0) remainingSeconds = refreshSeconds;
+      fetchAllFeeds();
+    }
 
     function classifyAndScore(text, defaultTopic) {
       const lower = text.toLowerCase();
@@ -488,7 +601,7 @@
 
       await Promise.allSettled(RSS_FEEDS.map(async (feed) => {
         try {
-          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
+          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&_t=${Date.now()}`;
           const res = await fetch(apiUrl);
           const data = await res.json();
 
@@ -497,9 +610,12 @@
               const titleEn = cleanHtml(item.title);
               const descEn = cleanHtml(item.description).slice(0, 240);
               const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
+              const uniqueKey = titleEn.slice(0, 50).toLowerCase();
 
               collected.push({
                 id: Math.random().toString(36).slice(2),
+                uniqueKey,
+                isNew: !isFirstLoad && !knownArticleKeys.has(uniqueKey),
                 source: feed.name,
                 lang: feed.lang,
                 titleEn,
@@ -517,20 +633,27 @@
         }
       }));
 
+      // กรองข่าวซ้ำ
       const seen = new Set();
       collected = collected.filter(item => {
-        const key = item.titleEn.slice(0, 45).toLowerCase();
-        if (seen.has(key)) return false;
-        seen.add(key);
+        if (seen.has(item.uniqueKey)) return false;
+        seen.add(item.uniqueKey);
         return true;
       });
 
       collected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+      // ตรวจจับข่าวใหม่ที่เพิ่งเข้ามาในการรีเฟรชรอบนี้
+      const newlyArrived = collected.filter(item => item.isNew);
+      collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
+
       allArticles = collected;
+      document.getElementById('newCountBadge').textContent = newlyArrived.length;
 
       updateSignalDashboard();
       renderNews();
 
+      // แปลข่าวใหม่หรือข่าวบนสุดก่อน
       if (autoTranslate) {
         for (let i = 0; i < Math.min(allArticles.length, 30); i++) {
           const art = allArticles[i];
@@ -542,9 +665,24 @@
         }
       }
 
+      // แจ้งเตือนเมื่อมีข่าวสำคัญเข้าใหม่
+      if (!isFirstLoad && newlyArrived.length > 0) {
+        const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
+        const alertTitle = highImpactNew.analysis.type === 'bullish'
+          ? '🟢 ข่าวใหม่หนุนทองขึ้น!'
+          : highImpactNew.analysis.type === 'bearish'
+            ? '🔴 ข่าวใหม่กดดันทองลง!'
+            : `📰 พบข่าวใหม่ ${newlyArrived.length} รายการ`;
+
+        showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
+        playAlertBeep(highImpactNew.analysis.type !== 'neutral');
+        document.getElementById('newAlertStatusText').textContent = `พบข่าวเข้าใหม่ ${newlyArrived.length} ข่าวเมื่อสักครู่`;
+      }
+
+      isFirstLoad = false;
       icon.classList.remove('animate-spin');
       const now = new Date();
-      document.getElementById('lastUpdateText').textContent = `อัปเดต ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} น.`;
+      document.getElementById('lastUpdateText').textContent = `อัปเดต ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
     }
 
     function updateSignalDashboard() {
@@ -587,28 +725,45 @@
 
       const signalBadge = document.getElementById('signalBadge');
       const reasoning = document.getElementById('aiReasoningText');
+      let currentSignalState = '';
 
       if (bullPct >= 62) {
+        currentSignalState = 'STRONG BUY';
         signalBadge.textContent = 'STRONG BUY (เน้นย่อซื้อ)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
         reasoning.textContent = `ปัจจัยบวกหนุนทองคำชัดเจน (${bullPct}% ต่อ ${bearPct}%) จากแรงซื้อกองทุนสถาบัน (SPDR/JPMorgan) ตัวเลขเศรษฐกิจที่หนุนการลดดอกเบี้ย หรือความเสี่ยงวิกฤตสงคราม/โรคระบาด/ก่อการร้าย แนะนำรอย่อตัวตามแนวรับเพื่อหาจังหวะ Buy`;
       } else if (bullPct >= 54) {
+        currentSignalState = 'BUY BIAS';
         signalBadge.textContent = 'BUY BIAS (โน้มเอียงขึ้น)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-300';
         reasoning.textContent = `น้ำหนักข่าวฝั่งบวก (${bullPct}%) เหนือกว่าฝั่งลบ (${bearPct}%) มีแรงหนุนจากปัจจัยมหภาคหรือความเสี่ยงภูมิรัฐศาสตร์ ทองคำมีโอกาสแกว่งตัวขึ้นทดสอบแนวต้าน`;
       } else if (bearPct >= 62) {
+        currentSignalState = 'STRONG SELL';
         signalBadge.textContent = 'STRONG SELL (เน้นเด้งขาย)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
         reasoning.textContent = `แรงกดดันขาลงรุนแรง (${bearPct}% ต่อ ${bullPct}%) จากตัวเลขเศรษฐกิจที่หนุนดอกเบี้ยสูง ดอลลาร์แข็งค่า หรือกองทุนสถาบันลดการถือครอง แนะนำรอจังหวะราคาดีดตัวไม่ผ่านแนวต้านเพื่อหาจังหวะ Sell`;
       } else if (bearPct >= 54) {
+        currentSignalState = 'SELL BIAS';
         signalBadge.textContent = 'SELL BIAS (โน้มเอียงลง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-300';
         reasoning.textContent = `แรงกดดันฝั่งขาลงมีมากกว่าเล็กน้อย (${bearPct}% ต่อ ${bullPct}%) ทองคำอาจเผชิญแรงขายเมื่อดีดตัวขึ้น แนะนำระวังการไล่ซื้อและเน้นเล่นสั้นตามกรอบแนวต้าน`;
       } else {
+        currentSignalState = 'SIDEWAYS';
         signalBadge.textContent = 'SIDEWAYS / WAIT';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-amber-400';
         reasoning.textContent = `แรงซื้อ (${bullPct}%) และแรงขาย (${bearPct}%) คานอำนาจกันอยู่ ตลาดกำลังชั่งน้ำหนักระหว่างตัวเลขเศรษฐกิจกับความเสี่ยงภูมิรัฐศาสตร์ แนะนำเทรดในกรอบแนวรับ-แนวต้าน`;
       }
+
+      // แจ้งเตือนเมื่อทิศทางสัญญาณเปลี่ยน
+      if (lastSignalState && lastSignalState !== currentSignalState) {
+        showToastAlert(
+          `⚡ สัญญาณ XAUUSD เปลี่ยนเป็น ${currentSignalState}`,
+          `สัดส่วนปัจจุบัน: ขึ้น ${bullPct}% vs ลง ${bearPct}%`,
+          bullPct > bearPct ? 'bullish' : 'bearish'
+        );
+        playAlertBeep(true);
+      }
+      lastSignalState = currentSignalState;
 
       updateRadarTile('fInstText', 'fInstTag', stats.inst);
       updateRadarTile('fMacroText', 'fMacroTag', stats.macro);
@@ -657,7 +812,7 @@
     function toggleAutoTranslate() {
       autoTranslate = !autoTranslate;
       const btn = document.getElementById('toggleTranslateBtn');
-      btn.textContent = autoTranslate ? '🌐 แปลไทย: เปิด' : '🌐 แปลไทย: ปิด';
+      btn.textContent = autoTranslate ? '🌐 แปลไทย' : '🌐 EN เดิม';
       if (autoTranslate) fetchAllFeeds();
       else renderNews();
     }
@@ -667,6 +822,7 @@
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
       const filtered = allArticles.filter(art => {
+        if (currentCategory === 'new' && !art.isNew) return false;
         if (currentCategory === 'bullish' && art.analysis.type !== 'bullish') return false;
         if (currentCategory === 'bearish' && art.analysis.type !== 'bearish') return false;
         if (['inst', 'macro', 'war', 'crisis', 'thai'].includes(currentCategory)) {
@@ -690,10 +846,13 @@
         const timeStr = art.pubDate ? new Date(art.pubDate).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : '';
 
         return `
-          <article class="bg-bbPanel border border-bbBorder hover:border-amber-500/40 rounded-xl p-4 flex flex-col justify-between transition">
+          <article class="bg-bbPanel border ${art.isNew ? 'border-amber-400/70 shadow-lg shadow-amber-500/10' : 'border-bbBorder'} hover:border-amber-500/40 rounded-xl p-4 flex flex-col justify-between transition">
             <div>
               <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">${art.analysis.topicLabel}</span>
+                <div class="flex items-center gap-1">
+                  ${art.isNew ? '<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500 text-black font-bold">NEW</span>' : ''}
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">${art.analysis.topicLabel}</span>
+                </div>
                 <span class="text-[10px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}">
                   ${art.analysis.label}
                 </span>
@@ -766,7 +925,9 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
+    // เริ่มต้นดึงข่าวและเริ่มตัวนับถอยหลังอัตโนมัติ
     fetchAllFeeds();
+    startCountdownTimer();
   </script>
 </body>
 </html>
