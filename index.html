@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD AI Signal & Gold News Terminal</title>
+  <title>XAUUSD 360° Global Macro, War, Institutional & AI Signal Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,19 +48,19 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
-            XAUUSD AI SIGNAL & NEWS TERMINAL
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">LIVE</span>
+            XAUUSD 360° GLOBAL INTELLIGENCE
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">ALL-FACTOR AI</span>
           </h1>
-          <p class="text-xs text-slate-400">วิเคราะห์แนวโน้มทองคำ & สัญญาณเทรด Forex อัตโนมัติจากข่าวทั่วโลก</p>
+          <p class="text-xs text-slate-400">SPDR • JPMorgan • ตัวเลขเศรษฐกิจ • สงคราม/การค้า • โรคระบาด • ก่อการร้าย</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
         <button id="toggleTranslateBtn" onclick="toggleAutoTranslate()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/15 text-bbGoldLight border border-amber-500/40 hover:bg-amber-500/25 transition">
-          🌐 แปลไทยอัตโนมัติ: เปิด
+          🌐 แปลไทย: เปิด
         </button>
-        <button onclick="fetchAllFeeds(true)" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition flex items-center gap-1.5">
-          <span id="refreshIcon">↻</span> รีเฟรชข่าว
+        <button onclick="fetchAllFeeds()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition flex items-center gap-1.5">
+          <span id="refreshIcon">↻</span> สแกนข่าวทั้งหมด
         </button>
       </div>
     </div>
@@ -68,17 +68,17 @@
 
   <main class="max-w-7xl w-full mx-auto px-4 py-5 flex-1 space-y-5">
 
-    <!-- AI XAUUSD Signal & Probability Dashboard -->
+    <!-- AI XAUUSD Signal & 6-Factor Matrix -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
       <!-- Left: Probability Gauge & Trade Bias -->
-      <div class="lg:col-span-7 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
+      <div class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
           <div>
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">AI NEWS SENTIMENT & PROBABILITY ENGINE</span>
+            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">MULTI-FACTOR GOLD PROBABILITY ENGINE</span>
             <h2 class="text-lg font-bold text-white">ความน่าจะเป็นทิศทางตลาดทองคำ (XAUUSD)</h2>
           </div>
           <span id="analyzedCountBadge" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-bbBorder">
-            วิเคราะห์จาก 0 ข่าวล่าสุด
+            สแกน 0 ข่าวล่าสุด
           </span>
         </div>
 
@@ -89,9 +89,9 @@
               <span class="text-xs text-emerald-400 font-semibold block">แนวโน้มขึ้น (BULLISH / BUY)</span>
               <span id="bullPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-emerald-400 tabular-nums">50%</span>
             </div>
-            <div class="text-center px-3 py-1 rounded-lg bg-slate-900 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">สัญญาณแนะนำ</span>
-              <span id="signalBadge" class="text-sm sm:text-base font-mono font-bold text-amber-400">WAITING...</span>
+            <div class="text-center px-3 py-1.5 rounded-lg bg-slate-900 border border-bbBorder">
+              <span class="text-[10px] text-slate-400 block">สัญญาณเทรดรวม</span>
+              <span id="signalBadge" class="text-xs sm:text-sm font-mono font-bold text-amber-400">ANALYZING...</span>
             </div>
             <div class="text-right">
               <span class="text-xs text-rose-400 font-semibold block">แนวโน้มลง (BEARISH / SELL)</span>
@@ -107,108 +107,146 @@
 
         <!-- AI Reasoning Summary -->
         <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed">
-          <div class="font-semibold text-bbGoldLight mb-1 flex items-center gap-1.5">
-            <span>📊 บทวิเคราะห์เหตุผลและปัจจัยขับเคลื่อนราคา:</span>
-          </div>
-          <p id="aiReasoningText">กำลังรวบรวมพาดหัวข่าวเศรษฐกิจ, ทิศทางดอกเบี้ย FED, ดัชนี DXY และกระแสเงินทุนกองทุนทองคำ...</p>
+          <div class="font-semibold text-bbGoldLight mb-1">🧠 สรุปการวิเคราะห์เชิงลึก (ทุกมิติ):</div>
+          <p id="aiReasoningText">กำลังรวบรวมข้อมูลจาก SPDR, JPMorgan, ตัวเลขเศรษฐกิจ, ข่าวสงคราม, สงครามการค้า, โรคระบาด และเหตุก่อการร้าย...</p>
+        </div>
+
+        <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
+          <span>*ให้น้ำหนักข่าวตามความรุนแรงต่อทองคำจริง</span>
+          <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
 
-      <!-- Right: Key Market Drivers & Trade Plan -->
-      <div class="lg:col-span-5 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
-        <div>
-          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">MACRO & TECHNICAL DRIVERS</span>
-          <h3 class="text-base font-bold text-white mb-3">ปัจจัยสำคัญที่ส่งผลต่อ XAUUSD</h3>
-
-          <div class="space-y-2.5 text-xs">
-            <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between">
-              <div>
-                <span class="text-slate-400 block">นโยบายดอกเบี้ย FED / FOMC</span>
-                <span id="fedFactorText" class="font-semibold text-slate-200">กำลังประเมินจากข่าว...</span>
-              </div>
-              <span id="fedFactorTag" class="px-2 py-0.5 rounded font-mono text-[11px] bg-slate-800 text-slate-300">NEUTRAL</span>
-            </div>
-
-            <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between">
-              <div>
-                <span class="text-slate-400 block">ดัชนีดอลลาร์ (DXY) & Bond Yield</span>
-                <span id="dxyFactorText" class="font-semibold text-slate-200">กำลังประเมินจากข่าว...</span>
-              </div>
-              <span id="dxyFactorTag" class="px-2 py-0.5 rounded font-mono text-[11px] bg-slate-800 text-slate-300">NEUTRAL</span>
-            </div>
-
-            <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between">
-              <div>
-                <span class="text-slate-400 block">ภูมิรัฐศาสตร์ & กองทุน ETF (BlackRock/SPDR)</span>
-                <span id="geoFactorText" class="font-semibold text-slate-200">กำลังประเมินจากข่าว...</span>
-              </div>
-              <span id="geoFactorTag" class="px-2 py-0.5 rounded font-mono text-[11px] bg-slate-800 text-slate-300">NEUTRAL</span>
-            </div>
-          </div>
+      <!-- Right: 6-Factor Breakdown Grid -->
+      <div class="lg:col-span-6 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between">
+        <div class="mb-2.5">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">6-PILLAR GOLD IMPACT RADAR</span>
+          <h3 class="text-base font-bold text-white">เรดาร์จับสัญญาณ 6 ปัจจัยหลักที่เขย่าราคาทอง</h3>
         </div>
 
-        <div class="mt-3 pt-3 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span>*คำนวณจากน้ำหนักข่าวจริง (ไม่ใช้แหล่งที่ติดบล็อก)</span>
-          <span id="lastUpdateText" class="font-mono">--:--</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+          <!-- 1. Institutions -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">🏦 SPDR / JPMorgan / กองทุน</span>
+              <span id="fInstText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fInstTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
+
+          <!-- 2. Macro & Economic Calendar -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">📅 ตัวเลขเศรษฐกิจ / FED / DXY</span>
+              <span id="fMacroText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fMacroTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
+
+          <!-- 3. War & Geopolitics -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">⚔️ สงคราม & ภูมิรัฐศาสตร์</span>
+              <span id="fWarText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fWarTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
+
+          <!-- 4. Trade War & Tariffs -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">🚢 สงครามการค้า & ภาษี Tariffs</span>
+              <span id="fTradeText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fTradeTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
+
+          <!-- 5. Pandemic & Global Health -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">🦠 โรคระบาดระดับโลก & ไวรัส</span>
+              <span id="fHealthText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fHealthTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
+
+          <!-- 6. Terrorism & Black Swan -->
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2">
+            <div>
+              <span class="text-slate-400 block text-[11px]">🚨 ก่อการร้าย & วิกฤตฉุกเฉิน</span>
+              <span id="fTerrorText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            </div>
+            <span id="fTerrorTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Filter Tabs & Search -->
-    <section class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-bbPanel border border-bbBorder p-3 rounded-xl">
+    <!-- Category Filter Tabs & Search -->
+    <section class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-bbPanel border border-bbBorder p-3 rounded-xl">
       <div class="flex flex-wrap gap-1.5" id="categoryTabs">
-        <button onclick="setCategory('all')" data-cat="all" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black">
-          ทั้งหมด (All)
+        <button onclick="setCategory('all')" data-cat="all" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black">
+          ทั้งหมด
         </button>
-        <button onclick="setCategory('bullish')" data-cat="bullish" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-emerald-400 border border-bbBorder hover:border-emerald-500/50">
-          🟢 ข่าวหนุนทองขึ้น (Bullish)
+        <button onclick="setCategory('bullish')" data-cat="bullish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-emerald-400 border border-bbBorder">
+          🟢 หนุนทองขึ้น
         </button>
-        <button onclick="setCategory('bearish')" data-cat="bearish" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-400 border border-bbBorder hover:border-rose-500/50">
-          🔴 ข่าวกดดันทองลง (Bearish)
+        <button onclick="setCategory('bearish')" data-cat="bearish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-400 border border-bbBorder">
+          🔴 กดดันทองลง
         </button>
-        <button onclick="setCategory('thai')" data-cat="thai" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder hover:border-slate-500">
-          🇹🇭 ข่าวทองคำภาษาไทย
+        <button onclick="setCategory('inst')" data-cat="inst" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          🏦 SPDR / JPMorgan
+        </button>
+        <button onclick="setCategory('macro')" data-cat="macro" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          📅 ตัวเลขเศรษฐกิจ
+        </button>
+        <button onclick="setCategory('war')" data-cat="war" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          ⚔️ สงคราม/การค้า
+        </button>
+        <button onclick="setCategory('crisis')" data-cat="crisis" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          🦠 โรคระบาด/ก่อการร้าย
+        </button>
+        <button onclick="setCategory('thai')" data-cat="thai" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          🇹🇭 ข่าวไทย
         </button>
       </div>
 
-      <div class="relative w-full sm:w-64">
-        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา เช่น FED, DXY, ทองคำ, CPI..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
+      <div class="relative w-full lg:w-60">
+        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา SPDR, JPM, CPI, War..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
 
     <!-- News Feed Grid -->
     <section id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="col-span-full text-center py-12 text-slate-400 text-sm">
-        กำลังโหลดข่าวทองคำและเศรษฐกิจจาก CNBC, Yahoo Finance, MarketWatch, FXStreet...
+        กำลังดึงข้อมูลข่าว SPDR, JPMorgan, ตัวเลขเศรษฐกิจ, สงคราม, โรคระบาด และก่อการร้าย...
       </div>
     </section>
 
   </main>
 
-  <!-- Reader Modal (In-App Full Article + Thai Translation) -->
+  <!-- Reader Modal -->
   <div id="readerModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5">
     <div class="bg-bbPanel border border-bbBorder rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl">
-      <!-- Modal Header -->
       <div class="p-4 border-b border-bbBorder flex items-start justify-between gap-3">
         <div>
-          <div class="flex items-center gap-2 mb-1">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
             <span id="modalSource" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-bbGold">SOURCE</span>
+            <span id="modalTopicTag" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">TOPIC</span>
             <span id="modalImpactBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">IMPACT</span>
           </div>
-          <h3 id="modalTitleTh" class="text-base sm:text-lg font-bold text-white leading-snug">กำลังโหลดหัวข้อข่าว...</h3>
+          <h3 id="modalTitleTh" class="text-base sm:text-lg font-bold text-white leading-snug">กำลังโหลด...</h3>
           <p id="modalTitleEn" class="text-xs text-slate-400 mt-1"></p>
         </div>
         <button onclick="closeReader()" class="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white text-sm">✕</button>
       </div>
 
-      <!-- Modal Body -->
       <div id="modalContent" class="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4 text-sm text-slate-200 leading-relaxed">
         <div class="text-center py-8 text-slate-400">กำลังดึงเนื้อหาข่าวและแปลเป็นภาษาไทย...</div>
       </div>
 
-      <!-- Modal Footer -->
       <div class="p-3.5 border-t border-bbBorder bg-bbBlack/60 rounded-b-2xl flex flex-wrap items-center justify-between gap-2">
-        <span class="text-[11px] text-slate-400">💡 หากเปิดเว็บต้นฉบับใน Safari สามารถกดปุ่มเมนูแถบล่างเลือก <b>Translate to Thai</b> ได้ทันที</span>
+        <span class="text-[11px] text-slate-400">💡 ใน Safari กดเมนูแถบล่างเลือก <b>Translate to Thai</b> เพื่อแปลทั้งหน้าได้ทันที</span>
         <a id="modalOriginalLink" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg bg-bbGold text-black font-semibold text-xs hover:bg-bbGoldLight transition">
           เปิดเว็บต้นฉบับใน Safari ↗
         </a>
@@ -217,86 +255,113 @@
   </div>
 
   <script>
-    // แหล่งข่าวที่ไม่ติดบล็อก Investing.com
+    // รวมฟีดครบทุกมิติ: สถาบัน (SPDR/JPMorgan), ตัวเลขเศรษฐกิจ (แทน Investing/ForexFactory แบบไม่ติดบล็อก), สงคราม/การค้า, โรคระบาด, ก่อการร้าย และข่าวไทย
     const RSS_FEEDS = [
-      { name: 'CNBC Economy', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258', lang: 'en' },
-      { name: 'CNBC Finance', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664', lang: 'en' },
-      { name: 'Yahoo Finance Gold', url: 'https://finance.yahoo.com/rss/headline?s=GC=F', lang: 'en' },
-      { name: 'MarketWatch Top', url: 'https://feeds.content.dowjones.io/public/rss/mw_topstories', lang: 'en' },
-      { name: 'FXStreet News', url: 'https://www.fxstreet.com/rss/news', lang: 'en' },
-      { name: 'ข่าวทองคำไทย', url: 'https://news.google.com/rss/search?q=ราคาทองคำ+OR+XAUUSD+OR+เฟด+ดอกเบี้ย&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
+      // 1. สถาบันการเงิน & กองทุนทองคำ
+      { name: 'SPDR & JPMorgan Gold', topic: 'inst', url: 'https://news.google.com/rss/search?q=(%22SPDR+Gold%22+OR+%22JPMorgan+gold%22+OR+%22BlackRock+gold%22+OR+%22central+bank+gold%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      // 2. ตัวเลขเศรษฐกิจสำคัญ & ปฏิทินข่าว (NFP, CPI, FED, Forex Factory / Investing)
+      { name: 'Economic Data & FED', topic: 'macro', url: 'https://news.google.com/rss/search?q=(%22Forex+Factory%22+OR+%22Investing.com+gold%22+OR+%22Nonfarm+Payrolls%22+OR+%22US+CPI%22+OR+%22FOMC%22+OR+%22XAUUSD%22)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      { name: 'FXStreet Gold & Macro', topic: 'macro', url: 'https://www.fxstreet.com/rss/news', lang: 'en' },
+      { name: 'CNBC Economy', topic: 'macro', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258', lang: 'en' },
+      // 3. สงคราม & สงครามการค้า
+      { name: 'War & Trade War', topic: 'war', url: 'https://news.google.com/rss/search?q=(%22trade+war%22+OR+%22tariffs%22+OR+%22Middle+East+war%22+OR+%22missile+strike%22+OR+%22sanctions%22+gold)+when:2d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      // 4. โรคระบาดระดับโลก & เหตุก่อการร้าย
+      { name: 'Pandemic & Terrorism', topic: 'crisis', url: 'https://news.google.com/rss/search?q=(%22WHO+outbreak%22+OR+%22pandemic+virus%22+OR+%22terrorist+attack%22+OR+%22global+health+emergency%22)+when:3d&hl=en-US&gl=US&ceid=US:en', lang: 'en' },
+      // 5. ข่าวภาษาไทย (ทองคำ เศรษฐกิจ สงคราม)
+      { name: 'ข่าวทองคำ & โลก (ไทย)', topic: 'thai', url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+สงครามการค้า+OR+โรคระบาด)+when:3d&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
     ];
 
     let allArticles = [];
     let currentCategory = 'all';
     let autoTranslate = true;
-    const translationCache = JSON.parse(localStorage.getItem('xau_trans_cache') || '{}');
+    const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
 
-    // คำศัพท์วิเคราะห์ผลกระทบต่อทองคำ (XAUUSD)
-    const BULLISH_KEYWORDS = [
-      'rate cut', 'cut rates', 'dovish', 'inflation cools', 'cpi falls', 'weak dollar', 'dollar falls',
-      'dollar slips', 'yields fall', 'treasury yields drop', 'geopolitical', 'war', 'conflict', 'safe haven',
-      'gold rises', 'gold gains', 'gold surges', 'gold climbs', 'central bank buying', 'pboc', 'recession',
-      'unemployment rises', 'ลดดอกเบี้ย', 'ทองพุ่ง', 'ทองขึ้น', 'ดอลลาร์อ่อน', 'สงคราม', 'ความตึงเครียด', 'เงินเฟ้อชะลอ'
-    ];
+    // คีย์เวิร์ดแยกตามหมวดหมู่และน้ำหนักผลกระทบต่อทองคำ
+    const RULES = {
+      instBull: ['spdr gold inflows', 'spdr adds', 'jpmorgan bullish gold', 'jpmorgan raises gold', 'central bank buys', 'pboc buys gold', 'gold etf inflows', 'ซื้อทองคำเพิ่ม', 'กองทุนเข้าซื้อทอง'],
+      instBear: ['spdr outflows', 'spdr sells', 'jpmorgan cuts gold', 'jpmorgan bearish gold', 'gold etf outflows', 'เทขายทองคำ', 'spdr ขาย'],
+      macroBull: ['rate cut', 'cut rates', 'dovish', 'cpi falls', 'inflation cools', 'weak dollar', 'dollar falls', 'yields fall', 'unemployment rises', 'nfp misses', 'ลดดอกเบี้ย', 'เงินเฟ้อชะลอ', 'ดอลลาร์อ่อน'],
+      macroBear: ['rate hike', 'hike rates', 'hawkish', 'higher for longer', 'hot inflation', 'cpi rises', 'ppi rises', 'strong dollar', 'dollar surges', 'yields surge', 'payrolls beat', 'nfp beats', 'ขึ้นดอกเบี้ย', 'คงดอกเบี้ย', 'ดอลลาร์แข็ง', 'เงินเฟ้อพุ่ง'],
+      warBull: ['war', 'missile', 'airstrike', 'invasion', 'escalation', 'conflict', 'trade war', 'tariffs', 'sanctions', 'geopolitical tension', 'สงคราม', 'โจมตี', 'ขีปนาวุธ', 'สงครามการค้า', 'กำแพงภาษี'],
+      warBear: ['ceasefire', 'peace deal', 'truce', 'tariff delay', 'trade deal reached', 'หยุดยิง', 'เจรจาสันติภาพ', 'บรรลุข้อตกลงการค้า'],
+      crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
+    };
 
-    const BEARISH_KEYWORDS = [
-      'rate hike', 'hike rates', 'hawkish', 'higher for longer', 'hot inflation', 'cpi rises', 'ppi rises',
-      'strong dollar', 'dollar surges', 'dollar rises', 'dollar hits', 'yields rise', 'yields surge',
-      'gold falls', 'gold drops', 'gold slides', 'gold tumbles', 'gold slips', 'strong jobs', 'payrolls beat',
-      'ขึ้นดอกเบี้ย', 'คงดอกเบี้ย', 'ทองร่วง', 'ทองลง', 'ดอลลาร์แข็ง', 'บอนด์ยีลด์พุ่ง', 'เงินเฟ้อพุ่ง'
-    ];
-
-    function analyzeGoldImpact(text) {
+    function classifyAndScore(text, defaultTopic) {
       const lower = text.toLowerCase();
       let bullScore = 0;
       let bearScore = 0;
-      let matchedReasons = [];
+      let detectedTopics = new Set([defaultTopic]);
+      let reasons = [];
 
-      BULLISH_KEYWORDS.forEach(kw => {
-        if (lower.includes(kw)) {
-          bullScore += 1.5;
-          matchedReasons.push(`+${kw}`);
-        }
-      });
+      // ตรวจจับหมวดหมู่จากเนื้อหาข่าวจริง
+      if (/spdr|jpmorgan|jp morgan|blackrock|goldman|etf|central bank|pboc|กองทุน|ธนาคารกลาง/.test(lower)) detectedTopics.add('inst');
+      if (/fed|fomc|cpi|ppi|nfp|payroll|gdp|yield|dollar|dxy|inflation|forex|ดอกเบี้ย|เงินเฟ้อ|ตัวเลขเศรษฐกิจ/.test(lower)) detectedTopics.add('macro');
+      if (/war|tariff|trade war|missile|military|sanction|ukraine|israel|iran|china|taiwan|สงคราม|ภาษี|คว่ำบาตร/.test(lower)) detectedTopics.add('war');
+      if (/virus|pandemic|outbreak|who|epidemic|terror|attack|bomb|hostage|ไวรัส|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('crisis');
 
-      BEARISH_KEYWORDS.forEach(kw => {
-        if (lower.includes(kw)) {
-          bearScore += 1.5;
-          matchedReasons.push(`-${kw}`);
-        }
-      });
+      // คำนวณคะแนนความรุนแรง
+      RULES.instBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('แรงซื้อสถาบัน/SPDR/JPM'); } });
+      RULES.instBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('แรงขายสถาบัน/SPDR/JPM'); } });
+
+      RULES.macroBull.forEach(k => { if (lower.includes(k)) { bullScore += 1.8; reasons.push('ตัวเลขเศรษฐกิจ/FED หนุนทอง'); } });
+      RULES.macroBear.forEach(k => { if (lower.includes(k)) { bearScore += 1.8; reasons.push('ตัวเลขเศรษฐกิจ/FED กดดันทอง'); } });
+
+      RULES.warBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.2; reasons.push('ความเสี่ยงสงคราม/สงครามการค้า'); } });
+      RULES.warBear.forEach(k => { if (lower.includes(k)) { bearScore += 1.8; reasons.push('สถานการณ์สงคราม/การค้าผ่อนคลาย'); } });
+
+      RULES.crisisBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.5; reasons.push('ภาวะวิกฤตโรคระบาด/ก่อการร้าย (Safe Haven)'); } });
+
+      // ตรวจจับทิศทางราคาทองโดยตรงในพาดหัว
+      if (/gold rises|gold surges|gold jumps|gold climbs|gold rallies|ทองพุ่ง|ทองขึ้น/.test(lower)) bullScore += 1.5;
+      if (/gold falls|gold drops|gold slides|gold plunges|gold slips|ทองร่วง|ทองลง/.test(lower)) bearScore += 1.5;
+
+      const uniqueReasons = [...new Set(reasons)];
+      const topicLabels = {
+        inst: '🏦 สถาบัน/SPDR/JPM',
+        macro: '📅 ตัวเลขเศรษฐกิจ/FED',
+        war: '⚔️ สงคราม/การค้า',
+        crisis: '🚨 โรคระบาด/ก่อการร้าย',
+        thai: '🇹🇭 ข่าวไทย'
+      };
+      const primaryTopic = [...detectedTopics].find(t => t !== 'thai') || defaultTopic;
 
       if (bullScore > bearScore) {
         return {
           type: 'bullish',
+          topics: [...detectedTopics],
+          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
           label: '🟢 หนุนทองขึ้น (Bullish)',
           badgeClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
           score: bullScore - bearScore,
-          reason: 'ปัจจัยหนุนราคาทองคำ / กดดันดอลลาร์'
+          reason: uniqueReasons.length ? uniqueReasons.join(' + ') : 'กระตุ้นแรงซื้อสินทรัพย์ปลอดภัย / กดดันดอลลาร์'
         };
       } else if (bearScore > bullScore) {
         return {
           type: 'bearish',
+          topics: [...detectedTopics],
+          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
           label: '🔴 กดดันทองลง (Bearish)',
           badgeClass: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
           score: -(bearScore - bullScore),
-          reason: 'ปัจจัยกดดันทองคำ / ดอลลาร์หรือยีลด์แข็งค่า'
+          reason: uniqueReasons.length ? uniqueReasons.join(' + ') : 'หนุนดอลลาร์แข็งค่า / ลดความต้องการสินทรัพย์ปลอดภัย'
         };
       } else {
         return {
           type: 'neutral',
-          label: '🟡 จับตาดู (Macro Watch)',
+          topics: [...detectedTopics],
+          topicLabel: topicLabels[primaryTopic] || '📊 ข่าวตลาดทอง',
+          label: '🟡 จับตาดู (Neutral)',
           badgeClass: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
           score: 0,
-          reason: 'ข่าวเศรษฐกิจทั่วไป รอความชัดเจนทิศทาง'
+          reason: 'ข้อมูลยังสมดุล รอความชัดเจนของตัวเลขหรือสถานการณ์'
         };
       }
     }
 
     async function translateToThai(text) {
       if (!text || !autoTranslate) return text;
-      if (/[ก-๙]/.test(text)) return text; // เป็นภาษาไทยอยู่แล้ว
+      if (/[ก-๙]/.test(text)) return text;
       if (translationCache[text]) return translationCache[text];
 
       try {
@@ -305,7 +370,7 @@
         const data = await res.json();
         const translated = data[0].map(item => item[0]).join('');
         translationCache[text] = translated;
-        localStorage.setItem('xau_trans_cache', JSON.stringify(translationCache));
+        localStorage.setItem('xau_360_cache', JSON.stringify(translationCache));
         return translated;
       } catch (e) {
         return text;
@@ -318,7 +383,7 @@
       return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
     }
 
-    async function fetchAllFeeds(force = false) {
+    async function fetchAllFeeds() {
       const icon = document.getElementById('refreshIcon');
       icon.classList.add('animate-spin', 'inline-block');
 
@@ -331,13 +396,10 @@
           const data = await res.json();
 
           if (data.status === 'ok' && Array.isArray(data.items)) {
-            data.items.slice(0, 8).forEach(item => {
-              // ข้ามลิงก์ที่มาจาก investing.com เพื่อป้องกันการติดบล็อก
-              if ((item.link || '').includes('investing.com')) return;
-
+            data.items.slice(0, 7).forEach(item => {
               const titleEn = cleanHtml(item.title);
-              const descEn = cleanHtml(item.description).slice(0, 220);
-              const impact = analyzeGoldImpact(`${titleEn} ${descEn}`);
+              const descEn = cleanHtml(item.description).slice(0, 240);
+              const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
 
               collected.push({
                 id: Math.random().toString(36).slice(2),
@@ -349,7 +411,7 @@
                 descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
                 link: item.link,
                 pubDate: item.pubDate,
-                impact
+                analysis
               });
             });
           }
@@ -358,16 +420,23 @@
         }
       }));
 
-      // เรียงตามเวลาล่าสุด
+      // ลบข่าวซ้ำตามพาดหัว
+      const seen = new Set();
+      collected = collected.filter(item => {
+        const key = item.titleEn.slice(0, 45).toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
       collected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
       allArticles = collected;
 
       updateSignalDashboard();
       renderNews();
 
-      // แปลหัวข้อข่าวภาษาอังกฤษเป็นไทยเบื้องหลัง
       if (autoTranslate) {
-        for (let i = 0; i < Math.min(allArticles.length, 24); i++) {
+        for (let i = 0; i < Math.min(allArticles.length, 30); i++) {
           const art = allArticles[i];
           if (art.lang === 'en' && art.titleTh === art.titleEn) {
             art.titleTh = await translateToThai(art.titleEn);
@@ -379,40 +448,42 @@
 
       icon.classList.remove('animate-spin');
       const now = new Date();
-      document.getElementById('lastUpdateText').textContent = `อัปเดตล่าสุด ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} น.`;
+      document.getElementById('lastUpdateText').textContent = `อัปเดต ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')} น.`;
     }
 
     function updateSignalDashboard() {
-      let totalBull = 1; // ค่าเริ่มต้นฐานสมดุล
+      let totalBull = 1;
       let totalBear = 1;
-      let fedMentions = 0, fedScore = 0;
-      let dxyMentions = 0, dxyScore = 0;
-      let geoMentions = 0, geoScore = 0;
+
+      const stats = {
+        inst: { count: 0, score: 0 },
+        macro: { count: 0, score: 0 },
+        war: { count: 0, score: 0 },
+        trade: { count: 0, score: 0 },
+        health: { count: 0, score: 0 },
+        terror: { count: 0, score: 0 }
+      };
 
       allArticles.forEach(art => {
         const text = `${art.titleEn} ${art.descEn}`.toLowerCase();
-        if (art.impact.type === 'bullish') totalBull += Math.abs(art.impact.score) || 1;
-        if (art.impact.type === 'bearish') totalBear += Math.abs(art.impact.score) || 1;
+        const sc = art.analysis.score;
 
-        if (text.includes('fed') || text.includes('rate') || text.includes('fomc') || text.includes('ดอกเบี้ย')) {
-          fedMentions++;
-          fedScore += art.impact.score;
-        }
-        if (text.includes('dollar') || text.includes('dxy') || text.includes('yield') || text.includes('ดอลลาร์')) {
-          dxyMentions++;
-          dxyScore += art.impact.score;
-        }
-        if (text.includes('war') || text.includes('gold') || text.includes('china') || text.includes('etf') || text.includes('ทอง')) {
-          geoMentions++;
-          geoScore += art.impact.score;
-        }
+        if (art.analysis.type === 'bullish') totalBull += Math.abs(sc) || 1;
+        if (art.analysis.type === 'bearish') totalBear += Math.abs(sc) || 1;
+
+        if (art.analysis.topics.includes('inst')) { stats.inst.count++; stats.inst.score += sc; }
+        if (art.analysis.topics.includes('macro')) { stats.macro.count++; stats.macro.score += sc; }
+        if (/war|missile|airstrike|invasion|military|ukraine|israel|iran|สงคราม|ขีปนาวุธ/.test(text)) { stats.war.count++; stats.war.score += sc; }
+        if (/trade war|tariff|sanction|สงครามการค้า|กำแพงภาษี/.test(text)) { stats.trade.count++; stats.trade.score += sc; }
+        if (/virus|pandemic|outbreak|who|epidemic|ไวรัส|โรคระบาด/.test(text)) { stats.health.count++; stats.health.score += sc; }
+        if (/terror|attack|bomb|hostage|ก่อการร้าย/.test(text)) { stats.terror.count++; stats.terror.score += sc; }
       });
 
       const sum = totalBull + totalBear;
       const bullPct = Math.round((totalBull / sum) * 100);
       const bearPct = 100 - bullPct;
 
-      document.getElementById('analyzedCountBadge').textContent = `วิเคราะห์จาก ${allArticles.length} ข่าวล่าสุด`;
+      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวล่าสุด`;
       document.getElementById('bullPercentText').textContent = `${bullPct}%`;
       document.getElementById('bearPercentText').textContent = `${bearPct}%`;
       document.getElementById('bullBar').style.width = `${bullPct}%`;
@@ -423,53 +494,55 @@
 
       if (bullPct >= 62) {
         signalBadge.textContent = 'STRONG BUY (เน้นย่อซื้อ)';
-        signalBadge.className = 'text-sm sm:text-base font-mono font-bold text-emerald-400';
-        reasoning.textContent = `กระแสข่าวส่วนใหญ่ (${bullPct}%) เป็นบวกต่อทองคำ จากความคาดหวังการผ่อนคลายนโยบายการเงิน ดอลลาร์อ่อนค่า หรือแรงซื้อสินทรัพย์ปลอดภัย แนะนำรอย่อตัวตามแนวรับเพื่อหาจังหวะ Buy`;
+        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
+        reasoning.textContent = `ปัจจัยบวกหนุนทองคำชัดเจน (${bullPct}% ต่อ ${bearPct}%) จากแรงซื้อกองทุนสถาบัน (SPDR/JPMorgan) ตัวเลขเศรษฐกิจที่หนุนการลดดอกเบี้ย หรือความเสี่ยงวิกฤตสงคราม/โรคระบาด/ก่อการร้าย แนะนำรอย่อตัวตามแนวรับเพื่อหาจังหวะ Buy`;
       } else if (bullPct >= 54) {
         signalBadge.textContent = 'BUY BIAS (โน้มเอียงขึ้น)';
-        signalBadge.className = 'text-sm sm:text-base font-mono font-bold text-emerald-300';
-        reasoning.textContent = `ข่าวหนุนทองคำมีน้ำหนักมากกว่าเล็กน้อย (${bullPct}% ต่อ ${bearPct}%) ตลาดมีโอกาสแกว่งตัวขึ้นทดสอบแนวต้าน ควรรอจังหวะย่อตัวไม่หลุดแนวรับสำคัญ`;
+        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-300';
+        reasoning.textContent = `น้ำหนักข่าวฝั่งบวก (${bullPct}%) เหนือกว่าฝั่งลบ (${bearPct}%) มีแรงหนุนจากปัจจัยมหภาคหรือความเสี่ยงภูมิรัฐศาสตร์ ทองคำมีโอกาสแกว่งตัวขึ้นทดสอบแนวต้าน`;
       } else if (bearPct >= 62) {
         signalBadge.textContent = 'STRONG SELL (เน้นเด้งขาย)';
-        signalBadge.className = 'text-sm sm:text-base font-mono font-bold text-rose-400';
-        reasoning.textContent = `กระแสข่าวส่วนใหญ่ (${bearPct}%) กดดันราคาทองคำ จากแนวโน้มดอกเบี้ยสูง ดอลลาร์แข็งค่า หรือบอนด์ยีลด์ปรับตัวขึ้น แนะนำรอจังหวะราคาดีดตัวไม่ผ่านแนวต้านเพื่อหาจังหวะ Sell`;
+        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
+        reasoning.textContent = `แรงกดดันขาลงรุนแรง (${bearPct}% ต่อ ${bullPct}%) จากตัวเลขเศรษฐกิจที่หนุนดอกเบี้ยสูง ดอลลาร์แข็งค่า หรือกองทุนสถาบันลดการถือครอง แนะนำรอจังหวะราคาดีดตัวไม่ผ่านแนวต้านเพื่อหาจังหวะ Sell`;
       } else if (bearPct >= 54) {
         signalBadge.textContent = 'SELL BIAS (โน้มเอียงลง)';
-        signalBadge.className = 'text-sm sm:text-base font-mono font-bold text-rose-300';
-        reasoning.textContent = `แรงกดดันฝั่งขาลงมีมากกว่าเล็กน้อย (${bearPct}% ต่อ ${bullPct}%) ทองคำอาจเผชิญแรงขายเมื่อดีดตัวขึ้น ควรระวังการไล่ซื้อและเน้นเล่นสั้นตามกรอบแนวต้าน`;
+        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-300';
+        reasoning.textContent = `แรงกดดันฝั่งขาลงมีมากกว่าเล็กน้อย (${bearPct}% ต่อ ${bullPct}%) ทองคำอาจเผชิญแรงขายเมื่อดีดตัวขึ้น แนะนำระวังการไล่ซื้อและเน้นเล่นสั้นตามกรอบแนวต้าน`;
       } else {
         signalBadge.textContent = 'SIDEWAYS / WAIT';
-        signalBadge.className = 'text-sm sm:text-base font-mono font-bold text-amber-400';
-        reasoning.textContent = `น้ำหนักข่าวฝั่งบวก (${bullPct}%) และฝั่งลบ (${bearPct}%) ใกล้เคียงกัน ตลาดกำลังรอปัจจัยชี้นำใหม่ แนะนำเทรดในกรอบแนวรับ-แนวต้าน หรือรอข่าวตัวเลขเศรษฐกิจสำคัญออกก่อน`;
+        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-amber-400';
+        reasoning.textContent = `แรงซื้อ (${bullPct}%) และแรงขาย (${bearPct}%) คานอำนาจกันอยู่ ตลาดกำลังชั่งน้ำหนักระหว่างตัวเลขเศรษฐกิจกับความเสี่ยงภูมิรัฐศาสตร์ แนะนำเทรดในกรอบแนวรับ-แนวต้าน`;
       }
 
-      // อัปเดตการ์ดย่อย 3 ปัจจัย
-      updateDriverCard('fedFactorText', 'fedFactorTag', fedMentions, fedScore, 'พบข่าวดอกเบี้ย/FED');
-      updateDriverCard('dxyFactorText', 'dxyFactorTag', dxyMentions, dxyScore, 'พบข่าวดอลลาร์/ยีลด์');
-      updateDriverCard('geoFactorText', 'geoFactorTag', geoMentions, geoScore, 'พบข่าวทองคำ/กองทุน');
+      updateRadarTile('fInstText', 'fInstTag', stats.inst);
+      updateRadarTile('fMacroText', 'fMacroTag', stats.macro);
+      updateRadarTile('fWarText', 'fWarTag', stats.war);
+      updateRadarTile('fTradeText', 'fTradeTag', stats.trade);
+      updateRadarTile('fHealthText', 'fHealthTag', stats.health);
+      updateRadarTile('fTerrorText', 'fTerrorTag', stats.terror);
     }
 
-    function updateDriverCard(textId, tagId, count, score, labelPrefix) {
+    function updateRadarTile(textId, tagId, stat) {
       const textEl = document.getElementById(textId);
       const tagEl = document.getElementById(tagId);
-      if (count === 0) {
-        textEl.textContent = 'ยังไม่มีข่าวใหม่ที่มีนัยสำคัญ';
-        tagEl.textContent = 'NEUTRAL';
-        tagEl.className = 'px-2 py-0.5 rounded font-mono text-[11px] bg-slate-800 text-slate-400';
+      if (stat.count === 0) {
+        textEl.textContent = 'ปกติ (ไม่มีเหตุรุนแรง)';
+        tagEl.textContent = 'CALM';
+        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0';
         return;
       }
-      if (score > 0.5) {
-        textEl.textContent = `${labelPrefix} ${count} ข่าว (หนุนทอง)`;
-        tagEl.textContent = 'BULLISH AU';
-        tagEl.className = 'px-2 py-0.5 rounded font-mono text-[11px] bg-emerald-500/20 text-emerald-400';
-      } else if (score < -0.5) {
-        textEl.textContent = `${labelPrefix} ${count} ข่าว (กดดันทอง)`;
-        tagEl.textContent = 'BEARISH AU';
-        tagEl.className = 'px-2 py-0.5 rounded font-mono text-[11px] bg-rose-500/20 text-rose-400';
+      if (stat.score > 0.5) {
+        textEl.textContent = `พบ ${stat.count} ข่าว (หนุนทอง)`;
+        tagEl.textContent = 'BULL +';
+        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-emerald-500/20 text-emerald-400 shrink-0';
+      } else if (stat.score < -0.5) {
+        textEl.textContent = `พบ ${stat.count} ข่าว (กดดันทอง)`;
+        tagEl.textContent = 'BEAR -';
+        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-rose-500/20 text-rose-400 shrink-0';
       } else {
-        textEl.textContent = `${labelPrefix} ${count} ข่าว (ทรงตัว)`;
-        tagEl.textContent = 'MIXED';
-        tagEl.className = 'px-2 py-0.5 rounded font-mono text-[11px] bg-amber-500/20 text-amber-400';
+        textEl.textContent = `พบ ${stat.count} ข่าว (จับตา)`;
+        tagEl.textContent = 'WATCH';
+        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-amber-500/20 text-amber-400 shrink-0';
       }
     }
 
@@ -477,9 +550,9 @@
       currentCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         if (btn.dataset.cat === cat) {
-          btn.className = 'cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black';
+          btn.className = 'cat-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black';
         } else {
-          btn.className = 'cat-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder hover:border-slate-500';
+          btn.className = 'cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder';
         }
       });
       renderNews();
@@ -488,7 +561,7 @@
     function toggleAutoTranslate() {
       autoTranslate = !autoTranslate;
       const btn = document.getElementById('toggleTranslateBtn');
-      btn.textContent = autoTranslate ? '🌐 แปลไทยอัตโนมัติ: เปิด' : '🌐 แปลไทยอัตโนมัติ: ปิด';
+      btn.textContent = autoTranslate ? '🌐 แปลไทย: เปิด' : '🌐 แปลไทย: ปิด';
       if (autoTranslate) fetchAllFeeds();
       else renderNews();
     }
@@ -498,9 +571,11 @@
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
       const filtered = allArticles.filter(art => {
-        if (currentCategory === 'bullish' && art.impact.type !== 'bullish') return false;
-        if (currentCategory === 'bearish' && art.impact.type !== 'bearish') return false;
-        if (currentCategory === 'thai' && art.lang !== 'th') return false;
+        if (currentCategory === 'bullish' && art.analysis.type !== 'bullish') return false;
+        if (currentCategory === 'bearish' && art.analysis.type !== 'bearish') return false;
+        if (['inst', 'macro', 'war', 'crisis', 'thai'].includes(currentCategory)) {
+          if (!art.analysis.topics.includes(currentCategory)) return false;
+        }
         if (query) {
           const hay = `${art.titleTh} ${art.titleEn} ${art.descTh} ${art.source}`.toLowerCase();
           if (!hay.includes(query)) return false;
@@ -509,7 +584,7 @@
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400 text-sm">ไม่พบข่าวในหมวดหมู่หรือคำค้นหานี้</div>`;
+        grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400 text-sm">ไม่พบข่าวในหมวดหมู่นี้</div>`;
         return;
       }
 
@@ -521,12 +596,14 @@
         return `
           <article class="bg-bbPanel border border-bbBorder hover:border-amber-500/40 rounded-xl p-4 flex flex-col justify-between transition">
             <div>
-              <div class="flex items-center justify-between gap-2 mb-2.5">
-                <span class="text-[11px] font-mono text-slate-400">${art.source} • ${timeStr}</span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded border ${art.impact.badgeClass}">
-                  ${art.impact.label}
+              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">${art.analysis.topicLabel}</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}">
+                  ${art.analysis.label}
                 </span>
               </div>
+
+              <div class="text-[11px] font-mono text-slate-500 mb-1.5">${art.source} • ${timeStr}</div>
 
               <h3 class="text-sm sm:text-base font-bold text-white leading-snug mb-1.5">
                 ${displayTitle}
@@ -535,13 +612,13 @@
               ${autoTranslate && art.lang === 'en' ? `<p class="text-[11px] text-slate-500 mb-2 line-clamp-1">${art.titleEn}</p>` : ''}
 
               <p class="text-xs text-slate-300 leading-relaxed line-clamp-3 mb-3">
-                ${displayDesc || 'กดปุ่มด้านล่างเพื่ออ่านสรุปเนื้อหาและเปิดข่าวฉบับเต็ม'}
+                ${displayDesc || 'กดปุ่มด้านล่างเพื่ออ่านสรุปวิเคราะห์ผลกระทบต่อทองคำ'}
               </p>
             </div>
 
             <div class="pt-3 border-t border-bbBorder/70 flex items-center justify-between gap-2">
               <button onclick="openReader('${art.id}')" class="flex-1 py-1.5 px-3 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-bbGoldLight border border-amber-500/30 text-xs font-semibold transition">
-                📖 อ่านสรุป & แปลไทย
+                📖 วิเคราะห์ & แปลไทย
               </button>
               <a href="${art.link}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition">
                 ต้นฉบับ ↗
@@ -556,72 +633,35 @@
       const art = allArticles.find(a => a.id === id);
       if (!art) return;
 
-      const modal = document.getElementById('readerModal');
-      modal.classList.remove('hidden');
-
+      document.getElementById('readerModal').classList.remove('hidden');
       document.getElementById('modalSource').textContent = art.source;
+      document.getElementById('modalTopicTag').textContent = art.analysis.topicLabel;
+
       const impactBadge = document.getElementById('modalImpactBadge');
-      impactBadge.textContent = art.impact.label;
-      impactBadge.className = `text-[11px] font-mono px-2 py-0.5 rounded border ${art.impact.badgeClass}`;
+      impactBadge.textContent = art.analysis.label;
+      impactBadge.className = `text-[11px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}`;
 
       document.getElementById('modalTitleTh').textContent = art.titleTh;
       document.getElementById('modalTitleEn').textContent = art.lang === 'en' ? art.titleEn : '';
       document.getElementById('modalOriginalLink').href = art.link;
 
       const contentEl = document.getElementById('modalContent');
-      contentEl.innerHTML = `<div class="text-center py-8 text-slate-400">กำลังดึงเนื้อหาบทความและแปลเป็นภาษาไทย...</div>`;
-
-      // พยายามดึงเนื้อหาผ่าน AllOrigins Proxy เพื่อเลี่ยงการโดนบล็อกเหมือน Jina
-      try {
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(art.link)}`;
-        const res = await fetch(proxyUrl);
-        const data = await res.json();
-
-        if (data && data.contents) {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(data.contents, 'text/html');
-          const paragraphs = Array.from(doc.querySelectorAll('article p, main p, p'))
-            .map(p => p.textContent.trim())
-            .filter(t => t.length > 60 && !t.includes('Cookie') && !t.includes('Subscribe'))
-            .slice(0, 6);
-
-          if (paragraphs.length > 0) {
-            const translatedParas = await Promise.all(paragraphs.map(p => translateToThai(p)));
-            contentEl.innerHTML = `
-              <div class="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-bbGoldLight">
-                <b>ผลกระทบต่อ XAUUSD:</b> ${art.impact.reason}
-              </div>
-              <div class="space-y-3">
-                ${translatedParas.map((th, idx) => `
-                  <div class="p-3 rounded-lg bg-bbCard border border-bbBorder">
-                    <p class="text-slate-100 text-sm leading-relaxed mb-1.5">${th}</p>
-                    ${art.lang === 'en' ? `<p class="text-slate-500 text-xs">${paragraphs[idx]}</p>` : ''}
-                  </div>
-                `).join('')}
-              </div>
-            `;
-            return;
-          }
-        }
-      } catch (e) {
-        console.warn('Reader proxy fallback:', e);
-      }
-
-      // Fallback แสดงคำอธิบายข่าวที่แปลแล้ว + แนะนำวิธีแปลใน Safari
       const fullDescTh = await translateToThai(art.descEn || art.titleEn);
+
       contentEl.innerHTML = `
-        <div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-bbGoldLight">
-          <b>ผลกระทบต่อ XAUUSD:</b> ${art.impact.reason}
+        <div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-bbGoldLight space-y-1">
+          <div><b>หมวดปัจจัยกระทบทองคำ:</b> ${art.analysis.topicLabel}</div>
+          <div><b>เหตุผลเชิงวิเคราะห์:</b> ${art.analysis.reason}</div>
         </div>
         <div class="p-4 rounded-xl bg-bbCard border border-bbBorder space-y-2">
-          <h4 class="font-bold text-white text-sm">สรุปเนื้อหาข่าว (แปลไทย):</h4>
+          <h4 class="font-bold text-white text-sm">เนื้อหาสรุปข่าว (แปลไทย):</h4>
           <p class="text-slate-200 leading-relaxed">${fullDescTh}</p>
           ${art.lang === 'en' ? `<p class="text-slate-400 text-xs pt-2 border-t border-bbBorder">${art.descEn}</p>` : ''}
         </div>
-        <div class="p-3.5 rounded-xl bg-slate-900 border border-bbBorder text-xs text-slate-300 space-y-1.5">
-          <p class="font-semibold text-white">วิธีอ่านฉบับเต็มแบบแปลไทยทั้งหน้าบน iPhone:</p>
-          <p>1. กดปุ่มสีทอง <b>"เปิดเว็บต้นฉบับใน Safari ↗"</b> ด้านล่างขวา</p>
-          <p>2. เมื่อหน้าเว็บเปิดขึ้น ให้กดไอคอนเมนู (<b>aA</b> หรือจุดสามจุด) ที่แถบด้านล่างของ Safari แล้วเลือก <b>Translate to Thai (แปลเป็นภาษาไทย)</b></p>
+        <div class="p-3.5 rounded-xl bg-slate-900 border border-bbBorder text-xs text-slate-300 space-y-1">
+          <p class="font-semibold text-white">วิธีเปิดอ่านฉบับเต็มแบบแปลไทยทั้งหน้าบน iPhone:</p>
+          <p>1. กดปุ่ม <b>"เปิดเว็บต้นฉบับใน Safari ↗"</b> ด้านล่างขวา</p>
+          <p>2. แตะไอคอนเมนู (<b>aA</b> หรือจุดสามจุด) ที่แถบด้านล่างของ Safari แล้วเลือก <b>Translate to Thai (แปลเป็นภาษาไทย)</b></p>
         </div>
       `;
     }
@@ -630,7 +670,6 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
-    // เริ่มทำงานทันทีเมื่อเปิดหน้าเว็บ
     fetchAllFeeds();
   </script>
 </body>
