@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° M5-Synced News & 3-Order Lot Planner</title>
+  <title>XAUUSD 360° M5-Synced News & SL-Price Lot Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -301,18 +301,18 @@
       </div>
     </section>
 
-    <!-- Capital & 3-Order Lot Calculator + Entry / SL / TP Planner -->
+    <!-- Capital & SL-Price Driven 3-Order Lot Calculator -->
     <section class="bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 space-y-4">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-bbBorder pb-3">
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">CAPITAL & 3-ORDER LOT CALCULATOR + ENTRY / SL / TP</span>
+            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">CAPITAL & SL-PRICE LOT CALCULATOR (MAX 3 ORDERS)</span>
             <span id="livePriceSourceBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-bbBorder">
               กำลังดึงราคาตลาด XAUUSD...
             </span>
           </div>
-          <h3 class="text-base font-bold text-white mt-0.5">คำนวณ Lot แบ่งไม้ (สูงสุด 3 ไม้) + แสดงกำไร TP / ขาดทุน SL</h3>
-          <p class="text-[11px] text-slate-400">กรอก <b>เงินทุน ($)</b> และ <b>ระยะ SL (จุด)</b> ระบบจะคำนวณ Lot ต่อไม้ (ไม่เกิน 3 ไม้) พร้อมยอดเงินได้/เสียจริงของแต่ละไม้</p>
+          <h3 class="text-base font-bold text-white mt-0.5">คำนวณระยะ SL อัตโนมัติจากราคา SL จริง + แบ่ง Lot สูงสุด 3 ไม้</h3>
+          <p class="text-[11px] text-slate-400">ใส่ <b>เงินทุน ($)</b>, <b>ราคาเข้า ($)</b> และ <b>ราคา SL ($)</b> ระบบจะคำนวณระยะจุด SL, ขนาด Lot ต่อไม้ และยอดกำไร TP / ขาดทุน SL ให้ทันที</p>
         </div>
 
         <div id="favoredSideBadge" class="px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30 self-start lg:self-center">
@@ -320,76 +320,81 @@
         </div>
       </div>
 
-      <!-- User Inputs Bar (Capital, SL Points, Max Orders, Reference Price) -->
+      <!-- 5 Input/Auto-Distance Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 text-xs">
         <div class="bg-bbBlack border border-amber-500/40 rounded-lg px-3 py-2">
           <label for="capitalInput" class="text-[10px] text-bbGoldLight font-semibold block">💰 เงินทุน (Capital $)</label>
           <input id="capitalInput" type="number" step="1" min="1" value="100" oninput="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
         </div>
 
-        <div class="bg-bbBlack border border-rose-500/40 rounded-lg px-3 py-2">
-          <label for="slPointsInput" class="text-[10px] text-rose-400 font-semibold block">📏 ระยะ SL (จุด / Points)</label>
-          <input id="slPointsInput" type="number" step="50" min="50" value="1000" oninput="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-rose-400 focus:outline-none tabular-nums mt-0.5" />
-        </div>
-
-        <div class="bg-bbBlack border border-bbBorder rounded-lg px-3 py-2">
-          <label for="orderCountSelect" class="text-[10px] text-slate-400 font-semibold block">🔢 แบ่งออกสูงสุด (ไม่เกิน 3 ไม้)</label>
-          <select id="orderCountSelect" onchange="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-sky-400 focus:outline-none cursor-pointer mt-0.5">
-            <option value="3" selected class="bg-bbPanel">3 ไม้ (หาร 3)</option>
-            <option value="2" class="bg-bbPanel">2 ไม้ (หาร 2)</option>
-            <option value="1" class="bg-bbPanel">1 ไม้ (เต็มไม้)</option>
-          </select>
-        </div>
-
-        <div class="bg-bbBlack border border-bbBorder rounded-lg px-3 py-2">
+        <div class="bg-bbBlack border border-sky-500/40 rounded-lg px-3 py-2">
           <div class="flex items-center justify-between">
-            <label for="refPriceInput" class="text-[10px] text-slate-400 font-semibold">📊 ราคาเข้าอ้างอิง ($)</label>
+            <label for="refPriceInput" class="text-[10px] text-sky-300 font-semibold">📊 ราคาเข้า (Entry $)</label>
             <button onclick="fetchLiveGoldPrice(true)" class="text-[10px] font-mono text-bbGoldLight hover:underline" title="ดึงราคาตลาดล่าสุด">↻ สด</button>
           </div>
-          <input id="refPriceInput" type="number" step="0.01" placeholder="พิมพ์ราคา..." oninput="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
+          <input id="refPriceInput" type="number" step="0.01" placeholder="พิมพ์ราคา..." oninput="onEntryPriceChanged()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
+        </div>
+
+        <div class="bg-bbBlack border border-rose-500/50 rounded-lg px-3 py-2">
+          <div class="flex items-center justify-between">
+            <label for="slPriceInput" class="text-[10px] text-rose-400 font-semibold">🛑 ราคา SL (SL Price $)</label>
+            <span id="detectedSideTag" class="text-[10px] font-mono text-slate-400">--</span>
+          </div>
+          <input id="slPriceInput" type="number" step="0.01" placeholder="พิมพ์ราคา SL..." oninput="onSlPriceChanged()" class="w-full bg-transparent font-mono font-bold text-base text-rose-400 focus:outline-none tabular-nums mt-0.5" />
+        </div>
+
+        <div class="bg-bbBlack border border-bbBorder rounded-lg px-3 py-2 flex flex-col justify-between">
+          <span class="text-[10px] text-slate-400 font-semibold block">📏 ระยะ SL ที่คำนวณได้</span>
+          <div class="font-mono font-bold text-base text-amber-300 tabular-nums mt-0.5">
+            <span id="calcSlPointsText">1100</span> <span class="text-xs font-normal text-slate-400">จุด</span>
+          </div>
         </div>
 
         <div class="col-span-2 sm:col-span-1 bg-bbBlack border border-bbBorder rounded-lg px-3 py-2">
-          <label for="brokerOffsetInput" class="text-[10px] text-slate-400 font-semibold block">⚖️ Offset โบรก ($)</label>
-          <input id="brokerOffsetInput" type="number" step="0.1" value="0.0" oninput="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-slate-300 focus:outline-none tabular-nums mt-0.5" title="บวกลบส่วนต่างราคาโบรกเกอร์ของคุณ" />
+          <label for="orderCountSelect" class="text-[10px] text-slate-400 font-semibold block">🔢 แบ่งออก (ไม่เกิน 3 ไม้)</label>
+          <select id="orderCountSelect" onchange="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-sky-400 focus:outline-none cursor-pointer mt-0.5">
+            <option value="3" selected class="bg-bbPanel">3 ไม้ (หาร 3)</option>
+            <option value="2" class="bg-bbPanel">2 ไม้ (หาร 2)</option>
+            <option value="1" class="bg-bbPanel">1 ไม้ (หาร 1)</option>
+          </select>
         </div>
       </div>
 
       <!-- Lot Sizing & Profit/Loss Output Summary Box -->
       <div class="p-3.5 rounded-xl bg-bbCard border border-amber-500/30 space-y-2.5">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-xs font-bold text-bbGoldLight">🧮 ผลคำนวณขนาด Lot และกำไร / ขาดทุน (XAUUSD: 1,000 จุด = $10.00)</span>
-          <span id="lotFormulaHint" class="text-[11px] font-mono text-slate-400">สูตร: (ทุน ÷ 100) ÷ จำนวนไม้</span>
+          <span class="text-xs font-bold text-bbGoldLight">🧮 ผลคำนวณ Lot ตามสูตรของคุณ: <span id="formulaStepText" class="font-mono text-slate-300 font-normal">ทุน 100 ÷ 1100 จุด = 0.09 Lot ÷ 3 = 0.03</span></span>
+          <span id="activeDirectionBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">อ้างอิงราคา SL ที่กรอก</span>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 font-mono text-xs">
           <div class="p-2.5 rounded-lg bg-bbBlack border border-amber-500/40">
             <span class="text-[10px] text-slate-400 block">Lot ต่อ 1 ไม้ (<span id="orderCountLabel">3 ไม้</span>)</span>
             <span id="lotPerOrderText" class="text-lg font-bold text-bbGoldLight tabular-nums">0.03 Lot</span>
-            <span id="totalLotSubText" class="text-[10px] text-slate-400 block">รวมทั้งหมด: 0.09 Lot</span>
+            <span id="rawLotDetailText" class="text-[10px] text-slate-400 block">ค่าหารจริง: 0.030 (รวม 0.09)</span>
           </div>
 
           <div class="p-2.5 rounded-lg bg-bbBlack border border-rose-500/40">
             <span class="text-[10px] text-rose-300/80 block">❌ ถ้าโดน SL (เสียรวม)</span>
-            <span id="slLossTotalText" class="text-lg font-bold text-rose-400 tabular-nums">-$90.00</span>
-            <span id="slLossPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: -$30.00</span>
+            <span id="slLossTotalText" class="text-lg font-bold text-rose-400 tabular-nums">-$99.00</span>
+            <span id="slLossPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: -$33.00</span>
           </div>
 
           <div class="p-2.5 rounded-lg bg-bbBlack border border-emerald-500/30">
             <span class="text-[10px] text-emerald-300/80 block">✅ ถ้าชน TP1 (RR 1:1.5)</span>
-            <span id="tp1ProfitTotalText" class="text-lg font-bold text-emerald-300 tabular-nums">+$135.00</span>
-            <span id="tp1ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$45.00</span>
+            <span id="tp1ProfitTotalText" class="text-lg font-bold text-emerald-300 tabular-nums">+$148.50</span>
+            <span id="tp1ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$49.50</span>
           </div>
 
           <div class="p-2.5 rounded-lg bg-bbBlack border border-emerald-500/40">
             <span class="text-[10px] text-emerald-300/80 block">🚀 ถ้าชน TP2 (RR 1:2.5)</span>
-            <span id="tp2ProfitTotalText" class="text-lg font-bold text-emerald-400 tabular-nums">+$225.00</span>
-            <span id="tp2ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$75.00</span>
+            <span id="tp2ProfitTotalText" class="text-lg font-bold text-emerald-400 tabular-nums">+$247.50</span>
+            <span id="tp2ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$82.50</span>
           </div>
 
           <div class="col-span-2 sm:col-span-1 p-2.5 rounded-lg bg-bbBlack border border-bbBorder flex flex-col justify-center">
-            <span class="text-[10px] text-slate-400 block">เทียบเงินทุนตั้งต้น</span>
-            <span id="capitalRiskPctText" class="text-sm font-bold text-slate-200 tabular-nums">เสี่ยง SL 90% ของทุน</span>
+            <span class="text-[10px] text-slate-400 block">Lot รวมตั้งต้น</span>
+            <span id="baseTotalLotText" class="text-sm font-bold text-white tabular-nums">0.09 Lot</span>
             <span id="minLotNoticeText" class="text-[10px] text-amber-400 block">แบ่งไม่เกิน 3 ไม้</span>
           </div>
         </div>
@@ -417,15 +422,15 @@
 
           <div class="grid grid-cols-3 gap-2 font-mono">
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1000</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1100</span> จุด)</span>
               <span id="buySlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
             </div>
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1500</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1650</span> จุด)</span>
               <span id="buyTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
             </div>
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2500</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2750</span> จุด)</span>
               <span id="buyTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
             </div>
           </div>
@@ -451,15 +456,15 @@
 
           <div class="grid grid-cols-3 gap-2 font-mono">
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1000</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1100</span> จุด)</span>
               <span id="sellSlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
             </div>
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1500</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1650</span> จุด)</span>
               <span id="sellTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
             </div>
             <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2500</span> จุด)</span>
+              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2750</span> จุด)</span>
               <span id="sellTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
             </div>
           </div>
@@ -571,6 +576,7 @@
     let refreshSeconds = 300;
     let timerHandle = null;
     let lastTriggeredCandleSlot = null;
+    let userHasEditedSlPrice = false;
 
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
     const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
@@ -597,7 +603,8 @@
 
     async function fetchLiveGoldPrice(showToast = false) {
       const badgeEl = document.getElementById('livePriceSourceBadge');
-      const inputEl = document.getElementById('refPriceInput');
+      const entryInput = document.getElementById('refPriceInput');
+      const slInput = document.getElementById('slPriceInput');
       badgeEl.textContent = '⏳ กำลังดึงราคา XAUUSD...';
 
       let livePrice = null;
@@ -625,7 +632,14 @@
       }
 
       if (livePrice) {
-        inputEl.value = livePrice.toFixed(2);
+        entryInput.value = livePrice.toFixed(2);
+        // ตั้งค่าเริ่มต้นราคา SL ห่าง 1,100 จุด ($11.00) ถ้าผู้ใช้ยังไม่ได้พิมพ์เอง
+        if (!userHasEditedSlPrice || !slInput.value) {
+          const defaultSl = latestBearPct - latestBullPct >= 6
+            ? (livePrice + 11.00)
+            : (livePrice - 11.00);
+          slInput.value = defaultSl.toFixed(2);
+        }
         const nowStr = new Date().toLocaleTimeString('th-TH', {
           timeZone: 'Asia/Bangkok',
           hour: '2-digit',
@@ -637,54 +651,100 @@
         badgeEl.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
         calculateTradeLevels();
         if (showToast) {
-          showToastAlert('⚡ อัปเดตราคา XAUUSD สดแล้ว', `ราคาตลาดปัจจุบัน $${livePrice.toFixed(2)} — คำนวณ Lot และจุดเข้าไม้ใหม่เรียบร้อย`, 'info');
+          showToastAlert('⚡ อัปเดตราคา XAUUSD สดแล้ว', `ราคาตลาดปัจจุบัน $${livePrice.toFixed(2)} — คำนวณระยะ SL และ Lot ใหม่เรียบร้อย`, 'info');
         }
       } else {
-        badgeEl.textContent = '⚠️ กรอกราคาอ้างอิงจากกราฟของคุณในช่องด้านล่าง';
+        badgeEl.textContent = '⚠️ กรอกราคาเข้า และราคา SL จากกราฟของคุณได้เลย';
         badgeEl.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30';
         calculateTradeLevels();
       }
     }
 
+    function onEntryPriceChanged() {
+      const entryVal = parseFloat(document.getElementById('refPriceInput').value) || 0;
+      const slInput = document.getElementById('slPriceInput');
+      if (entryVal > 0 && (!userHasEditedSlPrice || !slInput.value)) {
+        slInput.value = (entryVal - 11.00).toFixed(2);
+      }
+      calculateTradeLevels();
+    }
+
+    function onSlPriceChanged() {
+      userHasEditedSlPrice = true;
+      calculateTradeLevels();
+    }
+
     function calculateTradeLevels() {
       const capital = Math.max(1, parseFloat(document.getElementById('capitalInput').value) || 100);
-      const slPoints = Math.max(10, parseFloat(document.getElementById('slPointsInput').value) || 1000);
+      const entryPrice = parseFloat(document.getElementById('refPriceInput').value) || 0;
+      const slPrice = parseFloat(document.getElementById('slPriceInput').value) || 0;
       const orderCount = Math.min(3, Math.max(1, parseInt(document.getElementById('orderCountSelect').value, 10) || 3));
 
-      const rawPrice = parseFloat(document.getElementById('refPriceInput').value) || 0;
-      const offset = parseFloat(document.getElementById('brokerOffsetInput').value) || 0;
-      const basePrice = rawPrice > 0 ? (rawPrice + offset) : 0;
+      // คำนวณระยะ SL เป็นจุด (Points) จากส่วนต่างของราคาเข้ากับราคา SL (XAUUSD: $1.00 = 100 จุด)
+      let slDistUsd = 11.0;
+      let slPoints = 1100;
+      let detectedDirection = 'NONE';
 
-      // แปลงระยะจุด (Points) เป็นดอลลาร์ทองคำ (XAUUSD: 100 จุด = $1.00, 1000 จุด = $10.00)
-      const slDistUsd = slPoints / 100;
+      if (entryPrice > 0 && slPrice > 0 && entryPrice !== slPrice) {
+        slDistUsd = Math.abs(entryPrice - slPrice);
+        slPoints = Math.max(1, Math.round(slDistUsd * 100));
+        detectedDirection = slPrice < entryPrice ? 'BUY' : 'SELL';
+      }
+
+      document.getElementById('calcSlPointsText').textContent = slPoints.toLocaleString();
+
+      const sideTag = document.getElementById('detectedSideTag');
+      const dirBadge = document.getElementById('activeDirectionBadge');
+      if (detectedDirection === 'BUY') {
+        sideTag.textContent = 'ฝั่ง BUY';
+        sideTag.className = 'text-[10px] font-mono font-bold text-emerald-400';
+        dirBadge.textContent = `🟢 SL ต่ำกว่าราคาเข้า (${slPoints} จุด) → คำนวณฝั่ง BUY`;
+        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+      } else if (detectedDirection === 'SELL') {
+        sideTag.textContent = 'ฝั่ง SELL';
+        sideTag.className = 'text-[10px] font-mono font-bold text-rose-400';
+        dirBadge.textContent = `🔴 SL สูงกว่าราคาเข้า (${slPoints} จุด) → คำนวณฝั่ง SELL`;
+        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30';
+      } else {
+        sideTag.textContent = '--';
+        sideTag.className = 'text-[10px] font-mono text-slate-400';
+        dirBadge.textContent = 'กรอกราคาเข้าและราคา SL ที่ต่างกันเพื่อวัดระยะจุด';
+        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300';
+      }
+
+      // สูตรตามตัวอย่างของคุณ:
+      // 1) ทุน / ระยะ SL (จุด) เช่น 100 / 1100 = 0.0909 -> ปัด 2 ตำแหน่ง = 0.09 Lot (Lot รวม)
+      const exactTotalLot = capital / slPoints;
+      const baseTotalLot = Math.floor(exactTotalLot * 100) / 100;
+
+      // 2) นำ Lot รวม (เช่น 0.09) มาหารด้วยจำนวนไม้ (1, 2 หรือ 3 ไม้)
+      const rawLotPerOrder = baseTotalLot / orderCount;
+      const isBelowMinLot = rawLotPerOrder < 0.01;
+      const executableLotPerOrder = Math.max(0.01, Math.floor(rawLotPerOrder * 100) / 100);
+      const effectiveTotalLot = executableLotPerOrder * orderCount;
+
       const tp1Points = Math.round(slPoints * 1.5);
       const tp2Points = Math.round(slPoints * 2.5);
       const tp1DistUsd = slDistUsd * 1.5;
       const tp2DistUsd = slDistUsd * 2.5;
 
-      // สูตรของคุณ: (ทุน / 100) / (ระยะ SL จุด / 100) แล้วหารด้วยจำนวนไม้ (ไม่เกิน 3 ไม้)
-      const rawTotalLot = (capital / 100) / slDistUsd;
-      const rawLotPerOrder = rawTotalLot / orderCount;
-      const isBelowMinLot = rawLotPerOrder < 0.01;
-      const lotPerOrder = Math.max(0.01, Math.floor(rawLotPerOrder * 100) / 100);
-      const effectiveTotalLot = lotPerOrder * orderCount;
-
-      // คำนวณยอดเงินขาดทุน SL และกำไร TP (XAUUSD: 1 Lot เคลื่อน 1 จุด = $1 -> 0.01 Lot เคลื่อน 1000 จุด = $10)
-      const lossPerOrder = lotPerOrder * slPoints;
+      // คำนวณยอดเงินขาดทุน SL และกำไร TP (อิง Lot ที่โบรกเกอร์เปิดได้จริงต่อไม้)
+      const lossPerOrder = executableLotPerOrder * slPoints;
       const lossTotal = effectiveTotalLot * slPoints;
 
-      const tp1PerOrder = lotPerOrder * tp1Points;
+      const tp1PerOrder = executableLotPerOrder * tp1Points;
       const tp1Total = effectiveTotalLot * tp1Points;
 
-      const tp2PerOrder = lotPerOrder * tp2Points;
+      const tp2PerOrder = executableLotPerOrder * tp2Points;
       const tp2Total = effectiveTotalLot * tp2Points;
 
-      const riskPct = (lossTotal / capital) * 100;
+      // อัปเดตสูตรแสดงผลให้เห็นทีละขั้นตามตัวอย่างของคุณ
+      document.getElementById('formulaStepText').textContent =
+        `ทุน ${capital} ÷ ${slPoints} จุด = ${baseTotalLot.toFixed(2)} Lot ÷ ${orderCount} ไม้ = ${rawLotPerOrder.toFixed(3)} (เปิดจริง ${executableLotPerOrder.toFixed(2)} Lot/ไม้)`;
 
-      // อัปเดตตัวเลขฝั่งคำนวณ Lot & กำไร/ขาดทุน
       document.getElementById('orderCountLabel').textContent = `${orderCount} ไม้`;
-      document.getElementById('lotPerOrderText').textContent = `${lotPerOrder.toFixed(2)} Lot`;
-      document.getElementById('totalLotSubText').textContent = `รวม ${orderCount} ไม้: ${effectiveTotalLot.toFixed(2)} Lot`;
+      document.getElementById('lotPerOrderText').textContent = `${executableLotPerOrder.toFixed(2)} Lot`;
+      document.getElementById('rawLotDetailText').textContent = `ค่าหารจริง: ${rawLotPerOrder.toFixed(3)} (รวม ${effectiveTotalLot.toFixed(2)})`;
 
       document.getElementById('slLossTotalText').textContent = `-$${lossTotal.toFixed(2)}`;
       document.getElementById('slLossPerOrderText').textContent = `ไม้ละ: -$${lossPerOrder.toFixed(2)}`;
@@ -695,10 +755,10 @@
       document.getElementById('tp2ProfitTotalText').textContent = `+$${tp2Total.toFixed(2)}`;
       document.getElementById('tp2ProfitPerOrderText').textContent = `ไม้ละ: +$${tp2PerOrder.toFixed(2)}`;
 
-      document.getElementById('capitalRiskPctText').textContent = `ถ้าโดน SL: ${riskPct.toFixed(0)}% ของทุน`;
+      document.getElementById('baseTotalLotText').textContent = `${baseTotalLot.toFixed(2)} Lot`;
       document.getElementById('minLotNoticeText').textContent = isBelowMinLot
         ? '⚠️ ปัดขั้นต่ำ 0.01 Lot/ไม้'
-        : `แบ่ง ${orderCount} ไม้ (สูงสุด 3 ไม้)`;
+        : `หาร ${orderCount} จาก ${baseTotalLot.toFixed(2)} Lot`;
 
       document.querySelectorAll('.order-badge-count').forEach(el => { el.textContent = orderCount; });
       document.querySelectorAll('.sl-pts-label').forEach(el => { el.textContent = slPoints; });
@@ -730,7 +790,7 @@
         sellBox.className = 'p-4 rounded-xl bg-bbCard border border-rose-500/30 space-y-3 transition';
       }
 
-      if (basePrice <= 0) {
+      if (entryPrice <= 0) {
         ['buyMarketEntry', 'buyPullbackEntry', 'buySlPrice', 'buyTp1Price', 'buyTp2Price',
          'sellMarketEntry', 'sellBounceEntry', 'sellSlPrice', 'sellTp1Price', 'sellTp2Price'].forEach(id => {
           document.getElementById(id).textContent = '--';
@@ -740,25 +800,25 @@
 
       const pullbackDist = slDistUsd * 0.4;
 
-      // ฝั่ง BUY
-      const buyPullback = basePrice - pullbackDist;
-      const buySl = basePrice - slDistUsd;
-      const buyTp1 = basePrice + tp1DistUsd;
-      const buyTp2 = basePrice + tp2DistUsd;
+      // ฝั่ง BUY (ถ้า SL อยู่ต่ำกว่าราคาเข้า ใช้ราคา SL ที่กรอกตรงๆ)
+      const buyPullback = entryPrice - pullbackDist;
+      const buySl = detectedDirection === 'BUY' ? slPrice : (entryPrice - slDistUsd);
+      const buyTp1 = entryPrice + tp1DistUsd;
+      const buyTp2 = entryPrice + tp2DistUsd;
 
-      document.getElementById('buyMarketEntry').textContent = basePrice.toFixed(2);
+      document.getElementById('buyMarketEntry').textContent = entryPrice.toFixed(2);
       document.getElementById('buyPullbackEntry').textContent = `${(buyPullback - 1).toFixed(2)} - ${buyPullback.toFixed(2)}`;
       document.getElementById('buySlPrice').textContent = buySl.toFixed(2);
       document.getElementById('buyTp1Price').textContent = buyTp1.toFixed(2);
       document.getElementById('buyTp2Price').textContent = buyTp2.toFixed(2);
 
-      // ฝั่ง SELL
-      const sellBounce = basePrice + pullbackDist;
-      const sellSl = basePrice + slDistUsd;
-      const sellTp1 = basePrice - tp1DistUsd;
-      const sellTp2 = basePrice - tp2DistUsd;
+      // ฝั่ง SELL (ถ้า SL อยู่สูงกว่าราคาเข้า ใช้ราคา SL ที่กรอกตรงๆ)
+      const sellBounce = entryPrice + pullbackDist;
+      const sellSl = detectedDirection === 'SELL' ? slPrice : (entryPrice + slDistUsd);
+      const sellTp1 = entryPrice - tp1DistUsd;
+      const sellTp2 = entryPrice - tp2DistUsd;
 
-      document.getElementById('sellMarketEntry').textContent = basePrice.toFixed(2);
+      document.getElementById('sellMarketEntry').textContent = entryPrice.toFixed(2);
       document.getElementById('sellBounceEntry').textContent = `${sellBounce.toFixed(2)} - ${(sellBounce + 1).toFixed(2)}`;
       document.getElementById('sellSlPrice').textContent = sellSl.toFixed(2);
       document.getElementById('sellTp1Price').textContent = sellTp1.toFixed(2);
