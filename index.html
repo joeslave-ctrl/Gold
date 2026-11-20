@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° M5-Synced News & SL-Price Lot Planner</title>
+  <title>XAUUSD 360° M5-Synced News & Multi-Entry SL/TP Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -301,18 +301,21 @@
       </div>
     </section>
 
-    <!-- Capital & SL-Price Driven 3-Order Lot Calculator -->
+    <!-- Custom Manual Entry / SL / TP & Multi-Order Lot Calculator (Preserves User Values on Refresh) -->
     <section class="bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 space-y-4">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-bbBorder pb-3">
         <div>
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">CAPITAL & SL-PRICE LOT CALCULATOR (MAX 3 ORDERS)</span>
-            <span id="livePriceSourceBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-bbBorder">
-              กำลังดึงราคาตลาด XAUUSD...
+            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">CUSTOM MULTI-ORDER SL / TP & LOT PLANNER (PERSISTENT)</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              💾 จำค่าที่กรอกไว้เสมอเมื่อรีเฟรช
+            </span>
+            <span id="livePriceInfoBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-bbBorder">
+              ราคาตลาดอ้างอิง: --
             </span>
           </div>
-          <h3 class="text-base font-bold text-white mt-0.5">คำนวณระยะ SL อัตโนมัติจากราคา SL จริง + แบ่ง Lot สูงสุด 3 ไม้</h3>
-          <p class="text-[11px] text-slate-400">ใส่ <b>เงินทุน ($)</b>, <b>ราคาเข้า ($)</b> และ <b>ราคา SL ($)</b> ระบบจะคำนวณระยะจุด SL, ขนาด Lot ต่อไม้ และยอดกำไร TP / ขาดทุน SL ให้ทันที</p>
+          <h3 class="text-base font-bold text-white mt-0.5">คำนวณ Lot สูงสุด 3 ไม้ + ระยะ SL ที่สั้นลงเรื่อยๆ ตามราคาเข้าแต่ละไม้ + ราคา TP</h3>
+          <p class="text-[11px] text-slate-400">กรอก <b>ทุน</b>, <b>ราคาเข้าไม้ 1</b>, <b>ราคา SL</b>, <b>ราคา TP</b> และ <b>จำนวนไม้ (1–3 ไม้)</b> — ไม้ 2 และ 3 สามารถปรับราคาเข้าให้ใกล้ SL มากขึ้นเพื่อคำนวณระยะ SL ที่สั้นลงและ Lot แยกแต่ละไม้</p>
         </div>
 
         <div id="favoredSideBadge" class="px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30 self-start lg:self-center">
@@ -320,153 +323,139 @@
         </div>
       </div>
 
-      <!-- 5 Input/Auto-Distance Cards -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 text-xs">
+      <!-- Main Inputs Row: Capital, Entry 1, SL Price, TP Price, Order Count -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs">
         <div class="bg-bbBlack border border-amber-500/40 rounded-lg px-3 py-2">
-          <label for="capitalInput" class="text-[10px] text-bbGoldLight font-semibold block">💰 เงินทุน (Capital $)</label>
-          <input id="capitalInput" type="number" step="1" min="1" value="100" oninput="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
+          <label for="capitalInput" class="text-[10px] text-bbGoldLight font-semibold block">💰 เงินทุน ($)</label>
+          <input id="capitalInput" type="number" step="1" min="1" oninput="saveAndCalculate()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
         </div>
 
         <div class="bg-bbBlack border border-sky-500/40 rounded-lg px-3 py-2">
           <div class="flex items-center justify-between">
-            <label for="refPriceInput" class="text-[10px] text-sky-300 font-semibold">📊 ราคาเข้า (Entry $)</label>
-            <button onclick="fetchLiveGoldPrice(true)" class="text-[10px] font-mono text-bbGoldLight hover:underline" title="ดึงราคาตลาดล่าสุด">↻ สด</button>
+            <label for="entry1Input" class="text-[10px] text-sky-300 font-semibold">🎯 ราคาเข้า ไม้ 1 ($)</label>
+            <button onclick="pullMarketPriceIntoEntry1()" class="text-[10px] font-mono text-bbGoldLight hover:underline" title="ดึงราคาตลาดปัจจุบันมาใส่ช่องไม้ 1">↻ ดึงสด</button>
           </div>
-          <input id="refPriceInput" type="number" step="0.01" placeholder="พิมพ์ราคา..." oninput="onEntryPriceChanged()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
+          <input id="entry1Input" type="number" step="0.01" placeholder="กรอกราคาเข้า..." oninput="onEntry1Input()" class="w-full bg-transparent font-mono font-bold text-base text-white focus:outline-none tabular-nums mt-0.5" />
         </div>
 
         <div class="bg-bbBlack border border-rose-500/50 rounded-lg px-3 py-2">
           <div class="flex items-center justify-between">
-            <label for="slPriceInput" class="text-[10px] text-rose-400 font-semibold">🛑 ราคา SL (SL Price $)</label>
+            <label for="slPriceInput" class="text-[10px] text-rose-400 font-semibold">🛑 ราคา SL ($)</label>
             <span id="detectedSideTag" class="text-[10px] font-mono text-slate-400">--</span>
           </div>
-          <input id="slPriceInput" type="number" step="0.01" placeholder="พิมพ์ราคา SL..." oninput="onSlPriceChanged()" class="w-full bg-transparent font-mono font-bold text-base text-rose-400 focus:outline-none tabular-nums mt-0.5" />
+          <input id="slPriceInput" type="number" step="0.01" placeholder="กรอกราคา SL..." oninput="onSlOrTpInput(true)" class="w-full bg-transparent font-mono font-bold text-base text-rose-400 focus:outline-none tabular-nums mt-0.5" />
+        </div>
+
+        <div class="bg-bbBlack border border-emerald-500/50 rounded-lg px-3 py-2">
+          <div class="flex items-center justify-between">
+            <label for="tpPriceInput" class="text-[10px] text-emerald-400 font-semibold">🏁 ราคา TP ($)</label>
+            <span id="calcTpPointsTag" class="text-[10px] font-mono text-emerald-300">-- จุด</span>
+          </div>
+          <input id="tpPriceInput" type="number" step="0.01" placeholder="กรอกราคา TP..." oninput="onSlOrTpInput(false)" class="w-full bg-transparent font-mono font-bold text-base text-emerald-400 focus:outline-none tabular-nums mt-0.5" />
         </div>
 
         <div class="bg-bbBlack border border-bbBorder rounded-lg px-3 py-2 flex flex-col justify-between">
-          <span class="text-[10px] text-slate-400 font-semibold block">📏 ระยะ SL ที่คำนวณได้</span>
+          <span class="text-[10px] text-slate-400 font-semibold block">📏 ระยะ SL ไม้ 1</span>
           <div class="font-mono font-bold text-base text-amber-300 tabular-nums mt-0.5">
-            <span id="calcSlPointsText">1100</span> <span class="text-xs font-normal text-slate-400">จุด</span>
+            <span id="sl1PointsText">0</span> <span class="text-xs font-normal text-slate-400">จุด</span>
           </div>
         </div>
 
-        <div class="col-span-2 sm:col-span-1 bg-bbBlack border border-bbBorder rounded-lg px-3 py-2">
-          <label for="orderCountSelect" class="text-[10px] text-slate-400 font-semibold block">🔢 แบ่งออก (ไม่เกิน 3 ไม้)</label>
-          <select id="orderCountSelect" onchange="calculateTradeLevels()" class="w-full bg-transparent font-mono font-bold text-base text-sky-400 focus:outline-none cursor-pointer mt-0.5">
-            <option value="3" selected class="bg-bbPanel">3 ไม้ (หาร 3)</option>
-            <option value="2" class="bg-bbPanel">2 ไม้ (หาร 2)</option>
-            <option value="1" class="bg-bbPanel">1 ไม้ (หาร 1)</option>
+        <div class="bg-bbBlack border border-bbBorder rounded-lg px-3 py-2">
+          <label for="orderCountSelect" class="text-[10px] text-slate-400 font-semibold block">🔢 จำนวนไม้ (1–3)</label>
+          <select id="orderCountSelect" onchange="saveAndCalculate()" class="w-full bg-transparent font-mono font-bold text-base text-sky-400 focus:outline-none cursor-pointer mt-0.5">
+            <option value="3" class="bg-bbPanel">3 ไม้</option>
+            <option value="2" class="bg-bbPanel">2 ไม้</option>
+            <option value="1" class="bg-bbPanel">1 ไม้</option>
           </select>
         </div>
       </div>
 
-      <!-- Lot Sizing & Profit/Loss Output Summary Box -->
-      <div class="p-3.5 rounded-xl bg-bbCard border border-amber-500/30 space-y-2.5">
+      <!-- Editable Entry Prices for Order 2 & Order 3 (Shorter SL Distance as Order Increases) -->
+      <div class="p-3.5 rounded-xl bg-bbCard border border-bbBorder space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-xs font-bold text-bbGoldLight">🧮 ผลคำนวณ Lot ตามสูตรของคุณ: <span id="formulaStepText" class="font-mono text-slate-300 font-normal">ทุน 100 ÷ 1100 จุด = 0.09 Lot ÷ 3 = 0.03</span></span>
-          <span id="activeDirectionBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">อ้างอิงราคา SL ที่กรอก</span>
+          <span class="text-xs font-bold text-white">📐 ตั้งราคาเข้าไม้ที่ 2 และไม้ที่ 3 (ระยะ SL จะสั้นลงเรื่อยๆ ตามราคาเข้าที่ขยับเข้าใกล้ SL)</span>
+          <button onclick="autoStepEntriesTowardSl()" class="text-[11px] font-mono px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-bbGoldLight border border-bbBorder transition">
+            ⚡ จัดระยะไม้ 2–3 อัตโนมัติ (SL สั้นลง)
+          </button>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 font-mono text-xs">
-          <div class="p-2.5 rounded-lg bg-bbBlack border border-amber-500/40">
-            <span class="text-[10px] text-slate-400 block">Lot ต่อ 1 ไม้ (<span id="orderCountLabel">3 ไม้</span>)</span>
-            <span id="lotPerOrderText" class="text-lg font-bold text-bbGoldLight tabular-nums">0.03 Lot</span>
-            <span id="rawLotDetailText" class="text-[10px] text-slate-400 block">ค่าหารจริง: 0.030 (รวม 0.09)</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs font-mono">
+          <!-- Order 1 Box -->
+          <div class="p-2.5 rounded-lg bg-bbBlack border border-sky-500/40 space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sky-300">ไม้ที่ 1 (จุดเข้าหลัก)</span>
+              <span id="order1SlPts" class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-300">SL -- จุด</span>
+            </div>
+            <div class="text-slate-400 text-[11px]">ราคาเข้า: <span id="order1EntryDisplay" class="text-white font-bold">--</span> • TP: <span id="order1TpPts" class="text-emerald-300">-- จุด</span></div>
           </div>
 
-          <div class="p-2.5 rounded-lg bg-bbBlack border border-rose-500/40">
-            <span class="text-[10px] text-rose-300/80 block">❌ ถ้าโดน SL (เสียรวม)</span>
-            <span id="slLossTotalText" class="text-lg font-bold text-rose-400 tabular-nums">-$99.00</span>
-            <span id="slLossPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: -$33.00</span>
+          <!-- Order 2 Editable Entry Box -->
+          <div id="order2Box" class="p-2.5 rounded-lg bg-bbBlack border border-amber-500/40 space-y-1.5 transition">
+            <div class="flex items-center justify-between">
+              <label for="entry2Input" class="font-bold text-amber-300">ไม้ที่ 2 (SL สั้นลง)</label>
+              <span id="order2SlPts" class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-300">SL -- จุด</span>
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] text-slate-400">ราคาเข้า 2 ($):</span>
+              <input id="entry2Input" type="number" step="0.01" placeholder="ราคาไม้ 2..." oninput="onSubEntryInput(2)" class="w-28 bg-bbPanel border border-bbBorder rounded px-2 py-1 text-right text-white font-bold focus:outline-none focus:border-amber-400 tabular-nums" />
+            </div>
+            <div id="order2TpPts" class="text-[10px] text-emerald-300/90">ระยะ TP ไม้ 2: -- จุด</div>
           </div>
 
-          <div class="p-2.5 rounded-lg bg-bbBlack border border-emerald-500/30">
-            <span class="text-[10px] text-emerald-300/80 block">✅ ถ้าชน TP1 (RR 1:1.5)</span>
-            <span id="tp1ProfitTotalText" class="text-lg font-bold text-emerald-300 tabular-nums">+$148.50</span>
-            <span id="tp1ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$49.50</span>
-          </div>
-
-          <div class="p-2.5 rounded-lg bg-bbBlack border border-emerald-500/40">
-            <span class="text-[10px] text-emerald-300/80 block">🚀 ถ้าชน TP2 (RR 1:2.5)</span>
-            <span id="tp2ProfitTotalText" class="text-lg font-bold text-emerald-400 tabular-nums">+$247.50</span>
-            <span id="tp2ProfitPerOrderText" class="text-[10px] text-slate-400 block">ไม้ละ: +$82.50</span>
-          </div>
-
-          <div class="col-span-2 sm:col-span-1 p-2.5 rounded-lg bg-bbBlack border border-bbBorder flex flex-col justify-center">
-            <span class="text-[10px] text-slate-400 block">Lot รวมตั้งต้น</span>
-            <span id="baseTotalLotText" class="text-sm font-bold text-white tabular-nums">0.09 Lot</span>
-            <span id="minLotNoticeText" class="text-[10px] text-amber-400 block">แบ่งไม่เกิน 3 ไม้</span>
+          <!-- Order 3 Editable Entry Box -->
+          <div id="order3Box" class="p-2.5 rounded-lg bg-bbBlack border border-amber-500/40 space-y-1.5 transition">
+            <div class="flex items-center justify-between">
+              <label for="entry3Input" class="font-bold text-amber-300">ไม้ที่ 3 (SL สั้นที่สุด)</label>
+              <span id="order3SlPts" class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-300">SL -- จุด</span>
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] text-slate-400">ราคาเข้า 3 ($):</span>
+              <input id="entry3Input" type="number" step="0.01" placeholder="ราคาไม้ 3..." oninput="onSubEntryInput(3)" class="w-28 bg-bbPanel border border-bbBorder rounded px-2 py-1 text-right text-white font-bold focus:outline-none focus:border-amber-400 tabular-nums" />
+            </div>
+            <div id="order3TpPts" class="text-[10px] text-emerald-300/90">ระยะ TP ไม้ 3: -- จุด</div>
           </div>
         </div>
       </div>
 
-      <!-- BUY & SELL Entry / SL / TP Levels -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <!-- BUY Plan Card -->
-        <div id="buyPlanBox" class="p-4 rounded-xl bg-bbCard border border-emerald-500/30 space-y-3 transition">
-          <div class="flex items-center justify-between">
-            <span class="font-mono font-bold text-sm text-emerald-400">🟢 แผนฝั่ง BUY (เข้าสูงสุด <span class="order-badge-count">3</span> ไม้)</span>
-            <span id="buyWeightTag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">50%</span>
-          </div>
-
-          <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 flex flex-wrap items-center justify-between gap-2 font-mono">
-            <div>
-              <span class="text-[10px] text-emerald-300/80 block">🎯 ไม้ที่ 1 (Market Entry)</span>
-              <span id="buyMarketEntry" class="text-sm font-bold text-white tabular-nums">--</span>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-emerald-300/80 block">🛡️ ไม้ที่ 2–3 (โซนรอย่อรับ)</span>
-              <span id="buyPullbackEntry" class="text-sm font-bold text-emerald-300 tabular-nums">--</span>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-3 gap-2 font-mono">
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1100</span> จุด)</span>
-              <span id="buySlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
-            </div>
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1650</span> จุด)</span>
-              <span id="buyTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
-            </div>
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2750</span> จุด)</span>
-              <span id="buyTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
-            </div>
-          </div>
+      <!-- Per-Order Breakdown Table (Order 1, 2, 3 + Total) -->
+      <div class="p-3.5 rounded-xl bg-bbCard border border-amber-500/30 space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="text-xs font-bold text-bbGoldLight">🧮 ตารางคำนวณ Lot, ระยะ SL/TP และกำไร-ขาดทุน แยกแต่ละไม้ (XAUUSD: 1 Lot = $1/จุด)</span>
+          <span id="formulaSummaryNote" class="text-[11px] font-mono text-slate-400">ทุน ÷ ระยะ SL (จุด) ÷ จำนวนไม้</span>
         </div>
 
-        <!-- SELL Plan Card -->
-        <div id="sellPlanBox" class="p-4 rounded-xl bg-bbCard border border-rose-500/30 space-y-3 transition">
-          <div class="flex items-center justify-between">
-            <span class="font-mono font-bold text-sm text-rose-400">🔴 แผนฝั่ง SELL (เข้าสูงสุด <span class="order-badge-count">3</span> ไม้)</span>
-            <span id="sellWeightTag" class="font-mono text-[11px] px-2 py-0.5 rounded bg-rose-500/15 text-rose-300">50%</span>
-          </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse font-mono text-xs tabular-nums">
+            <thead>
+              <tr class="border-b border-bbBorder text-[11px] text-slate-400">
+                <th class="py-2 pr-3">ไม้ที่</th>
+                <th class="py-2 px-2">ราคาเข้า</th>
+                <th class="py-2 px-2">ระยะ SL</th>
+                <th class="py-2 px-2">ระยะ TP</th>
+                <th class="py-2 px-2">Lot คำนวณได้</th>
+                <th class="py-2 px-2">Lot เปิดจริง</th>
+                <th class="py-2 px-2 text-rose-400">ถ้าโดน SL</th>
+                <th class="py-2 pl-2 text-emerald-400 text-right">ถ้าชน TP</th>
+              </tr>
+            </thead>
+            <tbody id="orderBreakdownBody" class="divide-y divide-bbBorder/60"></tbody>
+          </table>
+        </div>
 
-          <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 flex flex-wrap items-center justify-between gap-2 font-mono">
-            <div>
-              <span class="text-[10px] text-rose-300/80 block">🎯 ไม้ที่ 1 (Market Entry)</span>
-              <span id="sellMarketEntry" class="text-sm font-bold text-white tabular-nums">--</span>
-            </div>
-            <div class="text-right">
-              <span class="text-[10px] text-rose-300/80 block">🛡️ ไม้ที่ 2–3 (โซนรอเด้งต้าน)</span>
-              <span id="sellBounceEntry" class="text-sm font-bold text-rose-300 tabular-nums">--</span>
-            </div>
+        <!-- Totals Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-bbBorder font-mono text-xs">
+          <div class="p-2.5 rounded-lg bg-bbBlack border border-bbBorder flex items-center justify-between">
+            <span class="text-slate-400">Lot รวมทุกไม้ที่เปิด:</span>
+            <span id="totalExecutedLotText" class="text-sm font-bold text-bbGoldLight">0.00 Lot</span>
           </div>
-
-          <div class="grid grid-cols-3 gap-2 font-mono">
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">SL (<span class="sl-pts-label">1100</span> จุด)</span>
-              <span id="sellSlPrice" class="text-rose-400 font-bold tabular-nums">--</span>
-            </div>
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP1 (<span class="tp1-pts-label">1650</span> จุด)</span>
-              <span id="sellTp1Price" class="text-emerald-300 font-bold tabular-nums">--</span>
-            </div>
-            <div class="p-2 rounded bg-bbBlack/80 border border-bbBorder">
-              <span class="text-[10px] text-slate-400 block">TP2 (<span class="tp2-pts-label">2750</span> จุด)</span>
-              <span id="sellTp2Price" class="text-emerald-400 font-bold tabular-nums">--</span>
-            </div>
+          <div class="p-2.5 rounded-lg bg-bbBlack border border-rose-500/30 flex items-center justify-between">
+            <span class="text-rose-300/90">ขาดทุนรวมถ้าโดน SL:</span>
+            <span id="totalSlLossText" class="text-sm font-bold text-rose-400">$0.00</span>
+          </div>
+          <div class="p-2.5 rounded-lg bg-bbBlack border border-emerald-500/30 flex items-center justify-between">
+            <span class="text-emerald-300/90">กำไรรวมถ้าชน TP:</span>
+            <span id="totalTpProfitText" class="text-sm font-bold text-emerald-400">$0.00</span>
           </div>
         </div>
       </div>
@@ -562,6 +551,8 @@
       { name: 'ข่าวด่วนทองคำ & โลก (ไทย)', topic: 'thai', url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+ตัวเลขเศรษฐกิจ+OR+สงคราม+OR+ข่าวด่วนโลก)+when:2d&hl=th&gl=TH&ceid=TH:th', lang: 'th' }
     ];
 
+    const CALC_STORAGE_KEY = 'xau_custom_calc_v3';
+
     let allArticles = [];
     const savedKeys = JSON.parse(localStorage.getItem('xau_known_keys') || '[]');
     let knownArticleKeys = new Set(savedKeys);
@@ -576,7 +567,10 @@
     let refreshSeconds = 300;
     let timerHandle = null;
     let lastTriggeredCandleSlot = null;
-    let userHasEditedSlPrice = false;
+
+    let customSubEntriesEdited = { 2: false, 3: false };
+    let customSlEdited = false;
+    let customTpEdited = false;
 
     const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
     const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
@@ -601,21 +595,76 @@
       crisisBull: ['pandemic', 'outbreak', 'new virus', 'who emergency', 'lockdown', 'terrorist attack', 'terrorism', 'explosion', 'bank collapse', 'โรคระบาด', 'ไวรัสสายพันธุ์ใหม่', 'ก่อการร้าย', 'ล็อกดาวน์']
     };
 
-    async function fetchLiveGoldPrice(showToast = false) {
-      const badgeEl = document.getElementById('livePriceSourceBadge');
-      const entryInput = document.getElementById('refPriceInput');
-      const slInput = document.getElementById('slPriceInput');
-      badgeEl.textContent = '⏳ กำลังดึงราคา XAUUSD...';
+    function loadSavedCalculatorState() {
+      const defaults = {
+        capital: '100',
+        entry1: '3553.83',
+        slPrice: '3542.83',
+        tpPrice: '3575.83',
+        entry2: '3548.33',
+        entry3: '3545.58',
+        orderCount: '3',
+        subEdited2: false,
+        subEdited3: false,
+        slEdited: true,
+        tpEdited: true
+      };
 
+      let state = defaults;
+      try {
+        const raw = localStorage.getItem(CALC_STORAGE_KEY);
+        if (raw) {
+          state = { ...defaults, ...JSON.parse(raw) };
+        }
+      } catch (e) {}
+
+      document.getElementById('capitalInput').value = state.capital;
+      document.getElementById('entry1Input').value = state.entry1;
+      document.getElementById('slPriceInput').value = state.slPrice;
+      document.getElementById('tpPriceInput').value = state.tpPrice;
+      document.getElementById('entry2Input').value = state.entry2;
+      document.getElementById('entry3Input').value = state.entry3;
+      document.getElementById('orderCountSelect').value = state.orderCount;
+
+      customSubEntriesEdited = { 2: !!state.subEdited2, 3: !!state.subEdited3 };
+      customSlEdited = !!state.slEdited;
+      customTpEdited = !!state.tpEdited;
+
+      calculateTradeLevels();
+    }
+
+    function persistCalculatorState() {
+      const payload = {
+        capital: document.getElementById('capitalInput').value,
+        entry1: document.getElementById('entry1Input').value,
+        slPrice: document.getElementById('slPriceInput').value,
+        tpPrice: document.getElementById('tpPriceInput').value,
+        entry2: document.getElementById('entry2Input').value,
+        entry3: document.getElementById('entry3Input').value,
+        orderCount: document.getElementById('orderCountSelect').value,
+        subEdited2: customSubEntriesEdited[2],
+        subEdited3: customSubEntriesEdited[3],
+        slEdited: customSlEdited,
+        tpEdited: customTpEdited
+      };
+      localStorage.setItem(CALC_STORAGE_KEY, JSON.stringify(payload));
+    }
+
+    function saveAndCalculate() {
+      persistCalculatorState();
+      calculateTradeLevels();
+    }
+
+    // ดึงราคาตลาดเฉพาะป้ายแสดงข้อมูล หรือเมื่อกดปุ่ม "↻ ดึงสด" (ไม่เขียนทับเมื่อรีเฟรชปิดแท่ง)
+    async function fetchMarketReferenceBadgeOnly(showToast = false) {
+      const badgeEl = document.getElementById('livePriceInfoBadge');
       let livePrice = null;
-      let sourceName = '';
 
       try {
         const res1 = await fetch(`https://api.gold-api.com/price/XAU?_t=${Date.now()}`);
         const data1 = await res1.json();
         if (data1 && typeof data1.price === 'number' && data1.price > 1000) {
           livePrice = data1.price;
-          sourceName = 'Live Spot XAU/USD';
         }
       } catch (e) {}
 
@@ -623,804 +672,66 @@
         try {
           const res2 = await fetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xau.json?_t=${Date.now()}`);
           const data2 = await res2.json();
-          const usdVal = data2?.xau?.usd;
-          if (typeof usdVal === 'number' && usdVal > 1000) {
-            livePrice = usdVal;
-            sourceName = 'Market Feed XAU/USD';
-          }
+          if (data2?.xau?.usd > 1000) livePrice = data2.xau.usd;
         } catch (e) {}
       }
 
       if (livePrice) {
-        entryInput.value = livePrice.toFixed(2);
-        // ตั้งค่าเริ่มต้นราคา SL ห่าง 1,100 จุด ($11.00) ถ้าผู้ใช้ยังไม่ได้พิมพ์เอง
-        if (!userHasEditedSlPrice || !slInput.value) {
-          const defaultSl = latestBearPct - latestBullPct >= 6
-            ? (livePrice + 11.00)
-            : (livePrice - 11.00);
-          slInput.value = defaultSl.toFixed(2);
-        }
         const nowStr = new Date().toLocaleTimeString('th-TH', {
           timeZone: 'Asia/Bangkok',
           hour: '2-digit',
           minute: '2-digit',
-          second: '2-digit',
           hour12: false
         });
-        badgeEl.textContent = `🟢 ${sourceName}: $${livePrice.toFixed(2)} (${nowStr})`;
-        badgeEl.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
-        calculateTradeLevels();
+        badgeEl.textContent = `ราคาตลาดอ้างอิง: $${livePrice.toFixed(2)} (${nowStr})`;
+        badgeEl.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-300 border border-bbBorder';
         if (showToast) {
-          showToastAlert('⚡ อัปเดตราคา XAUUSD สดแล้ว', `ราคาตลาดปัจจุบัน $${livePrice.toFixed(2)} — คำนวณระยะ SL และ Lot ใหม่เรียบร้อย`, 'info');
+          showToastAlert('📊 ราคาตลาด XAUUSD ล่าสุด', `ราคาตลาดปัจจุบัน $${livePrice.toFixed(2)} (ช่องคำนวณยังคงค่าที่คุณกรอกไว้)`, 'info');
         }
-      } else {
-        badgeEl.textContent = '⚠️ กรอกราคาเข้า และราคา SL จากกราฟของคุณได้เลย';
-        badgeEl.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30';
-        calculateTradeLevels();
+      }
+      return livePrice;
+    }
+
+    async function pullMarketPriceIntoEntry1() {
+      const livePrice = await fetchMarketReferenceBadgeOnly(false);
+      if (livePrice) {
+        document.getElementById('entry1Input').value = livePrice.toFixed(2);
+        autoStepEntriesTowardSl(true);
+        showToastAlert('🎯 ดึงราคาเข้า ไม้ 1 แล้ว', `ใส่ราคา $${livePrice.toFixed(2)} ในช่องไม้ 1 และปรับระยะไม้ 2–3 ให้แล้ว`, 'info');
       }
     }
 
-    function onEntryPriceChanged() {
-      const entryVal = parseFloat(document.getElementById('refPriceInput').value) || 0;
-      const slInput = document.getElementById('slPriceInput');
-      if (entryVal > 0 && (!userHasEditedSlPrice || !slInput.value)) {
-        slInput.value = (entryVal - 11.00).toFixed(2);
+    function onEntry1Input() {
+      if (!customSubEntriesEdited[2] || !customSubEntriesEdited[3]) {
+        autoStepEntriesTowardSl(false);
       }
-      calculateTradeLevels();
+      saveAndCalculate();
     }
 
-    function onSlPriceChanged() {
-      userHasEditedSlPrice = true;
-      calculateTradeLevels();
+    function onSlOrTpInput(isSl) {
+      if (isSl) customSlEdited = true;
+      else customTpEdited = true;
+
+      if (!customSubEntriesEdited[2] || !customSubEntriesEdited[3]) {
+        autoStepEntriesTowardSl(false);
+      }
+      saveAndCalculate();
     }
 
-    function calculateTradeLevels() {
-      const capital = Math.max(1, parseFloat(document.getElementById('capitalInput').value) || 100);
-      const entryPrice = parseFloat(document.getElementById('refPriceInput').value) || 0;
+    function onSubEntryInput(orderNum) {
+      customSubEntriesEdited[orderNum] = true;
+      saveAndCalculate();
+    }
+
+    // จัดระยะไม้ที่ 2 และ 3 ให้ขยับเข้าใกล้ราคา SL เรื่อยๆ (ระยะ SL สั้นลงเรื่อยๆ)
+    function autoStepEntriesTowardSl(forceReset = false) {
+      const entry1 = parseFloat(document.getElementById('entry1Input').value) || 0;
       const slPrice = parseFloat(document.getElementById('slPriceInput').value) || 0;
-      const orderCount = Math.min(3, Math.max(1, parseInt(document.getElementById('orderCountSelect').value, 10) || 3));
-
-      // คำนวณระยะ SL เป็นจุด (Points) จากส่วนต่างของราคาเข้ากับราคา SL (XAUUSD: $1.00 = 100 จุด)
-      let slDistUsd = 11.0;
-      let slPoints = 1100;
-      let detectedDirection = 'NONE';
-
-      if (entryPrice > 0 && slPrice > 0 && entryPrice !== slPrice) {
-        slDistUsd = Math.abs(entryPrice - slPrice);
-        slPoints = Math.max(1, Math.round(slDistUsd * 100));
-        detectedDirection = slPrice < entryPrice ? 'BUY' : 'SELL';
-      }
-
-      document.getElementById('calcSlPointsText').textContent = slPoints.toLocaleString();
-
-      const sideTag = document.getElementById('detectedSideTag');
-      const dirBadge = document.getElementById('activeDirectionBadge');
-      if (detectedDirection === 'BUY') {
-        sideTag.textContent = 'ฝั่ง BUY';
-        sideTag.className = 'text-[10px] font-mono font-bold text-emerald-400';
-        dirBadge.textContent = `🟢 SL ต่ำกว่าราคาเข้า (${slPoints} จุด) → คำนวณฝั่ง BUY`;
-        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
-      } else if (detectedDirection === 'SELL') {
-        sideTag.textContent = 'ฝั่ง SELL';
-        sideTag.className = 'text-[10px] font-mono font-bold text-rose-400';
-        dirBadge.textContent = `🔴 SL สูงกว่าราคาเข้า (${slPoints} จุด) → คำนวณฝั่ง SELL`;
-        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30';
-      } else {
-        sideTag.textContent = '--';
-        sideTag.className = 'text-[10px] font-mono text-slate-400';
-        dirBadge.textContent = 'กรอกราคาเข้าและราคา SL ที่ต่างกันเพื่อวัดระยะจุด';
-        dirBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300';
-      }
-
-      // สูตรตามตัวอย่างของคุณ:
-      // 1) ทุน / ระยะ SL (จุด) เช่น 100 / 1100 = 0.0909 -> ปัด 2 ตำแหน่ง = 0.09 Lot (Lot รวม)
-      const exactTotalLot = capital / slPoints;
-      const baseTotalLot = Math.floor(exactTotalLot * 100) / 100;
-
-      // 2) นำ Lot รวม (เช่น 0.09) มาหารด้วยจำนวนไม้ (1, 2 หรือ 3 ไม้)
-      const rawLotPerOrder = baseTotalLot / orderCount;
-      const isBelowMinLot = rawLotPerOrder < 0.01;
-      const executableLotPerOrder = Math.max(0.01, Math.floor(rawLotPerOrder * 100) / 100);
-      const effectiveTotalLot = executableLotPerOrder * orderCount;
-
-      const tp1Points = Math.round(slPoints * 1.5);
-      const tp2Points = Math.round(slPoints * 2.5);
-      const tp1DistUsd = slDistUsd * 1.5;
-      const tp2DistUsd = slDistUsd * 2.5;
-
-      // คำนวณยอดเงินขาดทุน SL และกำไร TP (อิง Lot ที่โบรกเกอร์เปิดได้จริงต่อไม้)
-      const lossPerOrder = executableLotPerOrder * slPoints;
-      const lossTotal = effectiveTotalLot * slPoints;
-
-      const tp1PerOrder = executableLotPerOrder * tp1Points;
-      const tp1Total = effectiveTotalLot * tp1Points;
-
-      const tp2PerOrder = executableLotPerOrder * tp2Points;
-      const tp2Total = effectiveTotalLot * tp2Points;
-
-      // อัปเดตสูตรแสดงผลให้เห็นทีละขั้นตามตัวอย่างของคุณ
-      document.getElementById('formulaStepText').textContent =
-        `ทุน ${capital} ÷ ${slPoints} จุด = ${baseTotalLot.toFixed(2)} Lot ÷ ${orderCount} ไม้ = ${rawLotPerOrder.toFixed(3)} (เปิดจริง ${executableLotPerOrder.toFixed(2)} Lot/ไม้)`;
-
-      document.getElementById('orderCountLabel').textContent = `${orderCount} ไม้`;
-      document.getElementById('lotPerOrderText').textContent = `${executableLotPerOrder.toFixed(2)} Lot`;
-      document.getElementById('rawLotDetailText').textContent = `ค่าหารจริง: ${rawLotPerOrder.toFixed(3)} (รวม ${effectiveTotalLot.toFixed(2)})`;
-
-      document.getElementById('slLossTotalText').textContent = `-$${lossTotal.toFixed(2)}`;
-      document.getElementById('slLossPerOrderText').textContent = `ไม้ละ: -$${lossPerOrder.toFixed(2)}`;
-
-      document.getElementById('tp1ProfitTotalText').textContent = `+$${tp1Total.toFixed(2)}`;
-      document.getElementById('tp1ProfitPerOrderText').textContent = `ไม้ละ: +$${tp1PerOrder.toFixed(2)}`;
-
-      document.getElementById('tp2ProfitTotalText').textContent = `+$${tp2Total.toFixed(2)}`;
-      document.getElementById('tp2ProfitPerOrderText').textContent = `ไม้ละ: +$${tp2PerOrder.toFixed(2)}`;
-
-      document.getElementById('baseTotalLotText').textContent = `${baseTotalLot.toFixed(2)} Lot`;
-      document.getElementById('minLotNoticeText').textContent = isBelowMinLot
-        ? '⚠️ ปัดขั้นต่ำ 0.01 Lot/ไม้'
-        : `หาร ${orderCount} จาก ${baseTotalLot.toFixed(2)} Lot`;
-
-      document.querySelectorAll('.order-badge-count').forEach(el => { el.textContent = orderCount; });
-      document.querySelectorAll('.sl-pts-label').forEach(el => { el.textContent = slPoints; });
-      document.querySelectorAll('.tp1-pts-label').forEach(el => { el.textContent = tp1Points; });
-      document.querySelectorAll('.tp2-pts-label').forEach(el => { el.textContent = tp2Points; });
-
-      // อัปเดตมุมมอง Buy / Sell ตามข่าว
-      document.getElementById('buyWeightTag').textContent = `โอกาสขึ้น ${latestBullPct}%`;
-      document.getElementById('sellWeightTag').textContent = `โอกาสลง ${latestBearPct}%`;
-
-      const favoredBadge = document.getElementById('favoredSideBadge');
-      const buyBox = document.getElementById('buyPlanBox');
-      const sellBox = document.getElementById('sellPlanBox');
-
-      if (latestBullPct - latestBearPct >= 6) {
-        favoredBadge.textContent = `โฟกัสฝั่ง BUY (${latestBullPct}% vs ${latestBearPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-emerald-500/15 text-emerald-400 border border-emerald-500/40 self-start lg:self-center';
-        buyBox.className = 'p-4 rounded-xl bg-bbCard border-2 border-emerald-500/70 space-y-3 transition';
-        sellBox.className = 'p-4 rounded-xl bg-bbCard border border-rose-500/20 opacity-80 space-y-3 transition';
-      } else if (latestBearPct - latestBullPct >= 6) {
-        favoredBadge.textContent = `โฟกัสฝั่ง SELL (${latestBearPct}% vs ${latestBullPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-rose-500/15 text-rose-400 border border-rose-500/40 self-start lg:self-center';
-        sellBox.className = 'p-4 rounded-xl bg-bbCard border-2 border-rose-500/70 space-y-3 transition';
-        buyBox.className = 'p-4 rounded-xl bg-bbCard border border-emerald-500/20 opacity-80 space-y-3 transition';
-      } else {
-        favoredBadge.textContent = `สองฝั่งใกล้เคียงกัน (${latestBullPct}% / ${latestBearPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30 self-start lg:self-center';
-        buyBox.className = 'p-4 rounded-xl bg-bbCard border border-emerald-500/30 space-y-3 transition';
-        sellBox.className = 'p-4 rounded-xl bg-bbCard border border-rose-500/30 space-y-3 transition';
-      }
-
-      if (entryPrice <= 0) {
-        ['buyMarketEntry', 'buyPullbackEntry', 'buySlPrice', 'buyTp1Price', 'buyTp2Price',
-         'sellMarketEntry', 'sellBounceEntry', 'sellSlPrice', 'sellTp1Price', 'sellTp2Price'].forEach(id => {
-          document.getElementById(id).textContent = '--';
-        });
+      if (entry1 <= 0 || slPrice <= 0 || entry1 === slPrice) {
+        saveAndCalculate();
         return;
       }
 
-      const pullbackDist = slDistUsd * 0.4;
-
-      // ฝั่ง BUY (ถ้า SL อยู่ต่ำกว่าราคาเข้า ใช้ราคา SL ที่กรอกตรงๆ)
-      const buyPullback = entryPrice - pullbackDist;
-      const buySl = detectedDirection === 'BUY' ? slPrice : (entryPrice - slDistUsd);
-      const buyTp1 = entryPrice + tp1DistUsd;
-      const buyTp2 = entryPrice + tp2DistUsd;
-
-      document.getElementById('buyMarketEntry').textContent = entryPrice.toFixed(2);
-      document.getElementById('buyPullbackEntry').textContent = `${(buyPullback - 1).toFixed(2)} - ${buyPullback.toFixed(2)}`;
-      document.getElementById('buySlPrice').textContent = buySl.toFixed(2);
-      document.getElementById('buyTp1Price').textContent = buyTp1.toFixed(2);
-      document.getElementById('buyTp2Price').textContent = buyTp2.toFixed(2);
-
-      // ฝั่ง SELL (ถ้า SL อยู่สูงกว่าราคาเข้า ใช้ราคา SL ที่กรอกตรงๆ)
-      const sellBounce = entryPrice + pullbackDist;
-      const sellSl = detectedDirection === 'SELL' ? slPrice : (entryPrice + slDistUsd);
-      const sellTp1 = entryPrice - tp1DistUsd;
-      const sellTp2 = entryPrice - tp2DistUsd;
-
-      document.getElementById('sellMarketEntry').textContent = entryPrice.toFixed(2);
-      document.getElementById('sellBounceEntry').textContent = `${sellBounce.toFixed(2)} - ${(sellBounce + 1).toFixed(2)}`;
-      document.getElementById('sellSlPrice').textContent = sellSl.toFixed(2);
-      document.getElementById('sellTp1Price').textContent = sellTp1.toFixed(2);
-      document.getElementById('sellTp2Price').textContent = sellTp2.toFixed(2);
-    }
-
-    function syncCandleClock() {
-      if (refreshSeconds <= 0) {
-        document.getElementById('countdownText').textContent = 'OFF';
-        document.getElementById('candleSyncSubtext').textContent = 'ปิดการซิงก์รอบแท่งเทียนอัตโนมัติ';
-        return;
-      }
-
-      const nowMs = Date.now();
-      const intervalMs = refreshSeconds * 1000;
-      const currentSlot = Math.floor(nowMs / intervalMs);
-      const nextCloseMs = (currentSlot + 1) * intervalMs;
-      const remainingSec = Math.ceil((nextCloseMs - nowMs) / 1000);
-
-      const mins = Math.floor(remainingSec / 60).toString().padStart(2, '0');
-      const secs = (remainingSec % 60).toString().padStart(2, '0');
-      document.getElementById('countdownText').textContent = `${mins}:${secs}`;
-
-      const nextCloseThai = new Date(nextCloseMs).toLocaleTimeString('th-TH', {
-        timeZone: 'Asia/Bangkok',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-      const tfLabel = refreshSeconds === 300 ? 'M5' : refreshSeconds === 900 ? 'M15' : refreshSeconds === 180 ? 'M3' : 'M1';
-      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. (เวลาไทย)`;
-
-      if (lastTriggeredCandleSlot !== null && currentSlot > lastTriggeredCandleSlot) {
-        lastTriggeredCandleSlot = currentSlot;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        fetchAllFeeds(true);
-      } else if (lastTriggeredCandleSlot === null) {
-        lastTriggeredCandleSlot = currentSlot;
-      }
-    }
-
-    function startCountdownTimer() {
-      if (timerHandle) clearInterval(timerHandle);
-      lastTriggeredCandleSlot = Math.floor(Date.now() / (Math.max(refreshSeconds, 1) * 1000));
-      syncCandleClock();
-      timerHandle = setInterval(syncCandleClock, 250);
-    }
-
-    function changeRefreshInterval() {
-      refreshSeconds = parseInt(document.getElementById('refreshIntervalSelect').value, 10);
-      startCountdownTimer();
-    }
-
-    function manualRefresh() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      fetchAllFeeds(true);
-    }
-
-    function formatThaiDateTime(pubDateStr) {
-      if (!pubDateStr) return '';
-      let parsed = new Date(pubDateStr);
-      if (isNaN(parsed.getTime())) {
-        const normalized = pubDateStr.includes('Z') || /[+-]\d{2}:?\d{2}$/.test(pubDateStr)
-          ? pubDateStr
-          : pubDateStr.replace(' ', 'T') + 'Z';
-        parsed = new Date(normalized);
-      }
-      if (isNaN(parsed.getTime())) return '';
-
-      return parsed.toLocaleString('th-TH', {
-        timeZone: 'Asia/Bangkok',
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      }) + ' น.';
-    }
-
-    function playAlertBeep(isUrgent = false) {
-      if (!soundEnabled) return;
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = isUrgent ? 'triangle' : 'sine';
-        osc.frequency.setValueAtTime(isUrgent ? 880 : 660, ctx.currentTime);
-        if (isUrgent) {
-          osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.15);
-        }
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.4);
-      } catch (e) {}
-    }
-
-    function showToastAlert(title, message, type = 'info') {
-      const container = document.getElementById('alertContainer');
-      const colors = {
-        bullish: 'border-emerald-500 bg-emerald-950/95 text-emerald-100',
-        bearish: 'border-rose-500 bg-rose-950/95 text-rose-100',
-        urgent: 'border-amber-400 bg-slate-900/95 text-amber-100',
-        info: 'border-sky-400 bg-bbPanel/95 text-slate-100'
-      };
-
-      const toast = document.createElement('div');
-      toast.className = `toast-enter pointer-events-auto p-3.5 rounded-xl border-l-4 shadow-2xl backdrop-blur ${colors[type] || colors.info}`;
-      toast.innerHTML = `
-        <div class="flex items-start justify-between gap-2">
-          <div class="text-xs font-bold">${title}</div>
-          <button onclick="this.parentElement.parentElement.remove()" class="text-slate-400 hover:text-white text-xs">✕</button>
-        </div>
-        <p class="text-[11px] opacity-90 mt-1 leading-snug">${message}</p>
-      `;
-      container.prepend(toast);
-      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 9000);
-    }
-
-    function highlightSummaryCard() {
-      const card = document.getElementById('probabilityCard');
-      if (!card) return;
-      card.classList.add('ring-2', 'ring-bbGold', 'bg-slate-900');
-      setTimeout(() => {
-        card.classList.remove('ring-2', 'ring-bbGold', 'bg-slate-900');
-      }, 1800);
-    }
-
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      const btn = document.getElementById('soundToggleBtn');
-      btn.textContent = soundEnabled ? '🔔 เสียง: เปิด' : '🔕 เสียง: ปิด';
-      if (soundEnabled) playAlertBeep(false);
-    }
-
-    function classifyAndScore(text, defaultTopic) {
-      const lower = text.toLowerCase();
-      let bullScore = 0;
-      let bearScore = 0;
-      let detectedTopics = new Set([defaultTopic]);
-      let reasons = [];
-
-      if (/spdr|jpmorgan|jp morgan|blackrock|goldman|etf|central bank|pboc|กองทุน|ธนาคารกลาง/.test(lower)) detectedTopics.add('inst');
-      if (/fed|fomc|cpi|ppi|pmi|nfp|nonfarm|payroll|gdp|yield|dxy|us dollar|inflation|ดอกเบี้ย|เงินเฟ้อ|ตัวเลขเศรษฐกิจ/.test(lower)) detectedTopics.add('macro');
-      if (/war|tariff|trade war|missile|military|sanction|ukraine|israel|iran|china|taiwan|สงคราม|ภาษี|คว่ำบาตร/.test(lower)) detectedTopics.add('war');
-      if (/virus|pandemic|outbreak|who|epidemic|terror|attack|bomb|hostage|ไวรัส|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('crisis');
-      if (defaultTopic === 'breaking' || /breaking|urgent|alert|emergency|ข่าวด่วน/.test(lower)) detectedTopics.add('breaking');
-
-      RULES.instBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('แรงซื้อสถาบัน/SPDR/JPM'); } });
-      RULES.instBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('แรงขายสถาบัน/SPDR/JPM'); } });
-
-      RULES.macroBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.0; reasons.push('ตัวเลข PPI/PMI/FOMC/NFP หนุนทอง'); } });
-      RULES.macroBear.forEach(k => { if (lower.includes(k)) { bearScore += 2.0; reasons.push('ตัวเลข PPI/PMI/FOMC/NFP กดดันทอง'); } });
-
-      RULES.warBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.2; reasons.push('ความเสี่ยงสงคราม/ข่าวด่วนโลก'); } });
-      RULES.warBear.forEach(k => { if (lower.includes(k)) { bearScore += 1.8; reasons.push('สถานการณ์สงคราม/การค้าผ่อนคลาย'); } });
-
-      RULES.crisisBull.forEach(k => { if (lower.includes(k)) { bullScore += 2.5; reasons.push('ภาวะวิกฤตโรคระบาด/ก่อการร้าย (Safe Haven)'); } });
-
-      if (/gold rises|gold surges|gold jumps|gold climbs|gold rallies|xau\/usd rises|xauusd rises|ทองพุ่ง|ทองขึ้น/.test(lower)) bullScore += 1.5;
-      if (/gold falls|gold drops|gold slides|gold plunges|gold slips|xau\/usd falls|xauusd falls|ทองร่วง|ทองลง/.test(lower)) bearScore += 1.5;
-
-      const uniqueReasons = [...new Set(reasons)];
-      const topicLabels = {
-        breaking: '⚡ ข่าวด่วนรอบโลก',
-        inst: '🏦 สถาบัน/SPDR/JPM',
-        macro: '📅 PPI/PMI/FOMC/NFP',
-        war: '⚔️ สงคราม/การค้า',
-        crisis: '🚨 โรคระบาด/ก่อการร้าย',
-        thai: '🇹🇭 ข่าวไทย'
-      };
-      const primaryTopic = [...detectedTopics].find(t => t !== 'thai' && t !== 'breaking') || defaultTopic;
-
-      if (bullScore > bearScore) {
-        return {
-          type: 'bullish',
-          topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
-          label: '🟢 หนุนทองขึ้น (Bullish)',
-          badgeClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-          score: bullScore - bearScore,
-          reason: uniqueReasons.length ? uniqueReasons.join(' + ') : 'กระตุ้นแรงซื้อสินทรัพย์ปลอดภัย / กดดันดอลลาร์'
-        };
-      } else if (bearScore > bullScore) {
-        return {
-          type: 'bearish',
-          topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
-          label: '🔴 กดดันทองลง (Bearish)',
-          badgeClass: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-          score: -(bearScore - bullScore),
-          reason: uniqueReasons.length ? uniqueReasons.join(' + ') : 'หนุนดอลลาร์แข็งค่า / ลดความต้องการสินทรัพย์ปลอดภัย'
-        };
-      } else {
-        return {
-          type: 'neutral',
-          topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '⚡ ข่าวด่วนรอบโลก',
-          label: '🟡 จับตาดู (Neutral)',
-          badgeClass: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-          score: 0,
-          reason: 'ข้อมูลยังสมดุล รอความชัดเจนของตัวเลขหรือสถานการณ์'
-        };
-      }
-    }
-
-    async function translateToThai(text) {
-      if (!text || !autoTranslate) return text;
-      if (/[ก-๙]/.test(text)) return text;
-      if (translationCache[text]) return translationCache[text];
-
-      try {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=th&dt=t&q=${encodeURIComponent(text)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        const translated = data[0].map(item => item[0]).join('');
-        translationCache[text] = translated;
-        localStorage.setItem('xau_360_cache', JSON.stringify(translationCache));
-        return translated;
-      } catch (e) {
-        return text;
-      }
-    }
-
-    function cleanHtml(html) {
-      const tmp = document.createElement('div');
-      tmp.innerHTML = html || '';
-      return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
-    }
-
-    async function fetchAllFeeds(isCycleRefresh = false) {
-      const icon = document.getElementById('refreshIcon');
-      icon.classList.add('animate-spin', 'inline-block');
-
-      if (isCycleRefresh) {
-        document.getElementById('newAlertStatusText').textContent = '⏳ ปิดแท่งเทียนแล้ว กำลังรีเฟรชและคำนวณ % ใหม่...';
-      }
-
-      fetchLiveGoldPrice(false);
-
-      let collected = [];
-
-      await Promise.allSettled(RSS_FEEDS.map(async (feed) => {
-        try {
-          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&_t=${Date.now()}`;
-          const res = await fetch(apiUrl);
-          const data = await res.json();
-
-          if (data.status === 'ok' && Array.isArray(data.items)) {
-            data.items.slice(0, 7).forEach(item => {
-              const titleEn = cleanHtml(item.title);
-              const descEn = cleanHtml(item.description).slice(0, 240);
-
-              if (IRRELEVANT_NOISE.test(titleEn)) return;
-
-              const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
-              const uniqueKey = titleEn.slice(0, 50).toLowerCase();
-
-              collected.push({
-                id: Math.random().toString(36).slice(2),
-                uniqueKey,
-                isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
-                source: feed.name,
-                lang: feed.lang,
-                titleEn,
-                titleTh: feed.lang === 'th' ? titleEn : (translationCache[titleEn] || titleEn),
-                descEn,
-                descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
-                link: item.link,
-                pubDate: item.pubDate,
-                analysis
-              });
-            });
-          }
-        } catch (err) {
-          console.warn('Feed error:', feed.name, err);
-        }
-      }));
-
-      const seen = new Set();
-      collected = collected.filter(item => {
-        if (seen.has(item.uniqueKey)) return false;
-        seen.add(item.uniqueKey);
-        return true;
-      });
-
-      collected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-
-      const newlyArrived = collected.filter(item => item.isNew);
-      collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
-      localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-250)));
-
-      allArticles = collected;
-      document.getElementById('newCountBadge').textContent = newlyArrived.length;
-
-      updateSignalDashboard();
-      renderNews();
-
-      const nowThai = new Date().toLocaleTimeString('th-TH', {
-        timeZone: 'Asia/Bangkok',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-      document.getElementById('lastUpdateText').textContent = `อัปเดต ${nowThai} น.`;
-
-      if (isCycleRefresh) {
-        highlightSummaryCard();
-        if (newlyArrived.length > 0) {
-          const highImpactNew = newlyArrived.find(a => a.analysis.type !== 'neutral') || newlyArrived[0];
-          const alertTitle = highImpactNew.analysis.type === 'bullish'
-            ? `🟢 ปิดแท่งเทียน: พบข่าวใหม่หนุนทองขึ้น! (${latestBullPct}% vs ${latestBearPct}%)`
-            : highImpactNew.analysis.type === 'bearish'
-              ? `🔴 ปิดแท่งเทียน: พบข่าวใหม่กดดันทองลง! (${latestBullPct}% vs ${latestBearPct}%)`
-              : `⚡ ปิดแท่งเทียน: พบข่าวเข้าใหม่ ${newlyArrived.length} รายการ`;
-          showToastAlert(alertTitle, highImpactNew.titleTh, highImpactNew.analysis.type === 'neutral' ? 'urgent' : highImpactNew.analysis.type);
-          playAlertBeep(true);
-          document.getElementById('newAlertStatusText').textContent = `ซิงก์ปิดแท่ง ${nowThai} น. • พบข่าวใหม่ ${newlyArrived.length} ข่าว`;
-        } else {
-          showToastAlert(
-            `🕯️ ปิดแท่งเทียนรอบ ${nowThai} น. เรียบร้อย`,
-            `โอกาสทองคำล่าสุด: ขึ้น ${latestBullPct}% vs ลง ${latestBearPct}%`,
-            'info'
-          );
-          document.getElementById('newAlertStatusText').textContent = `ซิงก์ปิดแท่ง ${nowThai} น. • ข้อมูลตรงรอบแท่งเทียนแล้ว`;
-        }
-      }
-
-      isFirstVisitEver = false;
-      icon.classList.remove('animate-spin');
-
-      if (autoTranslate) {
-        for (let i = 0; i < Math.min(allArticles.length, 32); i++) {
-          const art = allArticles[i];
-          if (art.lang === 'en' && art.titleTh === art.titleEn) {
-            art.titleTh = await translateToThai(art.titleEn);
-            if (art.descEn) art.descTh = await translateToThai(art.descEn);
-            renderNews();
-          }
-        }
-      }
-    }
-
-    function updateSignalDashboard() {
-      let totalBull = 1;
-      let totalBear = 1;
-
-      const stats = {
-        inst: { name: 'SPDR/JPMorgan', count: 0, score: 0 },
-        macro: { name: 'PPI/PMI/FOMC/NFP', count: 0, score: 0 },
-        war: { name: 'สงคราม & ข่าวด่วนโลก', count: 0, score: 0 },
-        trade: { name: 'สงครามการค้า & ภาษี', count: 0, score: 0 },
-        health: { name: 'โรคระบาด & ไวรัส', count: 0, score: 0 },
-        terror: { name: 'ก่อการร้าย & วิกฤต', count: 0, score: 0 }
-      };
-
-      allArticles.forEach(art => {
-        const text = `${art.titleEn} ${art.descEn}`.toLowerCase();
-        const sc = art.analysis.score;
-
-        if (art.analysis.type === 'bullish') totalBull += Math.abs(sc) || 1;
-        if (art.analysis.type === 'bearish') totalBear += Math.abs(sc) || 1;
-
-        if (art.analysis.topics.includes('inst')) { stats.inst.count++; stats.inst.score += sc; }
-        if (art.analysis.topics.includes('macro')) { stats.macro.count++; stats.macro.score += sc; }
-        if (/war|missile|airstrike|invasion|military|ukraine|israel|iran|สงคราม|ขีปนาวุธ/.test(text)) { stats.war.count++; stats.war.score += sc; }
-        if (/trade war|tariff|sanction|สงครามการค้า|กำแพงภาษี/.test(text)) { stats.trade.count++; stats.trade.score += sc; }
-        if (/virus|pandemic|outbreak|who|epidemic|ไวรัส|โรคระบาด/.test(text)) { stats.health.count++; stats.health.score += sc; }
-        if (/terror|attack|bomb|hostage|ก่อการร้าย/.test(text)) { stats.terror.count++; stats.terror.score += sc; }
-      });
-
-      const sum = totalBull + totalBear;
-      const bullPct = Math.round((totalBull / sum) * 100);
-      const bearPct = 100 - bullPct;
-      latestBullPct = bullPct;
-      latestBearPct = bearPct;
-
-      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวตรงจุด`;
-      document.getElementById('bullPercentText').textContent = `${bullPct}%`;
-      document.getElementById('bearPercentText').textContent = `${bearPct}%`;
-      document.getElementById('bullBar').style.width = `${bullPct}%`;
-      document.getElementById('bearBar').style.width = `${bearPct}%`;
-
-      const allPillars = Object.values(stats);
-      const bullPillars = allPillars.filter(s => s.score > 0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
-      const bearPillars = allPillars.filter(s => s.score < -0.5 && s.count > 0).map(s => `${s.name} (${s.count})`);
-
-      const signalBadge = document.getElementById('signalBadge');
-      const reasoning = document.getElementById('aiReasoningText');
-      const tradeIdea = document.getElementById('tradeIdeaText');
-      let currentSignalState = '';
-
-      const bullTextList = bullPillars.length ? bullPillars.join(', ') : 'ข่าวหนุนทองคำบางส่วน';
-      const bearTextList = bearPillars.length ? bearPillars.join(', ') : 'ข่าวกดดันทองคำบางส่วน';
-
-      if (bullPct >= 62) {
-        currentSignalState = 'BULLISH HIGH (โอกาสขึ้นเด่น)';
-        signalBadge.textContent = 'BULLISH HIGH (โอกาสขึ้นสูง)';
-        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
-        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้นอยู่ที่ ${bullPct}% ต่อ ${bearPct}% โดยแรงหนุนหลักมาจาก ${bullTextList}` +
-          (bearPillars.length ? ` ขณะที่ยังมีแรงกดดันถ่วงดุลจาก ${bearTextList}` : '');
-        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสโน้มเอียงขึ้นสูง ควรรอย่อตัว (Pullback) ใกล้แนวรับและรอแท่งเทียนกลับตัวขึ้นก่อนเข้า Buy พร้อมวาง Stop Loss ใต้แนวรับ`;
-      } else if (bullPct >= 54) {
-        currentSignalState = 'BULLISH MODERATE (เอียงขึ้น)';
-        signalBadge.textContent = 'BULLISH BIAS (เอียงขึ้น)';
-        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-300';
-        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้นนำเล็กน้อยที่ ${bullPct}% ต่อ ${bearPct}% หนุนโดย ${bullTextList}` +
-          (bearPillars.length ? ` โดยมีปัจจัยกดดันจาก ${bearTextList} คอยจำกัดกรอบการขึ้นเป็นระยะ` : '');
-        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสขึ้นมีมากกว่าเล็กน้อย เน้นเล่นสั้นตามจังหวะย่อตัวไม่หลุดแนวรับ ระวังแรงขายทำกำไรใกล้แนวต้าน`;
-      } else if (bearPct >= 62) {
-        currentSignalState = 'BEARISH HIGH (โอกาสลงเด่น)';
-        signalBadge.textContent = 'BEARISH HIGH (โอกาสลงสูง)';
-        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
-        reasoning.textContent = `ความเป็นไปได้ฝั่งลงอยู่ที่ ${bearPct}% ต่อ ${bullPct}% โดยมีแรงกดดันหลักมาจาก ${bearTextList}` +
-          (bullPillars.length ? ` แม้จะมีแรงพยุงบางส่วนจาก ${bullTextList}` : '');
-        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: โอกาสโน้มเอียงลงสูง ควรรอจังหวะราคาเด้งขึ้นทดสอบแนวต้านแล้วไม่ผ่านก่อนเข้า Sell พร้อมวาง Stop Loss เหนือแนวต้าน`;
-      } else if (bearPct >= 54) {
-        currentSignalState = 'BEARISH MODERATE (เอียงลง)';
-        signalBadge.textContent = 'BEARISH BIAS (เอียงลง)';
-        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-300';
-        reasoning.textContent = `ความเป็นไปได้ฝั่งลงนำเล็กน้อยที่ ${bearPct}% ต่อ ${bullPct}% กดดันโดย ${bearTextList}` +
-          (bullPillars.length ? ` โดยมีแรงหนุนบางส่วนจาก ${bullTextList} คอยพยุงราคาไว้` : '');
-        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: แรงกดดันฝั่งลงมีมากกว่าเล็กน้อย เน้นรอจังหวะเด้งขายตามแนวต้านและไม่ไล่ราคาตอนย่อลงลึก`;
-      } else {
-        currentSignalState = 'BALANCED / SIDEWAYS';
-        signalBadge.textContent = 'BALANCED (โอกาสใกล้เคียงกัน)';
-        signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-amber-400';
-        reasoning.textContent = `ความเป็นไปได้ฝั่งขึ้น (${bullPct}%) และฝั่งลง (${bearPct}%) ใกล้เคียงกันมาก เนื่องจาก ${bullTextList} กำลังหักล้างกับ ${bearTextList}`;
-        tradeIdea.textContent = `💡 แผนเทรดที่สอดคล้อง: สัญญาณข่าวยังก้ำกึ่ง แนะนำรอความชัดเจนจากการเบรกกรอบแนวรับ-แนวต้าน หรือรอตัวเลขเศรษฐกิจสำคัญออกก่อนเข้าเทรด`;
-      }
-
-      lastSignalState = currentSignalState;
-
-      updateRadarTile('fInstText', 'fInstTag', stats.inst);
-      updateRadarTile('fMacroText', 'fMacroTag', stats.macro);
-      updateRadarTile('fWarText', 'fWarTag', stats.war);
-      updateRadarTile('fTradeText', 'fTradeTag', stats.trade);
-      updateRadarTile('fHealthText', 'fHealthTag', stats.health);
-      updateRadarTile('fTerrorText', 'fTerrorTag', stats.terror);
-
-      calculateTradeLevels();
-    }
-
-    function updateRadarTile(textId, tagId, stat) {
-      const textEl = document.getElementById(textId);
-      const tagEl = document.getElementById(tagId);
-      if (stat.count === 0) {
-        textEl.textContent = 'ปกติ (ไม่มีเหตุรุนแรง)';
-        tagEl.textContent = 'CALM';
-        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0';
-        return;
-      }
-      if (stat.score > 0.5) {
-        textEl.textContent = `พบ ${stat.count} ข่าว (หนุนทอง)`;
-        tagEl.textContent = 'BULL +';
-        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-emerald-500/20 text-emerald-400 shrink-0';
-      } else if (stat.score < -0.5) {
-        textEl.textContent = `พบ ${stat.count} ข่าว (กดดันทอง)`;
-        tagEl.textContent = 'BEAR -';
-        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-rose-500/20 text-rose-400 shrink-0';
-      } else {
-        textEl.textContent = `พบ ${stat.count} ข่าว (จับตา)`;
-        tagEl.textContent = 'WATCH';
-        tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-amber-500/20 text-amber-400 shrink-0';
-      }
-    }
-
-    function setCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        if (btn.dataset.cat === cat) {
-          btn.className = 'cat-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-bbGold text-black';
-        } else {
-          btn.className = 'cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder';
-        }
-      });
-      renderNews();
-    }
-
-    function toggleAutoTranslate() {
-      autoTranslate = !autoTranslate;
-      const btn = document.getElementById('toggleTranslateBtn');
-      btn.textContent = autoTranslate ? '🌐 แปลไทย' : '🌐 EN เดิม';
-      if (autoTranslate) fetchAllFeeds(false);
-      else renderNews();
-    }
-
-    function renderNews() {
-      const grid = document.getElementById('newsGrid');
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-
-      const filtered = allArticles.filter(art => {
-        if (currentCategory === 'new' && !art.isNew) return false;
-        if (currentCategory === 'bullish' && art.analysis.type !== 'bullish') return false;
-        if (currentCategory === 'bearish' && art.analysis.type !== 'bearish') return false;
-        if (['breaking', 'inst', 'macro', 'war', 'crisis', 'thai'].includes(currentCategory)) {
-          if (!art.analysis.topics.includes(currentCategory)) return false;
-        }
-        if (query) {
-          const hay = `${art.titleTh} ${art.titleEn} ${art.descTh} ${art.source}`.toLowerCase();
-          if (!hay.includes(query)) return false;
-        }
-        return true;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400 text-sm">ไม่พบข่าวในหมวดหมู่นี้</div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map(art => {
-        const displayTitle = autoTranslate ? art.titleTh : art.titleEn;
-        const displayDesc = autoTranslate ? art.descTh : art.descEn;
-        const timeStr = formatThaiDateTime(art.pubDate);
-
-        return `
-          <article class="bg-bbPanel border ${art.isNew ? 'border-amber-400/70 shadow-lg shadow-amber-500/10' : 'border-bbBorder'} hover:border-amber-500/40 rounded-xl p-4 flex flex-col justify-between transition">
-            <div>
-              <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
-                <div class="flex items-center gap-1">
-                  ${art.isNew ? '<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500 text-black font-bold">NEW</span>' : ''}
-                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">${art.analysis.topicLabel}</span>
-                </div>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}">
-                  ${art.analysis.label}
-                </span>
-              </div>
-
-              <div class="text-[11px] font-mono text-slate-500 mb-1.5">${art.source}${timeStr ? ` • ${timeStr}` : ''}</div>
-
-              <h3 class="text-sm sm:text-base font-bold text-white leading-snug mb-1.5">
-                ${displayTitle}
-              </h3>
-
-              ${autoTranslate && art.lang === 'en' ? `<p class="text-[11px] text-slate-500 mb-2 line-clamp-1">${art.titleEn}</p>` : ''}
-
-              <p class="text-xs text-slate-300 leading-relaxed line-clamp-3 mb-3">
-                ${displayDesc || 'กดปุ่มด้านล่างเพื่ออ่านสรุปวิเคราะห์ผลกระทบต่อทองคำ'}
-              </p>
-            </div>
-
-            <div class="pt-3 border-t border-bbBorder/70 flex items-center justify-between gap-2">
-              <button onclick="openReader('${art.id}')" class="flex-1 py-1.5 px-3 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-bbGoldLight border border-amber-500/30 text-xs font-semibold transition">
-                📖 วิเคราะห์ & แปลไทย
-              </button>
-              <a href="${art.link}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition">
-                ต้นฉบับ ↗
-              </a>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
-
-    async function openReader(id) {
-      const art = allArticles.find(a => a.id === id);
-      if (!art) return;
-
-      document.getElementById('readerModal').classList.remove('hidden');
-      document.getElementById('modalSource').textContent = art.source;
-      document.getElementById('modalTopicTag').textContent = art.analysis.topicLabel;
-
-      const impactBadge = document.getElementById('modalImpactBadge');
-      impactBadge.textContent = art.analysis.label;
-      impactBadge.className = `text-[11px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}`;
-
-      document.getElementById('modalTitleTh').textContent = art.titleTh;
-      document.getElementById('modalTitleEn').textContent = art.lang === 'en' ? art.titleEn : '';
-      document.getElementById('modalOriginalLink').href = art.link;
-
-      const contentEl = document.getElementById('modalContent');
-      const fullDescTh = await translateToThai(art.descEn || art.titleEn);
-
-      contentEl.innerHTML = `
-        <div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-bbGoldLight space-y-1">
-          <div><b>หมวดปัจจัยกระทบทองคำ:</b> ${art.analysis.topicLabel}</div>
-          <div><b>เหตุผลเชิงวิเคราะห์:</b> ${art.analysis.reason}</div>
-        </div>
-        <div class="p-4 rounded-xl bg-bbCard border border-bbBorder space-y-2">
-          <h4 class="font-bold text-white text-sm">เนื้อหาสรุปข่าว (แปลไทย):</h4>
-          <p class="text-slate-200 leading-relaxed">${fullDescTh}</p>
-          ${art.lang === 'en' ? `<p class="text-slate-400 text-xs pt-2 border-t border-bbBorder">${art.descEn}</p>` : ''}
-        </div>
-        <div class="p-3.5 rounded-xl bg-slate-900 border border-bbBorder text-xs text-slate-300 space-y-1">
-          <p class="font-semibold text-white">วิธีเปิดอ่านฉบับเต็มแบบแปลไทยทั้งหน้าบน iPhone:</p>
-          <p>1. กดปุ่ม <b>"เปิดเว็บต้นฉบับใน Safari ↗"</b> ด้านล่างขวา</p>
-          <p>2. แตะไอคอนเมนู (<b>aA</b> หรือจุดสามจุด) ที่แถบด้านล่างของ Safari แล้วเลือก <b>Translate to Thai (แปลเป็นภาษาไทย)</b></p>
-        </div>
-      `;
-    }
-
-    function closeReader() {
-      document.getElementById('readerModal').classList.add('hidden');
-    }
-
-    calculateTradeLevels();
-    fetchAllFeeds(false);
-    startCountdownTimer();
-  </script>
-</body>
-</html>
+      // วางไม้ 2 ที่ 50% ของระยะ Entry1 -> SL และไม้ 3 ที่ 75% ของระยะ Entry1 -> SL (ระยะ SL สั้นลงเรื่อยๆ)
+      const e2 = entry1 + (slPrice - entry1) * 0.5;
+      const e3 = entry1 + (slPrice - entry1) * 0.75;
