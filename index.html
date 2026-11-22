@@ -61,7 +61,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> REAL-TIME RADAR
             </span>
           </h1>
-          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">ศูนย์รวมข่าวทองคำทั่วโลก • Dot Plot • 12 FOMC • Yield • DXY • GDP</p>
+          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">ศูนย์รวมข่าวทองคำทั่วโลก • Dot Plot • 12 FOMC • Yield • DXY • GDP • สงคราม</p>
         </div>
       </div>
 
@@ -240,7 +240,7 @@
 
           <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
             <div class="font-semibold text-bbGoldLight">🧠 สรุปการวิเคราะห์แนวโน้มจากทุกเรดาร์ทั่วโลก:</div>
-            <p id="aiReasoningText">กำลังรวบรวมข่าวจาก Dot Plot, คณะกรรมการ FOMC 12 คน, JPMorgan, BlackRock, Investing, Forex Factory, GDP, Bond Yield, DXY, CPI/PPI/NFP, Geopolitics และ Crude Oil...</p>
+            <p id="aiReasoningText">กำลังรวบรวมข่าวจาก Dot Plot, คณะกรรมการ FOMC 12 คน, JPMorgan, BlackRock, Investing, Forex Factory, GDP, Bond Yield, DXY, CPI/PPI/NFP, สงคราม และ Crude Oil...</p>
             <p id="radarDriverBreakdown" class="text-xs text-slate-400 pt-1 border-t border-bbBorder/70">กำลังคำนวณแรงขับเคลื่อนรายเรดาร์...</p>
           </div>
         </div>
@@ -251,7 +251,7 @@
         </div>
       </div>
 
-      <!-- Right: 10-Pillar Radar Grid (Clickable to View News in That Category) -->
+      <!-- Right: 10-Pillar Radar Grid -->
       <div class="lg:col-span-7 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -262,7 +262,6 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-          <!-- 01 Understanding Gold -->
           <div onclick="jumpToCategory('gold_nature')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-amber-300/90 block text-[11px] font-semibold">01 Understanding Gold (JPM / BlackRock / SPDR / ธนาคารกลาง)</span>
@@ -271,7 +270,6 @@
             <span id="f01Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 02 DXY & USD -->
           <div onclick="jumpToCategory('dxy')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-sky-300 block text-[11px] font-semibold">02 DXY & USD (ดอลลาร์สหรัฐ • EUR/JPY/GBP)</span>
@@ -280,7 +278,6 @@
             <span id="f02Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 03 Bond Yield -->
           <div onclick="jumpToCategory('yield')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-amber-500/35 flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-amber-300 block text-[11px] font-semibold">03 Bond Yield (US 2Y / 5Y / 10Y / 30Y / Real Yield)</span>
@@ -289,7 +286,6 @@
             <span id="f03Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 04 Federal Reserve (Dot Plot & 12 FOMC Members) -->
           <div onclick="jumpToCategory('fed')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-indigo-500/40 flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-indigo-300 block text-[11px] font-semibold">04 Federal Reserve (Dot Plot • FOMC 12 เสียง • Warsh/Powell)</span>
@@ -298,7 +294,6 @@
             <span id="f04Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 05 Inflation: CPI, PPI, NFP -->
           <div onclick="jumpToCategory('inflation')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-rose-300 block text-[11px] font-semibold">05 Inflation & Labor (CPI, PPI, PCE, NFP, การว่างงาน)</span>
@@ -307,7 +302,6 @@
             <span id="f05Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 06 Economic News & GDP -->
           <div onclick="jumpToCategory('econ')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-emerald-300 block text-[11px] font-semibold">06 Economic News & GDP (GDP ทุกตัว • PMI • Investing/FF)</span>
@@ -316,7 +310,6 @@
             <span id="f06Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 07 Geopolitics -->
           <div onclick="jumpToCategory('geopolitics')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-orange-300 block text-[11px] font-semibold">07 Geopolitics (สงคราม, กำแพงภาษี, คว่ำบาตร, วิกฤตโลก)</span>
@@ -325,7 +318,6 @@
             <span id="f07Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 08 Crude Oil & Energy -->
           <div onclick="jumpToCategory('oil')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-purple-300 block text-[11px] font-semibold">08 Crude Oil & Energy (WTI, Brent, OPEC+, พลังงานโลก)</span>
@@ -334,7 +326,6 @@
             <span id="f08Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
           </div>
 
-          <!-- 09 Fundamental Analysis -->
           <div onclick="jumpToCategory('all')" class="cursor-pointer p-2.5 rounded-lg bg-slate-900/90 hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-bbGoldLight block text-[11px] font-semibold">09 Fundamental Analysis (ข่าวรวมทั้งโลก)</span>
@@ -343,7 +334,6 @@
             <span id="f09Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-amber-500/20 text-bbGoldLight shrink-0">ALL NEWS</span>
           </div>
 
-          <!-- 10 Practical Trading -->
           <a href="#practicalTradingSection" class="p-2.5 rounded-lg bg-slate-900/90 hover:border-emerald-500/50 border border-bbBorder flex items-center justify-between gap-2 transition">
             <div>
               <span class="text-emerald-400 block text-[11px] font-semibold">10 Practical Trading (แผนเทรด & Lot)</span>
@@ -357,24 +347,18 @@
 
     <!-- 10 Practical Trading: Custom Manual Entry / SL / TP & Multi-Order Lot Calculator -->
     <section id="practicalTradingSection" class="bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 space-y-4">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-bbBorder pb-3">
-        <div>
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">10 PRACTICAL TRADING • MULTI-ORDER SL / TP & LOT PLANNER</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
-              💾 จำค่าที่กรอกไว้เสมอเมื่อรีเฟรช
-            </span>
-            <span id="livePriceInfoBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-bbBorder">
-              ราคาตลาดอ้างอิง: --
-            </span>
-          </div>
-          <h3 class="text-base font-bold text-white mt-0.5">คำนวณ Lot 1–3 ไม้ + ระยะ SL สั้นลงเรื่อยๆ + TP</h3>
-          <p class="text-[11px] text-slate-400">กรอก <b>ทุน</b>, <b>ราคาเข้าไม้ 1</b>, <b>ราคา SL</b>, <b>ราคา TP</b> และ <b>จำนวนไม้ (1–3 ไม้)</b> — ไม้ 2 และ 3 ปรับราคาเข้าให้ใกล้ SL มากขึ้นเพื่อคำนวณระยะ SL ที่สั้นลงและ Lot แยกแต่ละไม้</p>
+      <div class="border-b border-bbBorder pb-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">10 PRACTICAL TRADING • MULTI-ORDER SL / TP & LOT PLANNER</span>
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
+            💾 จำค่าที่กรอกไว้เสมอเมื่อรีเฟรช
+          </span>
+          <span id="livePriceInfoBadge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-bbBorder">
+            ราคาตลาดอ้างอิง: --
+          </span>
         </div>
-
-        <div id="favoredSideBadge" class="px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30 self-start lg:self-center">
-          รอคำนวณมุมมอง...
-        </div>
+        <h3 class="text-base font-bold text-white mt-0.5">คำนวณ Lot 1–3 ไม้ + ระยะ SL สั้นลงเรื่อยๆ + TP</h3>
+        <p class="text-[11px] text-slate-400">กรอก <b>ทุน</b>, <b>ราคาเข้าไม้ 1</b>, <b>ราคา SL</b>, <b>ราคา TP</b> และ <b>จำนวนไม้ (1–3 ไม้)</b> — ไม้ 2 และ 3 ปรับราคาเข้าให้ใกล้ SL มากขึ้นเพื่อคำนวณระยะ SL ที่สั้นลงและ Lot แยกแต่ละไม้</p>
       </div>
 
       <!-- Main Inputs Row -->
@@ -526,6 +510,9 @@
         <button onclick="setCategory('bearish')" data-cat="bearish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-400 border border-bbBorder">
           🔴 กดดันทองลง
         </button>
+        <button onclick="setCategory('geopolitics')" data-cat="geopolitics" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-orange-300 border border-bbBorder">
+          ⚔️ สงคราม / วิกฤต
+        </button>
         <button onclick="setCategory('fed')" data-cat="fed" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-indigo-300 border border-bbBorder">
           🏛️ Fed / Dot Plot / 12 FOMC
         </button>
@@ -538,8 +525,8 @@
         <button onclick="setCategory('econ')" data-cat="econ" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
           📅 GDP / CPI / PPI / NFP
         </button>
-        <button onclick="setCategory('geopolitics')" data-cat="geopolitics" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          ⚔️ สงคราม / น้ำมัน / วิกฤต
+        <button onclick="setCategory('oil')" data-cat="oil" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-purple-300 border border-bbBorder">
+          🛢️ น้ำมันดิบ
         </button>
         <button onclick="setCategory('thai')" data-cat="thai" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
           🇹🇭 ข่าวไทย
@@ -547,14 +534,14 @@
       </div>
 
       <div class="relative w-full lg:w-56">
-        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา Warsh, Powell, Dot Plot, GDP..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
+        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา war, Warsh, GDP, Yield..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
 
     <!-- News Feed Grid -->
     <section id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="col-span-full text-center py-12 text-slate-400 text-sm">
-        กำลังรวบรวมข่าวทองคำทั้งโลก (Dot Plot, 12 FOMC, JPMorgan, BlackRock, Investing, Forex Factory, GDP, Bond Yield, DXY, CPI/PPI/NFP, Oil)...
+        กำลังรวบรวมข่าวทองคำทั้งโลก (สงคราม, Dot Plot, 12 FOMC, JPMorgan, BlackRock, Investing, Forex Factory, GDP, Bond Yield, DXY, CPI/PPI/NFP, Oil)...
       </div>
     </section>
 
@@ -590,52 +577,46 @@
   </div>
 
   <script>
-    // Global Parallel Feeds: Dot Plot, 12 FOMC Speakers (2026), JPMorgan, BlackRock, Investing, Forex Factory, GDP, Yield, DXY, CPI/PPI/NFP, Geopolitics, Oil, Thai
+    // Dedicated feeds with fallback proxy support so war, today's news, FOMC, GDP, Yield, DXY, JPM/BlackRock never get dropped
     const RSS_FEEDS = [
       {
-        name: 'Fed Chair & 12 FOMC Speakers (2026)',
-        topic: 'fed',
-        url: 'https://news.google.com/rss/search?q=(%22Kevin+Warsh%22+OR+%22Jerome+Powell%22+OR+%22John+Williams%22+OR+%22Christopher+Waller%22+OR+%22Michelle+Bowman%22+OR+%22Michael+Barr%22+OR+%22Lisa+Cook%22+OR+%22Philip+Jefferson%22+OR+%22Beth+Hammack%22+OR+%22Neel+Kashkari%22+OR+%22Lorie+Logan%22+OR+%22Anna+Paulson%22)+AND+(Fed+OR+FOMC+OR+rates+OR+inflation+OR+gold)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'FOMC Dot Plot & Monetary Policy',
-        topic: 'fed',
-        url: 'https://news.google.com/rss/search?q=(%22Dot+Plot%22+OR+%22FOMC+minutes%22+OR+%22FOMC+statement%22+OR+%22Federal+Reserve%22+OR+%22Fed+projections%22)+AND+(rates+OR+inflation+OR+gold+OR+dollar)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'JPMorgan, BlackRock & Central Banks',
-        topic: 'gold_nature',
-        url: 'https://news.google.com/rss/search?q=(%22JPMorgan%22+OR+%22JP+Morgan%22+OR+%22BlackRock%22+OR+%22SPDR+Gold%22+OR+%22central+bank+gold%22+OR+%22World+Gold+Council%22)+AND+(gold+OR+XAUUSD+OR+yields+OR+dollar)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com, Forex Factory & GDP',
-        topic: 'econ',
-        url: 'https://news.google.com/rss/search?q=(%22GDP%22+OR+%22gross+domestic+product%22+OR+%22Investing.com%22+OR+%22Forex+Factory%22+OR+%22economic+calendar%22)+AND+(US+OR+Fed+OR+gold+OR+dollar)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'US Treasury Yields (2Y/10Y/30Y) & DXY',
-        topic: 'yield',
-        url: 'https://news.google.com/rss/search?q=(%22Treasury+yields%22+OR+%2210-year+yield%22+OR+%222-year+yield%22+OR+%22real+yield%22+OR+%22DXY%22+OR+%22US+dollar%22)+when:2d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'CPI, PPI, PCE, NFP & Global PMI',
-        topic: 'inflation',
-        url: 'https://news.google.com/rss/search?q=(%22CPI%22+OR+%22PPI%22+OR+%22PCE%22+OR+%22Nonfarm+Payrolls%22+OR+%22NFP%22+OR+%22PMI%22+OR+%22Retail+Sales%22)+AND+(US+OR+Fed+OR+gold)+when:2d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Geopolitics, Tariffs & Crude Oil',
+        name: 'War, Geopolitics & Global Crisis',
         topic: 'geopolitics',
-        url: 'https://news.google.com/rss/search?q=(%22war%22+OR+%22tariffs%22+OR+%22geopolitical%22+OR+%22sanctions%22+OR+%22crude+oil%22+OR+%22WTI%22+OR+%22Brent%22+OR+%22OPEC%22)+when:2d&hl=en-US&gl=US&ceid=US:en',
+        url: 'https://news.google.com/rss/search?q=(war+OR+missile+OR+military+OR+conflict+OR+geopolitical+OR+tariffs+OR+sanctions)+when:5d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
-        name: 'FXStreet Global Gold & Macro',
+        name: 'Fed, Dot Plot & FOMC Speakers',
+        topic: 'fed',
+        url: 'https://news.google.com/rss/search?q=(%22Federal+Reserve%22+OR+%22FOMC%22+OR+%22Dot+Plot%22+OR+%22Kevin+Warsh%22+OR+%22Jerome+Powell%22+OR+%22interest+rates%22)+when:5d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'JPMorgan, BlackRock & Gold Flows',
+        topic: 'gold_nature',
+        url: 'https://news.google.com/rss/search?q=(%22JPMorgan%22+OR+%22BlackRock%22+OR+%22SPDR+Gold%22+OR+%22gold+price%22+OR+%22XAUUSD%22)+when:5d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'GDP, Investing, Forex Factory & Macro',
+        topic: 'econ',
+        url: 'https://news.google.com/rss/search?q=(%22GDP%22+OR+%22Investing.com%22+OR+%22Forex+Factory%22+OR+%22CPI%22+OR+%22PPI%22+OR+%22NFP%22)+when:5d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Bond Yields (10Y/2Y) & DXY / USD',
+        topic: 'yield',
+        url: 'https://news.google.com/rss/search?q=(%22Treasury+yields%22+OR+%2210-year+yield%22+OR+%22bond+yields%22+OR+%22DXY%22+OR+%22US+dollar%22)+when:5d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Crude Oil & Energy Markets',
+        topic: 'oil',
+        url: 'https://news.google.com/rss/search?q=(%22crude+oil%22+OR+%22WTI+oil%22+OR+%22Brent+crude%22+OR+%22OPEC%22+OR+%22oil+prices%22)+when:5d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'FXStreet Gold & Macro',
         topic: 'yield',
         url: 'https://www.fxstreet.com/rss/news',
         lang: 'en'
@@ -643,7 +624,7 @@
       {
         name: 'ข่าวทองคำ & เศรษฐกิจโลก (ไทย)',
         topic: 'thai',
-        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+เฟด+OR+FOMC+OR+GDP+OR+บอนด์ยีลด์+OR+ดอลลาร์+OR+เงินเฟ้อ+OR+น้ำมันดิบ)+when:2d&hl=th&gl=TH&ceid=TH:th',
+        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+สงคราม+OR+เฟด+OR+GDP+OR+บอนด์ยีลด์+OR+ดอลลาร์+OR+เงินเฟ้อ+OR+น้ำมันดิบ)+when:5d&hl=th&gl=TH&ceid=TH:th',
         lang: 'th'
       }
     ];
@@ -956,18 +937,6 @@
       document.getElementById('totalTpProfitText').textContent = `+$${totalTpProfit.toFixed(2)}`;
       document.getElementById('formulaSummaryNote').textContent =
         `ทุน $${capital} • แบ่ง ${orderCount} ไม้ • ระยะ SL สั้นลงตามลำดับไม้`;
-
-      const favoredBadge = document.getElementById('favoredSideBadge');
-      if (latestBullPct - latestBearPct >= 5) {
-        favoredBadge.textContent = `เรดาร์โลก: เอียงขึ้น (${latestBullPct}% vs ${latestBearPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-emerald-500/15 text-emerald-400 border border-emerald-500/40 self-start lg:self-center';
-      } else if (latestBearPct - latestBullPct >= 5) {
-        favoredBadge.textContent = `เรดาร์โลก: เอียงลง (${latestBearPct}% vs ${latestBullPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-rose-500/15 text-rose-400 border border-rose-500/40 self-start lg:self-center';
-      } else {
-        favoredBadge.textContent = `เรดาร์โลก: สูสีกัน (${latestBullPct}% / ${latestBearPct}%)`;
-        favoredBadge.className = 'px-3 py-2 rounded-lg font-mono font-bold text-xs bg-amber-500/15 text-bbGoldLight border border-amber-500/30 self-start lg:self-center';
-      }
     }
 
     function syncCandleClock() {
@@ -1117,7 +1086,7 @@
       if (/dot plot|fomc|federal reserve|\bfed\b|rate cut|rate hike|เฟด|ดอกเบี้ย/.test(lower) || isFomcSpeaker) detectedTopics.add('fed');
       if (/\bcpi\b|\bppi\b|\bpce\b|\bnfp\b|nonfarm|payroll|inflation|unemployment|เงินเฟ้อ|จ้างงาน/.test(lower)) detectedTopics.add('inflation');
       if (/gdp|gross domestic product|\bpmi\b|retail sales|jobless claims|investing\.com|forex factory|เศรษฐกิจ/.test(lower)) detectedTopics.add('econ');
-      if (/war|missile|tariff|trade war|geopolitic|sanction|virus|pandemic|terror|สงคราม|ภาษี|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('geopolitics');
+      if (/war|missile|military|airstrike|invasion|escalation|conflict|tariff|trade war|geopolitic|sanction|virus|pandemic|terror|สงคราม|โจมตี|ขีปนาวุธ|กำแพงภาษี|โรคระบาด|ก่อการร้าย/.test(lower)) detectedTopics.add('geopolitics');
       if (/\boil\b|crude|wti|brent|opec|น้ำมัน|พลังงาน/.test(lower)) detectedTopics.add('oil');
 
       const speakerBoost = isFomcSpeaker ? 0.5 : 0;
@@ -1148,23 +1117,23 @@
 
       const uniqueReasons = [...new Set(reasons)];
       const topicLabels = {
+        geopolitics: '⚔️ สงคราม / วิกฤต',
         fed: '🏛️ Fed / Dot Plot / 12 FOMC',
         gold_nature: '🏦 JPM/BlackRock/SPDR',
         yield: '📉 Bond Yield',
         dxy: '💵 DXY & USD',
         inflation: '📊 CPI / PPI / NFP',
         econ: '📅 GDP & Economic News',
-        geopolitics: '⚔️ Geopolitics',
-        oil: '🛢️ Crude Oil & Energy',
+        oil: '🛢️ น้ำมันดิบ',
         thai: '🇹🇭 ข่าวไทย'
       };
-      const primaryTopic = ['fed', 'yield', 'dxy', 'inflation', 'econ', 'gold_nature', 'geopolitics', 'oil'].find(t => detectedTopics.has(t)) || defaultTopic;
+      const primaryTopic = ['geopolitics', 'fed', 'yield', 'dxy', 'inflation', 'econ', 'gold_nature', 'oil'].find(t => detectedTopics.has(t)) || defaultTopic;
 
       if (bullScore > bearScore) {
         return {
           type: 'bullish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '🏛️ Fed / Dot Plot / 12 FOMC',
+          topicLabel: topicLabels[primaryTopic] || '⚔️ สงคราม / วิกฤต',
           label: '🟢 หนุนทองขึ้น (Bullish)',
           badgeClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
           score: bullScore - bearScore,
@@ -1174,7 +1143,7 @@
         return {
           type: 'bearish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '🏛️ Fed / Dot Plot / 12 FOMC',
+          topicLabel: topicLabels[primaryTopic] || '⚔️ สงคราม / วิกฤต',
           label: '🔴 กดดันทองลง (Bearish)',
           badgeClass: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
           score: -(bearScore - bullScore),
@@ -1184,7 +1153,7 @@
         return {
           type: 'neutral',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '🏛️ Fed / Dot Plot / 12 FOMC',
+          topicLabel: topicLabels[primaryTopic] || '⚔️ สงคราม / วิกฤต',
           label: '🟡 จับตาดู (Neutral)',
           badgeClass: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
           score: 0,
@@ -1217,6 +1186,36 @@
       return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
     }
 
+    async function fetchSingleFeedItems(feed) {
+      // Primary endpoint: rss2json
+      try {
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&_t=${Date.now()}`;
+        const res = await fetch(apiUrl);
+        const data = await res.json();
+        if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+          return data.items;
+        }
+      } catch (e) {}
+
+      // Fallback endpoint: allorigins raw XML
+      try {
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
+        const res = await fetch(proxyUrl);
+        const xmlText = await res.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        const items = [...xmlDoc.querySelectorAll('item')];
+        return items.map(node => ({
+          title: node.querySelector('title')?.textContent || '',
+          description: node.querySelector('description')?.textContent || '',
+          link: node.querySelector('link')?.textContent || '',
+          pubDate: node.querySelector('pubDate')?.textContent || new Date().toISOString()
+        }));
+      } catch (e) {}
+
+      return [];
+    }
+
     async function fetchAllFeeds(isCycleRefresh = false) {
       const icon = document.getElementById('refreshIcon');
       icon.classList.add('animate-spin', 'inline-block');
@@ -1229,39 +1228,33 @@
 
       let collected = [];
 
-      // Parallel fetch for ultra-fast global scanning
       await Promise.allSettled(RSS_FEEDS.map(async (feed) => {
         try {
-          const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&_t=${Date.now()}`;
-          const res = await fetch(apiUrl);
-          const data = await res.json();
+          const items = await fetchSingleFeedItems(feed);
+          items.slice(0, 8).forEach(item => {
+            const titleEn = cleanHtml(item.title);
+            const descEn = cleanHtml(item.description).slice(0, 240);
 
-          if (data.status === 'ok' && Array.isArray(data.items)) {
-            data.items.slice(0, 7).forEach(item => {
-              const titleEn = cleanHtml(item.title);
-              const descEn = cleanHtml(item.description).slice(0, 240);
+            if (!titleEn || IRRELEVANT_NOISE.test(titleEn)) return;
 
-              if (IRRELEVANT_NOISE.test(titleEn)) return;
+            const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
+            const uniqueKey = titleEn.slice(0, 52).toLowerCase();
 
-              const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.topic);
-              const uniqueKey = titleEn.slice(0, 52).toLowerCase();
-
-              collected.push({
-                id: Math.random().toString(36).slice(2),
-                uniqueKey,
-                isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
-                source: feed.name,
-                lang: feed.lang,
-                titleEn,
-                titleTh: feed.lang === 'th' ? titleEn : (translationCache[titleEn] || titleEn),
-                descEn,
-                descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
-                link: item.link,
-                pubDate: item.pubDate,
-                analysis
-              });
+            collected.push({
+              id: Math.random().toString(36).slice(2),
+              uniqueKey,
+              isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
+              source: feed.name,
+              lang: feed.lang,
+              titleEn,
+              titleTh: feed.lang === 'th' ? titleEn : (translationCache[titleEn] || titleEn),
+              descEn,
+              descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
+              link: item.link,
+              pubDate: item.pubDate,
+              analysis
             });
-          }
+          });
         } catch (err) {
           console.warn('Feed error:', feed.name, err);
         }
@@ -1343,7 +1336,7 @@
         fed: { name: '04 Fed/Dot Plot/12 FOMC', count: 0, score: 0 },
         inflation: { name: '05 CPI/PPI/NFP', count: 0, score: 0 },
         econ: { name: '06 GDP & Economic News', count: 0, score: 0 },
-        geopolitics: { name: '07 Geopolitics & Crisis', count: 0, score: 0 },
+        geopolitics: { name: '07 Geopolitics & War', count: 0, score: 0 },
         oil: { name: '08 Crude Oil & Energy', count: 0, score: 0 }
       };
 
@@ -1372,7 +1365,7 @@
         if (/gdp|gross domestic product|\bpmi\b|retail sales|jobless claims|investing\.com|forex factory|เศรษฐกิจ/.test(text)) {
           pillars.econ.count++; pillars.econ.score += sc;
         }
-        if (/war|missile|tariff|trade war|geopolitic|sanction|virus|pandemic|terror|สงคราม|ภาษี|โรคระบาด|ก่อการร้าย/.test(text)) {
+        if (/war|missile|military|airstrike|invasion|escalation|conflict|tariff|trade war|geopolitic|sanction|virus|pandemic|terror|สงคราม|โจมตี|ขีปนาวุธ|กำแพงภาษี|โรคระบาด|ก่อการร้าย/.test(text)) {
           pillars.geopolitics.count++; pillars.geopolitics.score += sc;
         }
         if (/\boil\b|crude|wti|brent|opec|น้ำมัน|พลังงาน/.test(text)) {
