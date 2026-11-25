@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD 360° Global Gold Fundamental Terminal</title>
+  <title>XAUUSD Institutional 12-Radar Gold Terminal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,10 +18,10 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            bbBlack: '#090b0f',
-            bbPanel: '#11151d',
-            bbCard: '#161b26',
-            bbBorder: '#242c3d',
+            bbBlack: '#07090d',
+            bbPanel: '#0f131b',
+            bbCard: '#151a25',
+            bbBorder: '#232b3e',
             bbGold: '#f59e0b',
             bbGoldLight: '#fbbf24',
           }
@@ -30,11 +30,11 @@
     };
   </script>
   <style>
-    body { background-color: #090b0f; color: #e2e8f0; }
+    body { background-color: #07090d; color: #e2e8f0; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #090b0f; }
-    ::-webkit-scrollbar-thumb { background: #242c3d; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #07090d; }
+    ::-webkit-scrollbar-thumb { background: #232b3e; border-radius: 3px; }
     @keyframes slideInRight {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
@@ -51,35 +51,35 @@
   <header class="sticky top-0 z-40 bg-bbPanel/95 backdrop-blur border-b border-bbBorder px-4 py-2.5">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
       <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-bbGold font-mono font-bold text-lg">
+        <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-bbGold font-mono font-bold text-lg shadow-inner">
           Au
         </div>
         <div>
-          <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
-            XAUUSD GLOBAL GOLD FUNDAMENTAL TERMINAL
+          <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex flex-wrap items-center gap-2">
+            XAUUSD INSTITUTIONAL 12-RADAR TERMINAL
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> REAL-TIME RADAR
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 5-STAGE ENGINE
             </span>
           </h1>
-          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">ศูนย์รวมข่าวทองคำทั่วโลก • Trump • Jensen Huang/Nvidia • Investing • Fed/12 FOMC • Yield • DXY</p>
+          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">12 เรดาร์มหภาค • Tier 1 Yield/Fed/DXY/PCE • Tier 2 Flows/Banks • Tier 3 Trump/Nvidia/War/Oil</p>
         </div>
       </div>
 
-      <!-- Auto-Refresh & Sound Controls -->
+      <!-- Auto-Refresh & Controls -->
       <div class="flex flex-wrap items-center gap-1.5">
         <div class="flex items-center bg-bbBlack border border-bbBorder rounded-lg px-2 py-1 text-xs">
           <span class="text-slate-400 mr-1.5 hidden sm:inline">ซิงก์แท่ง:</span>
           <select id="refreshIntervalSelect" onchange="changeRefreshInterval()" class="bg-transparent text-bbGoldLight font-mono font-semibold focus:outline-none cursor-pointer">
             <option value="60" class="bg-bbPanel">M1 (ทุก 1 นาที)</option>
             <option value="180" class="bg-bbPanel">M3 (ทุก 3 นาที)</option>
-            <option value="300" selected class="bg-bbPanel">M5 (ทุก 5 นาที • ประหยัด)</option>
+            <option value="300" selected class="bg-bbPanel">M5 (ทุก 5 นาที)</option>
             <option value="900" class="bg-bbPanel">M15 (ทุก 15 นาที)</option>
             <option value="0" class="bg-bbPanel">ปิดออโต้</option>
           </select>
           <span id="countdownText" class="ml-2 text-[11px] font-mono text-emerald-400 font-bold tabular-nums w-11 text-right">--:--</span>
         </div>
 
-        <button id="soundToggleBtn" onclick="toggleSound()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition" title="เปิด/ปิดเสียงแจ้งเตือน">
+        <button id="soundToggleBtn" onclick="toggleSound()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 border border-bbBorder hover:bg-slate-700 transition">
           🔔 เสียง: เปิด
         </button>
 
@@ -88,13 +88,13 @@
         </button>
 
         <button onclick="manualRefresh()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbGold text-black font-semibold hover:bg-bbGoldLight transition flex items-center gap-1">
-          <span id="refreshIcon">↻</span> สแกนทันที
+          <span id="refreshIcon">↻</span> สแกน 12 เรดาร์
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Real-Time Market Ticker Strip (TradingView) -->
+  <!-- Real-Time Market Ticker Strip -->
   <div class="bg-bbBlack border-b border-bbBorder">
     <div class="max-w-7xl mx-auto px-2 py-1">
       <div class="tradingview-widget-container">
@@ -102,12 +102,13 @@
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
         {
           "symbols": [
-            { "proName": "OANDA:XAUUSD", "title": "01 Gold (XAU/USD)" },
-            { "proName": "CAPITALCOM:DXY", "title": "02 DXY (US Dollar)" },
-            { "proName": "TVC:US10Y", "title": "03 US 10Y Bond Yield" },
-            { "proName": "TVC:US02Y", "title": "03 US 2Y Bond Yield" },
-            { "proName": "NASDAQ:NVDA", "title": "AI / Nvidia (NVDA)" },
-            { "proName": "TVC:USOIL", "title": "08 WTI Crude Oil" }
+            { "proName": "OANDA:XAUUSD", "title": "Gold (XAU/USD)" },
+            { "proName": "OANDA:XAGUSD", "title": "Silver (XAG/USD)" },
+            { "proName": "CAPITALCOM:DXY", "title": "DXY (US Dollar)" },
+            { "proName": "TVC:US10Y", "title": "US 10Y Yield" },
+            { "proName": "TVC:US02Y", "title": "US 2Y Yield" },
+            { "proName": "NASDAQ:NVDA", "title": "Nvidia (NVDA)" },
+            { "proName": "TVC:USOIL", "title": "WTI Crude Oil" }
           ],
           "showSymbolLogo": true,
           "isTransparent": true,
@@ -120,11 +121,11 @@
     </div>
   </div>
 
-  <main class="max-w-7xl w-full mx-auto px-4 py-5 flex-1 space-y-5">
+  <main class="max-w-7xl w-full mx-auto px-4 py-4 flex-1 space-y-4">
 
     <!-- Real-Time 4-Asset Cards -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-36">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -142,7 +143,7 @@
         </div>
       </div>
 
-      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-36">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -160,7 +161,7 @@
         </div>
       </div>
 
-      <div class="bg-bbPanel border border-amber-500/40 rounded-xl overflow-hidden h-40">
+      <div class="bg-bbPanel border border-amber-500/40 rounded-xl overflow-hidden h-36">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -178,7 +179,7 @@
         </div>
       </div>
 
-      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-40">
+      <div class="bg-bbPanel border border-bbBorder rounded-xl overflow-hidden h-36">
         <div class="tradingview-widget-container" style="height:100%;width:100%">
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -197,33 +198,34 @@
       </div>
     </section>
 
-    <!-- Global Fundamental Analysis & Radar -->
+    <!-- Institutional Decision Engine & 12-Radar Matrix -->
     <section id="summarySection" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-      <!-- Left: Multi-Radar Global Trend Synthesis -->
+      <!-- Left: 5-Stage Institutional Synthesis -->
       <div id="probabilityCard" class="lg:col-span-5 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-300">
         <div>
           <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
             <div>
-              <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">GLOBAL FUNDAMENTAL ANALYSIS ENGINE</span>
-              <h2 class="text-lg font-bold text-white">วิเคราะห์แนวโน้มทองคำจากทุกเรดาร์ทั่วโลก</h2>
+              <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">INSTITUTIONAL 5-STAGE DECISION ENGINE</span>
+              <h2 class="text-lg font-bold text-white">สรุปทิศทางทองคำถ่วงน้ำหนัก 3 ชั้น</h2>
             </div>
             <span id="analyzedCountBadge" class="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-bbBorder">
-              สแกน 0 ข่าวตรงจุด
+              สแกน 0 ข่าว
             </span>
           </div>
 
+          <!-- Probability Meter -->
           <div class="my-2">
             <div class="flex justify-between items-end mb-2">
               <div>
-                <span class="text-xs text-emerald-400 font-semibold block">โอกาสโน้มเอียงขึ้น (BULLISH)</span>
+                <span class="text-xs text-emerald-400 font-semibold block">แรงหนุนขึ้น (BULLISH)</span>
                 <span id="bullPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-emerald-400 tabular-nums">50%</span>
               </div>
               <div class="text-center px-3 py-1.5 rounded-lg bg-slate-900 border border-bbBorder">
-                <span class="text-[10px] text-slate-400 block">สรุปแนวโน้มรวม</span>
+                <span class="text-[10px] text-slate-400 block">มติจาก 12 เรดาร์</span>
                 <span id="signalBadge" class="text-xs sm:text-sm font-mono font-bold text-amber-400">ANALYZING...</span>
               </div>
               <div class="text-right">
-                <span class="text-xs text-rose-400 font-semibold block">โอกาสโน้มเอียงลง (BEARISH)</span>
+                <span class="text-xs text-rose-400 font-semibold block">แรงกดดันลง (BEARISH)</span>
                 <span id="bearPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-rose-400 tabular-nums">50%</span>
               </div>
             </div>
@@ -234,125 +236,174 @@
             </div>
           </div>
 
-          <div id="macroAlignmentBox" class="mt-2.5 px-3 py-2 rounded-lg bg-slate-900/90 border border-bbBorder text-[11px] font-mono text-slate-300 flex items-center justify-between gap-2">
+          <!-- Live Gold Spot & Divergence Detector -->
+          <div class="mt-2.5 px-3 py-2 rounded-lg bg-slate-900/90 border border-bbBorder text-[11px] font-mono text-slate-300 flex flex-wrap items-center justify-between gap-2">
             <span id="liveGoldSpotTag">💰 XAUUSD สด: กำลังดึง...</span>
-            <span id="macroAlignmentTag" class="font-bold text-amber-300">กำลังประมวลผล...</span>
+            <span id="divergenceBadge" class="font-bold text-amber-300">กำลังตรวจจับ Divergence...</span>
           </div>
 
-          <div class="mt-3 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
-            <div class="font-semibold text-bbGoldLight">🧠 สรุปการวิเคราะห์แนวโน้มจากทุกเรดาร์ทั่วโลก (เน้นข่าวสดล่าสุด):</div>
-            <p id="aiReasoningText">กำลังรวบรวมข่าวจาก Donald Trump, Jensen Huang (Nvidia/AI), Investing.com, Kitco, สงคราม, Dot Plot, FOMC 12 คน, JPMorgan, BlackRock, GDP/PCE/Retail Sales, Bond Yield, DXY และ Crude Oil...</p>
-            <p id="radarDriverBreakdown" class="text-xs text-slate-400 pt-1 border-t border-bbBorder/70">กำลังคำนวณแรงขับเคลื่อนรายเรดาร์...</p>
+          <!-- Tier Breakdown Bars -->
+          <div class="mt-2.5 grid grid-cols-3 gap-1.5 text-[10px] font-mono">
+            <div class="p-2 rounded bg-bbCard border border-bbBorder">
+              <span class="text-slate-400 block">TIER 1 (45%) มหภาคหลัก</span>
+              <span id="tier1ScoreText" class="font-bold text-white">กำลังคำนวณ...</span>
+            </div>
+            <div class="p-2 rounded bg-bbCard border border-bbBorder">
+              <span class="text-slate-400 block">TIER 2 (30%) โฟลว์/สถาบัน</span>
+              <span id="tier2ScoreText" class="font-bold text-white">กำลังคำนวณ...</span>
+            </div>
+            <div class="p-2 rounded bg-bbCard border border-bbBorder">
+              <span class="text-slate-400 block">TIER 3 (25%) ข่าว/การเมือง</span>
+              <span id="tier3ScoreText" class="font-bold text-white">กำลังคำนวณ...</span>
+            </div>
+          </div>
+
+          <!-- Institutional Reasoning Box -->
+          <div class="mt-2.5 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
+            <div class="font-semibold text-bbGoldLight">🧠 บทวิเคราะห์เชิงสถาบัน (ถ่วงน้ำหนัก Tier + ความสดใหม่ + ความแรงพาดหัว):</div>
+            <p id="aiReasoningText">กำลังรวบรวมข้อมูลเชิงลึกจากทั่วโลก...</p>
+            <p id="radarDriverBreakdown" class="text-xs text-slate-400 pt-1 border-t border-bbBorder/70">กำลังเรียงลำดับปัจจัยขับเคลื่อน...</p>
           </div>
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span id="newAlertStatusText">ถ่วงน้ำหนักความสดใหม่ (Time-Decay) + ราคาสดอัตโนมัติ</span>
+          <span id="newAlertStatusText">ระบบถ่วงน้ำหนัก 3 ชั้น + Sample Guardrail</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
 
-      <!-- Right: Global Radar Grid -->
+      <!-- Right: 12-Radar 3-Tier Matrix -->
       <div class="lg:col-span-7 bg-bbPanel border border-bbBorder rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">GOLD FUNDAMENTAL GLOBAL RADAR</span>
-            <h3 class="text-base font-bold text-white">เรดาร์จับสัญญาณข่าวทองคำทั่วโลก (คลิกช่องเพื่อดูข่าวหมวดนั้น)</h3>
+            <span class="text-[11px] font-mono uppercase tracking-wider text-bbGold">12-RADAR GLOBAL MACRO MATRIX (3-TIER WEIGHTED)</span>
+            <h3 class="text-base font-bold text-white">เรดาร์จับสัญญาณทองคำ 12 มิติ (คลิกช่องเพื่อเจาะลึกข่าวหมวดนั้น)</h3>
           </div>
           <span id="readinessStatusBadge" class="text-[11px] font-mono px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-            ความพร้อมวิเคราะห์: พร้อม 100%
+            ความพร้อม: 0/12 เรดาร์
           </span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-          <!-- 01 Gold Action & Flows -->
-          <div onclick="jumpToCategory('gold_nature')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-amber-300/90 block text-[11px] font-semibold">Gold Action & Flows (ราคาทอง/Kitco/JPM/BlackRock/SPDR/COT)</span>
-              <span id="f01Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
-            </div>
-            <span id="f01Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+        <!-- TIER 1 -->
+        <div>
+          <div class="text-[10px] font-mono uppercase tracking-wider text-amber-400 mb-1.5 flex items-center justify-between">
+            <span>⚡ TIER 1: CORE MACRO DRIVERS — น้ำหนัก 45% (ตัวกำหนดเทรนด์หลัก)</span>
+            <span>Yield • Fed • DXY • PCE/GDP</span>
           </div>
-
-          <!-- 02 DXY & USD & Global Central Banks -->
-          <div onclick="jumpToCategory('dxy')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-sky-300 block text-[11px] font-semibold">DXY & FX (ดอลลาร์สหรัฐ • BOJ • ECB • PBOC • RBA)</span>
-              <span id="f02Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div onclick="jumpToCategory('yield')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-amber-500/30 flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-amber-300 block text-[11px] font-semibold">01. US Bond Yields & Real Yield (2Y/10Y/30Y)</span>
+                <span id="r01Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r01Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f02Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+
+            <div onclick="jumpToCategory('fed')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-indigo-500/35 flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-indigo-300 block text-[11px] font-semibold">02. Federal Reserve & Rate Odds (Dot Plot • 12 FOMC)</span>
+                <span id="r02Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r02Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
+
+            <div onclick="jumpToCategory('dxy')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-sky-300 block text-[11px] font-semibold">03. DXY & US Dollar Index (ดัชนีดอลลาร์สหรัฐ)</span>
+                <span id="r03Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r03Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
+
+            <div onclick="jumpToCategory('econ')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-emerald-300 block text-[11px] font-semibold">04. Inflation & Growth (Core PCE • CPI • GDP • NFP • PMI)</span>
+                <span id="r04Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r04Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
           </div>
+        </div>
 
-          <!-- 03 Bond Yield -->
-          <div onclick="jumpToCategory('yield')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-amber-500/35 flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-amber-300 block text-[11px] font-semibold">Bond Yield & Liquidity (US 2Y/10Y/30Y • Real Yield • พันธบัตร)</span>
-              <span id="f03Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
-            </div>
-            <span id="f03Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+        <!-- TIER 2 -->
+        <div>
+          <div class="text-[10px] font-mono uppercase tracking-wider text-sky-400 mb-1.5 flex items-center justify-between">
+            <span>🏦 TIER 2: INSTITUTIONAL FLOWS & CENTRAL BANKS — น้ำหนัก 30%</span>
+            <span>Price Action • ETF/COT • CBs • Silver</span>
           </div>
-
-          <!-- 04 Federal Reserve -->
-          <div onclick="jumpToCategory('fed')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-indigo-500/40 flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-indigo-300 block text-[11px] font-semibold">Federal Reserve (Dot Plot • FOMC 12 เสียง • Warsh/Powell)</span>
-              <span id="f04Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div onclick="jumpToCategory('gold_action')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-amber-200 block text-[11px] font-semibold">05. Gold Price Action & Technicals (Kitco • แนวรับ-ต้าน)</span>
+                <span id="r05Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r05Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f04Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+
+            <div onclick="jumpToCategory('flows')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-teal-300 block text-[11px] font-semibold">06. Institutional & ETF Flows (SPDR • Goldman • JPM • COT)</span>
+                <span id="r06Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r06Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
+
+            <div onclick="jumpToCategory('cbanks')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-blue-300 block text-[11px] font-semibold">07. Global Central Banks & FX (PBOC • BOJ • ECB • RBA)</span>
+                <span id="r07Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r07Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
+
+            <div onclick="jumpToCategory('silver')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-slate-300 block text-[11px] font-semibold">08. Silver & Metals Spillover (XAG/USD • โลหะมีค่า)</span>
+                <span id="r08Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r08Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+            </div>
           </div>
+        </div>
 
-          <!-- 05 Inflation & Economic Indicators -->
-          <div onclick="jumpToCategory('econ')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-emerald-300 block text-[11px] font-semibold">Macro & Indicators (GDP • CPI/PPI/PCE • NFP • Retail Sales)</span>
-              <span id="f05Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
-            </div>
-            <span id="f05Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
+        <!-- TIER 3 -->
+        <div>
+          <div class="text-[10px] font-mono uppercase tracking-wider text-rose-400 mb-1.5 flex items-center justify-between">
+            <span>🌍 TIER 3: GEOPOLITICS, POLITICS & LIQUIDITY — น้ำหนัก 25%</span>
+            <span>War • Trump • Nvidia/AI • Oil</span>
           </div>
-
-          <!-- 06 War & Geopolitics -->
-          <div onclick="jumpToCategory('geopolitics')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-orange-300 block text-[11px] font-semibold">War & Geopolitics (สงคราม, อิหร่าน, กำแพงภาษี, คว่ำบาตร)</span>
-              <span id="f06Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div onclick="jumpToCategory('geopolitics')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-orange-300 block text-[11px] font-semibold">09. War & Middle East Geopolitics (สงคราม • อิหร่าน)</span>
+                <span id="r09Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r09Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f06Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
-          </div>
 
-          <!-- 07 Donald Trump & White House -->
-          <div onclick="jumpToCategory('trump')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-rose-500/40 flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-rose-300 block text-[11px] font-semibold">Donald Trump (นโยบายทรัมป์ • ภาษี • อิหร่าน • แทรกแซงตลาด)</span>
-              <span id="f07Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            <div onclick="jumpToCategory('trump')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-rose-500/35 flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-rose-300 block text-[11px] font-semibold">10. Donald Trump & Tariffs (นโยบายทรัมป์ • กำแพงภาษี)</span>
+                <span id="r10Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r10Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f07Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
-          </div>
 
-          <!-- 08 Jensen Huang / Nvidia / AI & Equity Liquidity -->
-          <div onclick="jumpToCategory('nvidia_ai')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-cyan-500/40 flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-cyan-300 block text-[11px] font-semibold">Jensen Huang & Nvidia / AI (กระแสหุ้น AI & การปรับพอร์ตเงินสด)</span>
-              <span id="f08Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            <div onclick="jumpToCategory('nvidia_ai')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-cyan-500/35 flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-cyan-300 block text-[11px] font-semibold">11. Jensen Huang, Nvidia & AI / Cash Liquidity</span>
+                <span id="r11Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r11Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f08Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
-          </div>
 
-          <!-- 09 Crude Oil & Energy -->
-          <div onclick="jumpToCategory('oil')" class="cursor-pointer p-2.5 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-purple-300 block text-[11px] font-semibold">Crude Oil & Energy (WTI, Brent, OPEC+, พลังงานโลก)</span>
-              <span id="f09OilText" class="font-semibold text-slate-200">รอข้อมูล...</span>
+            <div onclick="jumpToCategory('oil')" class="cursor-pointer p-2 rounded-lg bg-bbCard hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
+              <div>
+                <span class="text-purple-300 block text-[11px] font-semibold">12. Crude Oil & Inflation Spillover (WTI • Brent • OPEC+)</span>
+                <span id="r12Text" class="font-semibold text-slate-200">รอข้อมูล...</span>
+              </div>
+              <span id="r12Tag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
             </div>
-            <span id="f09OilTag" class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-slate-800 text-slate-400 shrink-0">--</span>
-          </div>
-
-          <!-- 10 Investing.com Complete Wire -->
-          <div onclick="jumpToCategory('investing')" class="cursor-pointer p-2.5 rounded-lg bg-slate-900/90 hover:border-amber-400 border border-bbBorder flex items-center justify-between gap-2 transition">
-            <div>
-              <span class="text-bbGoldLight block text-[11px] font-semibold">Investing.com Wire (Commodities • Forex • Economy • Politics)</span>
-              <span id="f10InvText" class="font-semibold text-slate-200">รวมข่าว Investing.com ครบทุกหมวด</span>
-            </div>
-            <span class="px-1.5 py-0.5 rounded font-mono text-[10px] bg-amber-500/20 text-bbGoldLight shrink-0">INVESTING</span>
           </div>
         </div>
       </div>
@@ -373,32 +424,38 @@
         <button onclick="setCategory('bearish')" data-cat="bearish" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-400 border border-bbBorder">
           🔴 กดดันทองลง
         </button>
-        <button onclick="setCategory('trump')" data-cat="trump" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-300 border border-bbBorder">
-          🇺🇸 ทรัมป์ (Trump)
-        </button>
-        <button onclick="setCategory('nvidia_ai')" data-cat="nvidia_ai" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-cyan-300 border border-bbBorder">
-          🟢 ฮวง / Nvidia / AI
-        </button>
-        <button onclick="setCategory('investing')" data-cat="investing" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-bbGoldLight border border-bbBorder">
-          📈 Investing.com
-        </button>
-        <button onclick="setCategory('geopolitics')" data-cat="geopolitics" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-orange-300 border border-bbBorder">
-          ⚔️ สงคราม / วิกฤต
-        </button>
-        <button onclick="setCategory('fed')" data-cat="fed" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-indigo-300 border border-bbBorder">
-          🏛️ Fed / Dot Plot / 12 FOMC
-        </button>
-        <button onclick="setCategory('gold_nature')" data-cat="gold_nature" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          🏦 Gold / Kitco / JPM / SPDR
-        </button>
         <button onclick="setCategory('yield')" data-cat="yield" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-amber-300 border border-bbBorder">
           📉 Bond Yield
         </button>
-        <button onclick="setCategory('dxy')" data-cat="dxy" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-sky-300 border border-bbBorder">
-          💵 DXY & FX
+        <button onclick="setCategory('fed')" data-cat="fed" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-indigo-300 border border-bbBorder">
+          🏛️ Fed / 12 FOMC
         </button>
-        <button onclick="setCategory('econ')" data-cat="econ" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
-          📅 GDP / CPI / PCE / NFP
+        <button onclick="setCategory('dxy')" data-cat="dxy" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-sky-300 border border-bbBorder">
+          💵 DXY
+        </button>
+        <button onclick="setCategory('econ')" data-cat="econ" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-emerald-300 border border-bbBorder">
+          📅 PCE / GDP / CPI
+        </button>
+        <button onclick="setCategory('gold_action')" data-cat="gold_action" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-amber-200 border border-bbBorder">
+          📊 Gold Action
+        </button>
+        <button onclick="setCategory('flows')" data-cat="flows" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-teal-300 border border-bbBorder">
+          🏦 SPDR / Banks / COT
+        </button>
+        <button onclick="setCategory('cbanks')" data-cat="cbanks" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-blue-300 border border-bbBorder">
+          🌐 PBOC / BOJ / ECB
+        </button>
+        <button onclick="setCategory('silver')" data-cat="silver" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
+          🥈 Silver
+        </button>
+        <button onclick="setCategory('geopolitics')" data-cat="geopolitics" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-orange-300 border border-bbBorder">
+          ⚔️ สงคราม / อิหร่าน
+        </button>
+        <button onclick="setCategory('trump')" data-cat="trump" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-rose-300 border border-bbBorder">
+          🇺🇸 ทรัมป์
+        </button>
+        <button onclick="setCategory('nvidia_ai')" data-cat="nvidia_ai" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-cyan-300 border border-bbBorder">
+          🟢 ฮวง / Nvidia / AI
         </button>
         <button onclick="setCategory('oil')" data-cat="oil" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-purple-300 border border-bbBorder">
           🛢️ น้ำมันดิบ
@@ -408,15 +465,15 @@
         </button>
       </div>
 
-      <div class="relative w-full lg:w-56">
-        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา Trump, Jensen, Nvidia, GDP..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
+      <div class="relative w-full lg:w-52">
+        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา PCE, Yield, Trump, Nvidia..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
 
     <!-- News Feed Grid -->
     <section id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="col-span-full text-center py-12 text-slate-400 text-sm">
-        กำลังรวบรวมข่าวทองคำทั้งโลก (Donald Trump, Jensen Huang/Nvidia, Investing.com, Kitco, สงคราม, Dot Plot, 12 FOMC, JPMorgan, BlackRock, GDP/PCE/Retail Sales, Bond Yield, DXY, Oil)...
+        กำลังสแกนข่าวทั่วโลกเข้าสู่ 12 เรดาร์ทั้ง 3 ชั้น (Tier 1: Yield/Fed/DXY/PCE • Tier 2: Flows/Banks/Silver • Tier 3: War/Trump/Nvidia/Oil)...
       </div>
     </section>
 
@@ -452,72 +509,93 @@
   </div>
 
   <script>
-    // Complete global feeds: Trump, Jensen Huang/Nvidia/AI, Investing.com (Direct + Site Wire), Kitco, War, Fed/FOMC, Macro, Yield/DXY, Oil, Thai
+    // 14 Dedicated Global Feeds covering all 12 Institutional Radars
     const RSS_FEEDS = [
+      // TIER 1 FEEDS
       {
-        name: 'Donald Trump & White House Policy',
-        topic: 'trump',
-        url: 'https://news.google.com/rss/search?q=(%22Donald+Trump%22+OR+%22Trump%22)+AND+(gold+OR+tariffs+OR+Iran+OR+Fed+OR+economy+OR+Nvidia+OR+China+OR+markets)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        name: 'US Treasury Yields & Real Yield Wire',
+        topic: 'yield',
+        url: 'https://news.google.com/rss/search?q=(%22Treasury+yields%22+OR+%2210-year+yield%22+OR+%222-year+yield%22+OR+%22bond+yields%22+OR+%22real+yield%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
-        name: 'Jensen Huang, Nvidia & AI Market Impact',
-        topic: 'nvidia_ai',
-        url: 'https://news.google.com/rss/search?q=(%22Jensen+Huang%22+OR+%22Nvidia%22)+AND+(AI+OR+stock+OR+rally+OR+selloff+OR+Trump+OR+China+OR+gold+OR+tech)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com Gold, Macro & Markets Wire',
-        topic: 'investing',
-        url: 'https://news.google.com/rss/search?q=site:investing.com+(gold+OR+XAU+OR+Federal+Reserve+OR+Treasury+yields+OR+dollar+OR+CPI+OR+GDP+OR+Trump+OR+Nvidia)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com Commodities RSS',
-        topic: 'investing',
-        url: 'https://www.investing.com/rss/news_11.rss',
-        lang: 'en'
-      },
-      {
-        name: 'Kitco & Gold Price Action',
-        topic: 'gold_nature',
-        url: 'https://news.google.com/rss/search?q=(gold+falls+OR+gold+drops+OR+gold+plunges+OR+gold+slides+OR+gold+rises+OR+gold+surges+OR+%22Kitco%22+OR+%22XAU%2FUSD%22+OR+%22COT+report%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'War, Geopolitics & Global Crisis',
-        topic: 'geopolitics',
-        url: 'https://news.google.com/rss/search?q=(war+OR+missile+OR+military+OR+airstrike+OR+Iran+OR+conflict+OR+geopolitical+OR+tariffs+OR+sanctions)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Fed, Dot Plot & 12 FOMC Speakers',
+        name: 'Federal Reserve, FOMC & Rate Hike/Cut Odds',
         topic: 'fed',
         url: 'https://news.google.com/rss/search?q=(%22Federal+Reserve%22+OR+%22FOMC%22+OR+%22Dot+Plot%22+OR+%22Kevin+Warsh%22+OR+%22Jerome+Powell%22+OR+%22rate+hike%22+OR+%22rate+cut%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
-        name: 'GDP, CPI, PCE, Retail Sales & Macro',
+        name: 'DXY & US Dollar Index Wire',
+        topic: 'dxy',
+        url: 'https://news.google.com/rss/search?q=(%22DXY%22+OR+%22US+dollar+index%22+OR+%22US+dollar%22+OR+%22greenback%22)+AND+(rises+OR+falls+OR+surges+OR+drops+OR+gold+OR+Fed)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Core PCE, CPI, GDP, NFP & US Macro',
         topic: 'econ',
-        url: 'https://news.google.com/rss/search?q=(%22GDP%22+OR+%22CPI%22+OR+%22PPI%22+OR+%22PCE%22+OR+%22Nonfarm+Payrolls%22+OR+%22Retail+Sales%22+OR+%22PMI%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        url: 'https://news.google.com/rss/search?q=(%22Core+PCE%22+OR+%22PCE+inflation%22+OR+%22CPI%22+OR+%22GDP%22+OR+%22Nonfarm+Payrolls%22+OR+%22Retail+Sales%22+OR+%22PMI%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      // TIER 2 FEEDS
+      {
+        name: 'Gold Price Action & Technical Outlook',
+        topic: 'gold_action',
+        url: 'https://news.google.com/rss/search?q=(%22gold+price%22+OR+%22XAU%2FUSD%22+OR+%22spot+gold%22+OR+%22Kitco%22)+AND+(falls+OR+drops+OR+rises+OR+rebounds+OR+plunges+OR+support+OR+resistance)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
-        name: 'Bond Yields (10Y/2Y), DXY & Central Banks',
-        topic: 'yield',
-        url: 'https://news.google.com/rss/search?q=(%22Treasury+yields%22+OR+%2210-year+yield%22+OR+%22bond+yields%22+OR+%22DXY%22+OR+%22US+dollar%22+OR+%22BOJ%22+OR+%22PBOC%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        name: 'Institutional Forecasts, ETF & COT Flows',
+        topic: 'flows',
+        url: 'https://news.google.com/rss/search?q=(%22Goldman+Sachs%22+OR+%22JPMorgan%22+OR+%22UBS%22+OR+%22Bank+of+America%22+OR+%22SPDR+Gold%22+OR+%22BlackRock%22+OR+%22COT+report%22)+AND+gold+when:4d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
-        name: 'Crude Oil & Energy Markets',
+        name: 'Global Central Banks (PBOC, BOJ, ECB, RBA)',
+        topic: 'cbanks',
+        url: 'https://news.google.com/rss/search?q=(%22PBOC%22+OR+%22Bank+of+Japan%22+OR+%22BOJ%22+OR+%22ECB%22+OR+%22RBA%22+OR+%22central+bank+gold%22)+AND+(gold+OR+yen+OR+yuan+OR+rates)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Silver (XAG/USD) & Precious Metals',
+        topic: 'silver',
+        url: 'https://news.google.com/rss/search?q=(%22silver+price%22+OR+%22XAG%2FUSD%22+OR+%22precious+metals%22)+AND+(rises+OR+falls+OR+surges+OR+drops+OR+gold)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      // TIER 3 FEEDS
+      {
+        name: 'War, Iran & Geopolitical Risk Wire',
+        topic: 'geopolitics',
+        url: 'https://news.google.com/rss/search?q=(war+OR+Iran+OR+missile+OR+military+OR+airstrike+OR+geopolitical+OR+sanctions)+AND+(gold+OR+oil+OR+markets+OR+Middle+East)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Donald Trump & White House Tariff Policy',
+        topic: 'trump',
+        url: 'https://news.google.com/rss/search?q=(%22Donald+Trump%22+OR+%22Trump%22)+AND+(tariffs+OR+gold+OR+Iran+OR+Fed+OR+China+OR+Nvidia+OR+economy)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Jensen Huang, Nvidia & AI Equity Liquidity',
+        topic: 'nvidia_ai',
+        url: 'https://news.google.com/rss/search?q=(%22Jensen+Huang%22+OR+%22Nvidia%22)+AND+(AI+OR+stock+OR+rally+OR+selloff+OR+Trump+OR+China+OR+gold)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Crude Oil, OPEC+ & Energy Inflation',
         topic: 'oil',
-        url: 'https://news.google.com/rss/search?q=(%22crude+oil%22+OR+%22WTI+oil%22+OR+%22Brent+crude%22+OR+%22OPEC%22+OR+%22oil+prices%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        url: 'https://news.google.com/rss/search?q=(%22crude+oil%22+OR+%22WTI%22+OR+%22Brent+crude%22+OR+%22OPEC%22)+AND+(prices+OR+surges+OR+falls+OR+inflation)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Investing.com Global Markets Wire',
+        topic: 'gold_action',
+        url: 'https://news.google.com/rss/search?q=site:investing.com+(gold+OR+XAU+OR+Treasury+yields+OR+Federal+Reserve+OR+DXY+OR+PCE)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
       {
         name: 'ข่าวทองคำ ทรัมป์ ฮวง & เศรษฐกิจโลก (ไทย)',
         topic: 'thai',
-        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+ทรัมป์+OR+อินวิเดีย+OR+เจนเซน+ฮวง+OR+สงคราม+OR+เฟด+OR+GDP+OR+บอนด์ยีลด์)+when:3d&hl=th&gl=TH&ceid=TH:th',
+        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+ทรัมป์+OR+อินวิเดีย+OR+เจนเซน+ฮวง+OR+เฟด+OR+บอนด์ยีลด์+OR+เงินเฟ้อ)+when:3d&hl=th&gl=TH&ceid=TH:th',
         lang: 'th'
       }
     ];
@@ -563,77 +641,94 @@
 
     const FOMC_MEMBERS_2026_REGEX = /\b(kevin warsh|warsh|jerome powell|powell|john williams|williams|christopher waller|waller|michelle bowman|bowman|michael barr|barr|lisa cook|cook|philip jefferson|jefferson|beth hammack|hammack|neel kashkari|kashkari|lorie logan|logan|anna paulson|paulson|mary daly|daly|austan goolsbee|goolsbee|thomas barkin|barkin)\b/i;
 
+    // 5-Stage Institutional Rules with Expectation Gap (Beat vs Miss) & Second-Order Effects
     const RULES = {
-      goldBull: [
-        /\bgold rises\b/, /\bgold surges\b/, /\bgold climbs\b/, /\bgold gains\b/, /\bgold jumps\b/, /\bgold advances\b/,
-        /\bbullion rises\b/, /\bbullion gains\b/, /\bxau\/usd rises\b/, /\bxauusd rises\b/, /\bbargain hunting\b/, /\bbargain buying\b/,
-        /\bspdr gold inflows\b/, /\bspdr adds\b/, /\bjpmorgan bullish\b/, /\bblackrock gold\b/,
-        /\bcentral bank buys\b/, /\bpboc buys gold\b/, /\bgold etf inflows\b/, /\bsafe haven\b/,
-        /ราคาทองพุ่ง/, /ราคาทองขึ้น/, /ทองคำปรับขึ้น/, /ซื้อทองคำเพิ่ม/, /กองทุนทอง/, /ทุนสำรองทองคำ/
+      yieldBull: [
+        /\byields fall\b/, /\byields drop\b/, /\byields slide\b/, /\byields slip\b/, /\byields ease\b/, /\byields retreat\b/,
+        /\btreasury yields fall\b/, /\b10-year yield falls\b/, /\b2-year yield falls\b/, /\bbond yields fall\b/, /\breal yields fall\b/,
+        /บอนด์ยีลด์ร่วง/, /บอนด์ยีลด์ลด/, /ยีลด์ร่วง/, /ยีลด์ลด/
       ],
-      goldBear: [
-        /\bgold falls\b/, /\bgold drops\b/, /\bgold plunges\b/, /\bgold slides\b/, /\bgold retreats\b/, /\bgold tumbles\b/,
-        /\bgold slips\b/, /\bgold weakens\b/, /\bgold pares gains\b/, /\bgold gives up gains\b/, /\bgold sinks\b/,
-        /\bbullion falls\b/, /\bbullion drops\b/, /\bxau\/usd falls\b/, /\bxau\/usd drops\b/, /\bxauusd falls\b/,
-        /\bprofit-taking\b/, /\bprofit taking\b/, /\bgold sell-off\b/, /\bgold sells off\b/, /\braise cash\b/, /\bliquidity squeeze\b/,
-        /\bspdr outflows\b/, /\bspdr sells\b/, /\bjpmorgan cuts gold\b/, /\bjpmorgan bearish\b/, /\bgold etf outflows\b/,
-        /ราคาทองร่วง/, /ราคาทองลง/, /ทองคำปรับลง/, /ทองคำย่อ/, /เทขายทองคำ/, /spdr ขาย/, /แรงขายทำกำไร/
+      yieldBear: [
+        /\byields surge\b/, /\byields rise\b/, /\byields climb\b/, /\byields jump\b/, /\byields rebound\b/, /\byields hit\b/,
+        /\btreasury yields rise\b/, /\btreasury yields surge\b/, /\b10-year yield rises\b/, /\b2-year yield rises\b/,
+        /\bbond yields rise\b/, /\breal yields rise\b/, /\b5% yield\b/,
+        /บอนด์ยีลด์พุ่ง/, /บอนด์ยีลด์ขึ้น/, /ยีลด์พุ่ง/, /ยีลด์ขึ้น/
+      ],
+      fedBull: [
+        /\brate cut\b/, /\bcut rates\b/, /\bdovish\b/, /\bfomc dovish\b/, /\bpowell dovish\b/, /\bwarsh dovish\b/,
+        /\bhike bets ease\b/, /\bscale back.*tightening\b/, /\bless hawkish\b/, /\bfed pivots\b/, /\beasing cycle\b/,
+        /ลดดอกเบี้ย/, /เฟดผ่อนคลาย/, /ชะลอขึ้นดอกเบี้ย/
+      ],
+      fedBear: [
+        /\brate hike\b/, /\bhike rates\b/, /\brate hike bets\b/, /\bhawkish\b/, /\bfomc hawkish\b/, /\bpowell hawkish\b/, /\bwarsh hawkish\b/,
+        /\bhigher for longer\b/, /\bmonetary tightening\b/, /\bfurther tightening\b/, /\bquarter-point increase\b/, /\bquarter-point hike\b/,
+        /ขึ้นดอกเบี้ย/, /คงดอกเบี้ย/, /เฟดคุมเข้ม/
       ],
       dxyBull: [
-        /\bdollar falls\b/, /\bdollar drops\b/, /\bdollar slips\b/, /\bdollar weakens\b/, /\bdollar slides\b/,
+        /\bdollar falls\b/, /\bdollar drops\b/, /\bdollar slips\b/, /\bdollar weakens\b/, /\bdollar slides\b/, /\bdollar retreats\b/,
         /\bdxy falls\b/, /\bdxy drops\b/, /\bdxy slips\b/, /\bdxy weakens\b/, /\bweaker dollar\b/,
         /ดอลลาร์อ่อน/, /ดอลลาร์ร่วง/, /ดอลลาร์ลง/, /dxy ร่วง/, /dxy อ่อน/
       ],
       dxyBear: [
         /\bdollar surges\b/, /\bdollar rises\b/, /\bdollar climbs\b/, /\bdollar strengthens\b/, /\bdollar rebounds\b/, /\bdollar jumps\b/,
-        /\bdxy surges\b/, /\bdxy rises\b/, /\bdxy climbs\b/, /\bdxy rebounds\b/, /\bstronger dollar\b/, /\bfirm dollar\b/,
+        /\bdxy surges\b/, /\bdxy rises\b/, /\bdxy climbs\b/, /\bdxy rebounds\b/, /\bstronger dollar\b/, /\bfirm dollar\b/, /\bdollar strength\b/,
         /ดอลลาร์แข็ง/, /ดอลลาร์พุ่ง/, /ดอลลาร์ขึ้น/, /dxy พุ่ง/, /dxy แข็ง/
       ],
-      yieldBull: [
-        /\byields fall\b/, /\byields drop\b/, /\byields slide\b/, /\byields slip\b/, /\byields ease\b/,
-        /\btreasury yields fall\b/, /\b10-year yield falls\b/, /\b2-year yield falls\b/, /\bbond yields fall\b/, /\breal yields fall\b/,
-        /บอนด์ยีลด์ร่วง/, /บอนด์ยีลด์ลด/, /ยีลด์ร่วง/, /ยีลด์ลด/
-      ],
-      yieldBear: [
-        /\byields surge\b/, /\byields rise\b/, /\byields climb\b/, /\byields jump\b/, /\byields rebound\b/,
-        /\btreasury yields rise\b/, /\btreasury yields surge\b/, /\b10-year yield rises\b/, /\b2-year yield rises\b/,
-        /\bbond yields rise\b/, /\breal yields rise\b/,
-        /บอนด์ยีลด์พุ่ง/, /บอนด์ยีลด์ขึ้น/, /ยีลด์พุ่ง/, /ยีลด์ขึ้น/
-      ],
-      fedBull: [
-        /\brate cut\b/, /\bcut rates\b/, /\bdovish\b/, /\bfomc dovish\b/, /\bpowell dovish\b/, /\bwarsh dovish\b/,
-        /\bfed pivots\b/, /\beasing cycle\b/, /\blower dot plot\b/, /\bmore rate cuts\b/,
-        /ลดดอกเบี้ย/, /เฟดส่งสัญญาณผ่อนคลาย/, /เฟดลดดอกเบี้ย/
-      ],
-      fedBear: [
-        /\brate hike\b/, /\bhike rates\b/, /\brate hike bets\b/, /\bhawkish\b/, /\bfomc hawkish\b/, /\bpowell hawkish\b/, /\bwarsh hawkish\b/,
-        /\bhigher for longer\b/, /\bhigher dot plot\b/, /\bfewer rate cuts\b/, /\bno rate cuts\b/,
-        /\bpause rate cuts\b/, /\bfed holds\b/, /\bholds rates steady\b/,
-        /ขึ้นดอกเบี้ย/, /คงดอกเบี้ย/, /เฟดคุมเข้ม/, /ชะลอลดดอกเบี้ย/
-      ],
       econBull: [
-        /\bcpi falls\b/, /\bcpi cools\b/, /\bcpi misses\b/, /\bppi falls\b/, /\bppi cools\b/, /\bpce cools\b/,
-        /\binflation cools\b/, /\binflation eases\b/, /\bnfp misses\b/, /\bnonfarm misses\b/, /\bpayrolls miss\b/,
-        /\bjobs miss\b/, /\bunemployment rises\b/, /\bsoft jobs\b/,
-        /\bgdp slows\b/, /\bgdp misses\b/, /\bgdp contracts\b/, /\bpmi falls\b/, /\bpmi misses\b/, /\bpmi contracts\b/,
-        /\bretail sales fall\b/, /\bjobless claims rise\b/, /\brecession\b/, /\beconomic slowdown\b/,
-        /เงินเฟ้อชะลอ/, /เงินเฟ้อลด/, /จ้างงานต่ำกว่าคาด/, /gdp ต่ำกว่าคาด/, /pmi ต่ำกว่าคาด/, /เศรษฐกิจชะลอ/
+        /\bpce cools\b/, /\bpce misses\b/, /\bweaker pce\b/, /\bcpi falls\b/, /\bcpi cools\b/, /\bcpi misses\b/,
+        /\binflation cools\b/, /\binflation eases\b/, /\bnfp misses\b/, /\bpayrolls miss\b/, /\bunemployment rises\b/,
+        /\bgdp slows\b/, /\bgdp misses\b/, /\bpmi falls\b/, /\bpmi misses\b/, /\bweaker business activity\b/, /\bretail sales fall\b/,
+        /เงินเฟ้อชะลอ/, /เงินเฟ้อลด/, /จ้างงานต่ำกว่าคาด/, /gdp ต่ำกว่าคาด/, /pmi ต่ำกว่าคาด/
       ],
       econBear: [
-        /\bcpi rises\b/, /\bcpi beats\b/, /\bhot inflation\b/, /\bsticky inflation\b/, /\bppi rises\b/, /\bppi beats\b/,
-        /\bpce rises\b/, /\bnfp beats\b/, /\bnonfarm beats\b/, /\bpayrolls beat\b/, /\bjobs beat\b/, /\bstrong jobs\b/,
-        /\bgdp beats\b/, /\bgdp rises\b/, /\bgdp grows\b/, /\bpmi rises\b/, /\bpmi beats\b/, /\bpmi expands\b/,
-        /\bretail sales beat\b/, /\bjobless claims fall\b/, /\bresilient economy\b/,
-        /เงินเฟ้อพุ่ง/, /เงินเฟ้อเร่งตัว/, /จ้างงานสูงกว่าคาด/, /gdp สูงกว่าคาด/, /pmi สูงกว่าคาด/, /เศรษฐกิจแข็งแกร่ง/
+        /\bpce accelerates\b/, /\bpce rises\b/, /\bpce beats\b/, /\bhot pce\b/, /\bsticky inflation\b/, /\bhot inflation\b/,
+        /\bcpi rises\b/, /\bcpi beats\b/, /\bnfp beats\b/, /\bpayrolls beat\b/, /\bstrong jobs\b/,
+        /\bgdp beats\b/, /\bgdp rises\b/, /\bpmi rises\b/, /\bpmi beats\b/, /\bretail sales beat\b/, /\bresilient economy\b/,
+        /เงินเฟ้อพุ่ง/, /เงินเฟ้อเร่งตัว/, /จ้างงานสูงกว่าคาด/, /gdp สูงกว่าคาด/, /pmi สูงกว่าคาด/
+      ],
+      goldActionBull: [
+        /\bgold rises\b/, /\bgold surges\b/, /\bgold climbs\b/, /\bgold gains\b/, /\bgold rebounds\b/, /\bgold recovers\b/,
+        /\bbargain hunting\b/, /\bdip-buying\b/, /\bdip buying\b/, /\bbullion rises\b/, /\bxau\/usd rises\b/,
+        /ราคาทองพุ่ง/, /ราคาทองขึ้น/, /ทองคำรีบาวด์/, /แรงซื้อเก็งกำไร/
+      ],
+      goldActionBear: [
+        /\bgold falls\b/, /\bgold drops\b/, /\bgold plunges\b/, /\bgold slides\b/, /\bgold retreats\b/, /\bgold tumbles\b/,
+        /\bgold slips\b/, /\bbreaks.*uptrend\b/, /\bworst week\b/, /\bprofit-taking\b/, /\bprofit taking\b/, /\bgold sell-off\b/, /\bcash machine\b/,
+        /ราคาทองร่วง/, /ราคาทองลง/, /ทองคำปรับลง/, /เทขายทองคำ/
+      ],
+      flowsBull: [
+        /\bspdr gold inflows\b/, /\bspdr adds\b/, /\bgold etf inflows\b/, /\betfs added\b/, /\bcentral banks purchased\b/,
+        /\bcentral bank buys\b/, /\bpboc buys gold\b/, /\bubs maintains \$5,000\b/, /\bjpmorgan bullish\b/,
+        /กองทุนทองซื้อ/, /ธนาคารกลางซื้อทอง/
+      ],
+      flowsBear: [
+        /\bspdr outflows\b/, /\bspdr sells\b/, /\bgold etf outflows\b/, /\blowers? its gold price forecast\b/, /\bcuts? gold.*target\b/,
+        /\bphysical investment demand weakened\b/, /\braise cash\b/,
+        /กองทุนทองขาย/, /หั่นเป้าหมายราคาทอง/
+      ],
+      cbanksBull: [
+        /\bpboc buys\b/, /\bpboc adds\b/, /\bboj intervenes\b/, /\byen surges\b/, /\bcentral bank demand\b/,
+        /ธนาคารกลางจีนซื้อ/, /แทรกแซงค่าเงินเยน/
+      ],
+      cbanksBear: [
+        /\bpboc pauses\b/, /\byen weakens\b/, /\byen falls\b/, /\brba hikes\b/, /\becb hawkish\b/,
+        /จีนชะลอซื้อทอง/, /เงินเยนอ่อน/
+      ],
+      silverBull: [
+        /\bsilver rises\b/, /\bsilver surges\b/, /\bsilver climbs\b/, /\bsilver rebounds\b/, /\bxag\/usd rises\b/,
+        /โลหะเงินพุ่ง/, /ราคาเงินขึ้น/
+      ],
+      silverBear: [
+        /\bsilver falls\b/, /\bsilver drops\b/, /\bsilver plunges\b/, /\bsilver slides\b/, /\bxag\/usd falls\b/,
+        /โลหะเงินร่วง/, /ราคาเงินลง/
       ],
       geoBull: [
         /\bwar\b/, /\bmissile\b/, /\bmilitary\b/, /\bairstrike\b/, /\binvasion\b/, /\bescalation\b/,
-        /\bconflict\b/, /\btariffs?\b/, /\btrade war\b/, /\bgeopolitical\b/, /\bsanctions?\b/,
-        /\bpandemic\b/, /\bterrorist\b/, /\bstrike iran\b/, /\bseized\b/,
-        /สงคราม/, /โจมตี/, /ขีปนาวุธ/, /กำแพงภาษี/, /โรคระบาด/, /ก่อการร้าย/
+        /\bconflict\b/, /\bgeopolitical\b/, /\bsanctions?\b/, /\biran\b/, /\bmiddle east tensions\b/,
+        /สงคราม/, /อิหร่าน/, /โจมตี/, /ขีปนาวุธ/, /คว่ำบาตร/
       ],
       geoBear: [
-        /\bceasefire\b/, /\bpeace deal\b/, /\btruce\b/, /\bde-escalation\b/, /\btariff delay\b/,
+        /\bceasefire\b/, /\bpeace deal\b/, /\btruce\b/, /\bde-escalation\b/,
         /หยุดยิง/, /เจรจาสันติภาพ/, /คลี่คลาย/
       ],
       trumpBull: [
@@ -645,21 +740,21 @@
         /\btrump\b.*\b(deal|peace|delay|deregulation|tax cut|pro-business|boosts stocks)\b/,
         /ทรัมป์.*(ข้อตกลง|สันติภาพ|เลื่อนภาษี|หนุนหุ้น)/
       ],
+      // Second-Order AI/Nvidia rule: AI rally lifts stocks & eases cash-crunch selling on gold, OR pulls money to stocks; AI crash can cause cash squeeze or safe haven
       aiBull: [
-        /\b(nvidia|jensen huang|ai)\b.*\b(selloff|sell-off|plunge|crash|tumble|bubble|fears|slump|drop)\b/,
-        /อินวิเดีย.*(ร่วง|เทขาย|ฟองสบู่)/
+        /\b(nvidia|jensen huang|ai)\b.*\b(boosts sentiment|eases cash|safe haven|bubble fears)\b/
       ],
       aiBear: [
-        /\b(nvidia|jensen huang|ai)\b.*\b(rally|surge|rebound|soar|boost|return|reinstate)\b/,
-        /อินวิเดีย.*(พุ่ง|รีบาวด์|ฟื้น)/
+        /\b(nvidia|jensen huang|ai)\b.*\b(rally|surge|soar|tech rout|sell-off|selloff|plunge)\b/
       ],
       oilBull: [
         /\boil surges\b/, /\boil rises\b/, /\boil climbs\b/, /\bsupply disruption\b/, /\bopec cuts\b/,
         /น้ำมันพุ่ง/, /น้ำมันขึ้น/
       ],
-      oilBear: [
-        /\boil plunges\b/, /\boil falls\b/, /\boil drops\b/, /\boil slides\b/,
-        /น้ำมันร่วง/, /น้ำมันลง/
+      // Second-order effect: Oil surge feeding inflation -> Fed rate hike pressure is Bearish for gold!
+      oilInflationBear: [
+        /\boil\b.*\binflation\b/, /\benergy costs fed into inflation\b/, /\boil plunges\b/, /\boil falls\b/, /\boil drops\b/,
+        /น้ำมันร่วง/, /น้ำมันลง/, /น้ำมันดันเงินเฟ้อ/
       ]
     };
 
@@ -675,6 +770,12 @@
       if (ageHours <= 24) return 1.8;
       if (ageHours <= 48) return 1.0;
       return 0.4;
+    }
+
+    function getConvictionMultiplier(lowerText) {
+      if (/\b(plunges|surges|soars|crashes|emergency|96%|100%|50 bps|half-point|worst week)\b/.test(lowerText)) return 1.35;
+      if (/\b(edges|steadies|eyes|awaits|little changed)\b/.test(lowerText)) return 0.75;
+      return 1.0;
     }
 
     function jumpToCategory(cat) {
@@ -715,9 +816,7 @@
       try {
         const res1 = await fetch(`https://api.gold-api.com/price/XAU?_t=${Date.now()}`);
         const data1 = await res1.json();
-        if (data1 && typeof data1.price === 'number' && data1.price > 1000) {
-          livePrice = data1.price;
-        }
+        if (data1 && typeof data1.price === 'number' && data1.price > 1000) livePrice = data1.price;
       } catch (e) {}
 
       if (!livePrice) {
@@ -782,7 +881,7 @@
         hour12: false
       });
       const tfLabel = refreshSeconds === 300 ? 'M5' : refreshSeconds === 900 ? 'M15' : refreshSeconds === 180 ? 'M3' : 'M1';
-      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. (เวลาไทย)`;
+      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. • 12-Radar 3-Tier Engine`;
 
       if (lastTriggeredCandleSlot !== null && currentSlot > lastTriggeredCandleSlot) {
         lastTriggeredCandleSlot = currentSlot;
@@ -818,9 +917,7 @@
         const gain = ctx.createGain();
         osc.type = isUrgent ? 'triangle' : 'sine';
         osc.frequency.setValueAtTime(isUrgent ? 880 : 660, ctx.currentTime);
-        if (isUrgent) {
-          osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.15);
-        }
+        if (isUrgent) osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.15);
         gain.gain.setValueAtTime(0.15, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
         osc.connect(gain);
@@ -856,9 +953,7 @@
       const card = document.getElementById('probabilityCard');
       if (!card) return;
       card.classList.add('ring-2', 'ring-bbGold', 'bg-slate-900');
-      setTimeout(() => {
-        card.classList.remove('ring-2', 'ring-bbGold', 'bg-slate-900');
-      }, 1800);
+      setTimeout(() => card.classList.remove('ring-2', 'ring-bbGold', 'bg-slate-900'), 1800);
     }
 
     function toggleSound() {
@@ -868,6 +963,7 @@
       if (soundEnabled) playAlertBeep(false);
     }
 
+    // 5-Stage Institutional Classifier
     function classifyAndScore(text, sourceName, defaultTopic, pubMs = 0) {
       const lower = `${text} ${sourceName}`.toLowerCase();
       let rawBull = 0;
@@ -876,8 +972,7 @@
       let reasons = [];
 
       const decay = getTimeDecayMultiplier(pubMs);
-      const isInvesting = /\binvesting\.com\b|\binvesting\b/i.test(lower);
-      if (isInvesting) detectedTopics.add('investing');
+      const conviction = getConvictionMultiplier(lower);
 
       const isTrump = /\b(donald trump|trump|white house)\b|ทรัมป์/.test(lower);
       if (isTrump) detectedTopics.add('trump');
@@ -887,100 +982,112 @@
 
       const isFomcSpeaker = FOMC_MEMBERS_2026_REGEX.test(lower);
 
-      if (/\b(gold|bullion|xau|kitco|jpmorgan|blackrock|spdr|etf|central bank|pboc|cot report)\b|ทองคำ|กองทุนทอง/.test(lower)) detectedTopics.add('gold_nature');
-      if (/\b(dxy|dollar index|greenback|us dollar|boj|ecb|pboc|rba)\b|ดอลลาร์/.test(lower)) detectedTopics.add('dxy');
       if (/\b(yield|treasury|10-year|2-year|5-year|30-year|real yield|bond)\b|บอนด์ยีลด์|พันธบัตร/.test(lower)) detectedTopics.add('yield');
-      if (/\b(dot plot|fomc|federal reserve|fed|rate cut|rate hike)\b|เฟด|ดอกเบี้ย/.test(lower) || isFomcSpeaker) detectedTopics.add('fed');
+      if (/\b(dot plot|fomc|federal reserve|fed|rate cut|rate hike|fedwatch)\b|เฟด|ดอกเบี้ย/.test(lower) || isFomcSpeaker) detectedTopics.add('fed');
+      if (/\b(dxy|dollar index|greenback|us dollar)\b|ดอลลาร์/.test(lower)) detectedTopics.add('dxy');
       if (/\b(cpi|ppi|pce|nfp|nonfarm|payroll|inflation|unemployment|gdp|pmi|retail sales|jobless claims)\b|เงินเฟ้อ|จ้างงาน|เศรษฐกิจ/.test(lower)) detectedTopics.add('econ');
-      if (/\b(war|missile|military|airstrike|invasion|escalation|conflict|tariffs?|trade war|geopolitical|sanctions?|iran|pandemic|terrorist)\b|สงคราม|โจมตี|ขีปนาวุธ|กำแพงภาษี/.test(lower)) detectedTopics.add('geopolitics');
+      if (/\b(gold price|spot gold|xau|kitco|support|resistance|uptrend)\b|ราคาทอง/.test(lower)) detectedTopics.add('gold_action');
+      if (/\b(goldman|jpmorgan|ubs|bank of america|blackrock|spdr|etf|cot report|forecast)\b|กองทุนทอง/.test(lower)) detectedTopics.add('flows');
+      if (/\b(pboc|boj|bank of japan|ecb|rba|central bank|yen|yuan)\b|ธนาคารกลาง/.test(lower)) detectedTopics.add('cbanks');
+      if (/\b(silver|xag|precious metals)\b|โลหะเงิน/.test(lower)) detectedTopics.add('silver');
+      if (/\b(war|missile|military|airstrike|invasion|escalation|conflict|geopolitical|sanctions?|iran|middle east)\b|สงคราม|อิหร่าน|ขีปนาวุธ/.test(lower)) detectedTopics.add('geopolitics');
       if (/\b(oil|crude|wti|brent|opec)\b|น้ำมัน|พลังงาน/.test(lower)) detectedTopics.add('oil');
 
-      const speakerBoost = isFomcSpeaker ? 0.5 : 0;
+      // Tier 1 Multipliers (Higher institutional weight: 1.45x)
+      const T1 = 1.45;
+      RULES.yieldBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.4 * T1; reasons.push('[T1] Bond Yield ย่อลงหนุนทอง'); } });
+      RULES.yieldBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.5 * T1; reasons.push('[T1] Bond Yield พุ่งกดดันทอง'); } });
 
-      RULES.goldBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.5; reasons.push('ราคาทอง/กองทุน/ธนาคารกลางหนุนขึ้น'); } });
-      RULES.goldBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.7; reasons.push('ราคาทองย่อ/ร่วงหรือแรงขายถือเงินสดกดดัน'); } });
+      RULES.fedBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.4 * T1; reasons.push('[T1] Fed/FOMC ผ่อนคลายแรงตึงตัว'); } });
+      RULES.fedBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.6 * T1; reasons.push('[T1] Fed/FOMC คุมเข้ม/โอกาสขึ้นดอกเบี้ย'); } });
 
-      RULES.dxyBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.2; reasons.push('DXY/ดอลลาร์อ่อนค่า'); } });
-      RULES.dxyBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.2; reasons.push('DXY/ดอลลาร์แข็งค่า'); } });
+      RULES.dxyBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.2 * T1; reasons.push('[T1] DXY/ดอลลาร์อ่อนค่า'); } });
+      RULES.dxyBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.2 * T1; reasons.push('[T1] DXY/ดอลลาร์แข็งค่า'); } });
 
-      RULES.yieldBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.5; reasons.push('Bond Yield ย่อ/ร่วง'); } });
-      RULES.yieldBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.5; reasons.push('Bond Yield พุ่ง/สูงขึ้น'); } });
+      RULES.econBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.2 * T1; reasons.push('[T1] PCE/CPI/GDP ชะลอหนุนทอง'); } });
+      RULES.econBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.3 * T1; reasons.push('[T1] PCE/CPI/GDP ร้อนแรงกดดันทอง'); } });
 
-      RULES.fedBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += (2.4 + speakerBoost); reasons.push(isFomcSpeaker ? 'กรรมการ FOMC ส่งสัญญาณผ่อนคลาย' : 'Fed/Dot Plot โทนผ่อนคลาย'); } });
-      RULES.fedBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += (2.5 + speakerBoost); reasons.push(isFomcSpeaker ? 'กรรมการ FOMC ส่งสัญญาณคุมเข้ม/ขึ้นดอกเบี้ย' : 'Fed/Dot Plot โทนเข้มงวด'); } });
+      // Tier 2 Multipliers (Institutional flows: 1.15x)
+      const T2 = 1.15;
+      RULES.goldActionBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0 * T2; reasons.push('[T2] ราคาทองรีบาวด์/แรงซื้อแนวรับ'); } });
+      RULES.goldActionBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.2 * T2; reasons.push('[T2] ราคาทองหลุดแนวรับ/แรงเทขาย'); } });
 
-      RULES.econBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0; reasons.push('GDP/CPI/PCE/Retail Sales เอื้อหนุนทอง'); } });
-      RULES.econBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.1; reasons.push('GDP/CPI/PCE/Retail Sales กดดันทอง'); } });
+      RULES.flowsBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.1 * T2; reasons.push('[T2] กองทุน ETF/สถาบันเพิ่มมุมมองบวก'); } });
+      RULES.flowsBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.2 * T2; reasons.push('[T2] สถาบันหั่นเป้าหมาย/เงินไหลออก'); } });
 
-      RULES.geoBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.2; reasons.push('ความเสี่ยงสงคราม/อิหร่าน/ภาษี/วิกฤต'); } });
-      RULES.geoBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.9; reasons.push('ความตึงเครียดผ่อนคลาย'); } });
+      RULES.cbanksBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.9 * T2; reasons.push('[T2] ธนาคารกลางเข้าซื้อ/เยนแข็ง'); } });
+      RULES.cbanksBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.9 * T2; reasons.push('[T2] ธนาคารกลางชะลอ/เยนอ่อน'); } });
 
-      RULES.trumpBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0; reasons.push('ท่าทีทรัมป์เพิ่มความเสี่ยงภูมิรัฐศาสตร์/ภาษี'); } });
-      RULES.trumpBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.8; reasons.push('ท่าทีทรัมป์หนุนตลาดหุ้น/ผ่อนคลายความเสี่ยง'); } });
+      RULES.silverBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.5 * T2; reasons.push('[T2] โลหะเงิน (Silver) พุ่งตาม'); } });
+      RULES.silverBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.5 * T2; reasons.push('[T2] โลหะเงิน (Silver) ร่วงกดดัน'); } });
 
-      RULES.aiBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.7; reasons.push('หุ้น AI/Nvidia ร่วงกระตุ้นแรงซื้อสินทรัพย์ปลอดภัย'); } });
-      RULES.aiBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.7; reasons.push('หุ้น AI/Nvidia พุ่งดึงเงินกลับเข้าตลาดหุ้น'); } });
+      // Tier 3 Multipliers (Geopolitics/Politics/Liquidity: 1.0x)
+      RULES.geoBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0; reasons.push('[T3] ความเสี่ยงสงคราม/ตะวันออกกลาง'); } });
+      RULES.geoBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.8; reasons.push('[T3] ความตึงเครียดผ่อนคลาย'); } });
 
-      RULES.oilBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.4; reasons.push('น้ำมันดิบ/พลังงานขึ้น'); } });
-      RULES.oilBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.4; reasons.push('น้ำมันดิบย่อลง'); } });
+      RULES.trumpBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.9; reasons.push('[T3] ทรัมป์เพิ่มความเสี่ยงภาษี/ภูมิรัฐศาสตร์'); } });
+      RULES.trumpBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.7; reasons.push('[T3] ท่าทีทรัมป์ผ่อนคลายตลาด'); } });
 
-      const weightedBull = rawBull * decay;
-      const weightedBear = rawBear * decay;
+      RULES.aiBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.6; reasons.push('[T3] กระแส AI ช่วยลดแรงขายถือเงินสด'); } });
+      RULES.aiBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.7; reasons.push('[T3] หุ้น AI/Tech ผันผวนดึงสภาพคล่อง'); } });
+
+      RULES.oilBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.3; reasons.push('[T3] น้ำมันดิบดีดตัว'); } });
+      RULES.oilInflationBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.5; reasons.push('[T3] น้ำมันร่วงหรือดันเงินเฟ้อจน Fed ตึงตัว'); } });
+
+      const weightedBull = rawBull * decay * conviction;
+      const weightedBear = rawBear * decay * conviction;
       const netScore = weightedBull - weightedBear;
 
       const uniqueReasons = [...new Set(reasons)];
       const topicLabels = {
-        trump: '🇺🇸 ทรัมป์ (Trump)',
-        nvidia_ai: '🟢 ฮวง / Nvidia / AI',
-        investing: '📈 Investing.com',
-        geopolitics: '⚔️ สงคราม / วิกฤต',
-        fed: '🏛️ Fed / Dot Plot / 12 FOMC',
-        gold_nature: '🏦 Gold/Kitco/JPM/SPDR',
-        yield: '📉 Bond Yield',
-        dxy: '💵 DXY & FX',
-        econ: '📅 GDP / CPI / PCE / NFP',
-        oil: '🛢️ น้ำมันดิบ',
+        yield: '📉 01. Bond Yield',
+        fed: '🏛️ 02. Fed / 12 FOMC',
+        dxy: '💵 03. DXY & USD',
+        econ: '📅 04. PCE / GDP / CPI',
+        gold_action: '📊 05. Gold Action',
+        flows: '🏦 06. ETF / Banks / COT',
+        cbanks: '🌐 07. PBOC / BOJ / ECB',
+        silver: '🥈 08. Silver',
+        geopolitics: '⚔️ 09. War / Iran',
+        trump: '🇺🇸 10. Trump',
+        nvidia_ai: '🟢 11. Jensen / Nvidia',
+        oil: '🛢️ 12. Crude Oil',
         thai: '🇹🇭 ข่าวไทย'
       };
-      const primaryTopic = isTrump
-        ? 'trump'
-        : isNvidiaAi
-          ? 'nvidia_ai'
-          : (isInvesting && defaultTopic === 'investing')
-            ? 'investing'
-            : (['gold_nature', 'geopolitics', 'fed', 'yield', 'dxy', 'econ', 'oil'].find(t => detectedTopics.has(t)) || defaultTopic);
 
+      const priorityOrder = ['yield', 'fed', 'dxy', 'econ', 'flows', 'cbanks', 'trump', 'nvidia_ai', 'geopolitics', 'silver', 'oil', 'gold_action'];
+      const primaryTopic = priorityOrder.find(t => detectedTopics.has(t)) || defaultTopic;
       const ageTag = decay >= 3.0 ? ' [สด ≤6ชม.]' : decay >= 1.8 ? ' [≤24ชม.]' : '';
 
-      if (netScore > 0.15) {
+      if (netScore > 0.2) {
         return {
           type: 'bullish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📈 Investing.com',
+          topicLabel: topicLabels[primaryTopic] || '📊 Gold Wire',
           label: '🟢 หนุนทองขึ้น (Bullish)',
           badgeClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
           score: netScore,
-          reason: (uniqueReasons.length ? uniqueReasons.join(' + ') : 'ปัจจัยข่าวเอียงหนุนราคาทองคำ') + ageTag
+          reason: (uniqueReasons.length ? uniqueReasons.join(' + ') : 'ปัจจัยมหภาคเอียงหนุนราคาทองคำ') + ageTag
         };
-      } else if (netScore < -0.15) {
+      } else if (netScore < -0.2) {
         return {
           type: 'bearish',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📈 Investing.com',
+          topicLabel: topicLabels[primaryTopic] || '📊 Gold Wire',
           label: '🔴 กดดันทองลง (Bearish)',
           badgeClass: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
           score: netScore,
-          reason: (uniqueReasons.length ? uniqueReasons.join(' + ') : 'ปัจจัยข่าวเอียงกดดันราคาทองคำ') + ageTag
+          reason: (uniqueReasons.length ? uniqueReasons.join(' + ') : 'ปัจจัยมหภาคเอียงกดดันราคาทองคำ') + ageTag
         };
       } else {
         return {
           type: 'neutral',
           topics: [...detectedTopics],
-          topicLabel: topicLabels[primaryTopic] || '📈 Investing.com',
+          topicLabel: topicLabels[primaryTopic] || '📊 Gold Wire',
           label: '🟡 จับตาดู (Neutral)',
           badgeClass: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
           score: 0,
-          reason: isTrump ? 'ข่าวเคลื่อนไหวจากทรัมป์ จับตาผลกระทบต่อตลาด' : isNvidiaAi ? 'ข่าวเคลื่อนไหว Nvidia / Jensen Huang จับตากระแสเงินทุน AI' : 'น้ำหนักข่าวสองฝั่งใกล้เคียงกัน'
+          reason: 'น้ำหนักข่าวสองฝั่งใกล้เคียงกัน รอตัวเลขยืนยัน'
         };
       }
     }
@@ -1041,7 +1148,7 @@
       icon.classList.add('animate-spin', 'inline-block');
 
       if (isCycleRefresh) {
-        document.getElementById('newAlertStatusText').textContent = '⏳ ปิดแท่งเทียนแล้ว กำลังรีเฟรชข่าวทั่วโลกพร้อมกัน...';
+        document.getElementById('newAlertStatusText').textContent = '⏳ ปิดแท่งเทียนแล้ว กำลังรีเฟรช 12 เรดาร์...';
       }
 
       await fetchLiveGoldSpotMomentum();
@@ -1094,7 +1201,7 @@
       const newlyArrived = collected.filter(item => item.isNew);
       collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
       try {
-        localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-350)));
+        localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-400)));
       } catch (e) {}
 
       allArticles = collected;
@@ -1137,10 +1244,9 @@
       isFirstVisitEver = false;
       icon.classList.remove('animate-spin');
 
-      // Batch translate in chunks of 8 to prevent DOM flicker/freeze
       if (autoTranslate) {
-        const toTranslate = allArticles.slice(0, 48).filter(a => a.lang === 'en' && a.titleTh === a.titleEn);
-        const batchSize = 8;
+        const toTranslate = allArticles.slice(0, 60).filter(a => a.lang === 'en' && a.titleTh === a.titleEn);
+        const batchSize = 10;
         for (let i = 0; i < toTranslate.length; i += batchSize) {
           if (!autoTranslate) break;
           const batch = toTranslate.slice(i, i + batchSize);
@@ -1154,60 +1260,40 @@
     }
 
     function updateSignalDashboard() {
-      let totalBull = 0.25;
-      let totalBear = 0.25;
-      let investingCount = 0;
+      // Sample Guardrail: prevents extreme skew when sample size is small
+      const guardrailBase = allArticles.length < 18 ? 4.0 : 1.0;
+      let totalBull = guardrailBase;
+      let totalBear = guardrailBase;
 
-      if (liveGoldDelta > 0.5) totalBull += Math.min(3.0, liveGoldDelta * 0.4);
-      if (liveGoldDelta < -0.5) totalBear += Math.min(3.0, Math.abs(liveGoldDelta) * 0.4);
+      if (liveGoldDelta > 0.5) totalBull += Math.min(3.5, liveGoldDelta * 0.45);
+      if (liveGoldDelta < -0.5) totalBear += Math.min(3.5, Math.abs(liveGoldDelta) * 0.45);
 
-      const pillars = {
-        gold_nature: { name: 'Gold/Kitco/JPM/SPDR', count: 0, score: 0 },
-        dxy: { name: 'DXY & FX', count: 0, score: 0 },
-        yield: { name: 'Bond Yield', count: 0, score: 0 },
-        fed: { name: 'Fed/Dot Plot/12 FOMC', count: 0, score: 0 },
-        econ: { name: 'GDP/CPI/PCE/NFP', count: 0, score: 0 },
-        geopolitics: { name: 'War & Geopolitics', count: 0, score: 0 },
-        trump: { name: 'Donald Trump', count: 0, score: 0 },
-        nvidia_ai: { name: 'Jensen Huang/Nvidia/AI', count: 0, score: 0 },
-        oil: { name: 'Crude Oil & Energy', count: 0, score: 0 }
+      const radars = {
+        yield: { id: 'r01', tier: 1, name: '01. Bond Yields', count: 0, score: 0 },
+        fed: { id: 'r02', tier: 1, name: '02. Fed / 12 FOMC', count: 0, score: 0 },
+        dxy: { id: 'r03', tier: 1, name: '03. DXY & USD', count: 0, score: 0 },
+        econ: { id: 'r04', tier: 1, name: '04. PCE / GDP / CPI', count: 0, score: 0 },
+        gold_action: { id: 'r05', tier: 2, name: '05. Gold Action', count: 0, score: 0 },
+        flows: { id: 'r06', tier: 2, name: '06. ETF / Banks / COT', count: 0, score: 0 },
+        cbanks: { id: 'r07', tier: 2, name: '07. PBOC / BOJ / ECB', count: 0, score: 0 },
+        silver: { id: 'r08', tier: 2, name: '08. Silver (XAG)', count: 0, score: 0 },
+        geopolitics: { id: 'r09', tier: 3, name: '09. War / Iran', count: 0, score: 0 },
+        trump: { id: 'r10', tier: 3, name: '10. Donald Trump', count: 0, score: 0 },
+        nvidia_ai: { id: 'r11', tier: 3, name: '11. Jensen / Nvidia', count: 0, score: 0 },
+        oil: { id: 'r12', tier: 3, name: '12. Crude Oil', count: 0, score: 0 }
       };
 
       allArticles.forEach(art => {
-        const text = `${art.titleEn} ${art.descEn} ${art.source}`.toLowerCase();
         const sc = art.analysis.score;
-
-        if (art.analysis.topics.includes('investing')) investingCount++;
         if (sc > 0) totalBull += sc;
         if (sc < 0) totalBear += Math.abs(sc);
 
-        if (/\b(gold|bullion|xau|kitco|jpmorgan|blackrock|spdr|etf|central bank|pboc|cot report)\b|ทองคำ|กองทุนทอง/.test(text)) {
-          pillars.gold_nature.count++; pillars.gold_nature.score += sc;
-        }
-        if (/\b(dxy|dollar index|greenback|us dollar|boj|ecb|pboc|rba)\b|ดอลลาร์/.test(text)) {
-          pillars.dxy.count++; pillars.dxy.score += sc;
-        }
-        if (/\b(yield|treasury|10-year|2-year|5-year|30-year|real yield|bond)\b|บอนด์ยีลด์|พันธบัตร/.test(text)) {
-          pillars.yield.count++; pillars.yield.score += sc;
-        }
-        if (/\b(dot plot|fomc|federal reserve|fed|rate cut|rate hike)\b|ดอกเบี้ย|เฟด/.test(text) || FOMC_MEMBERS_2026_REGEX.test(text)) {
-          pillars.fed.count++; pillars.fed.score += sc;
-        }
-        if (/\b(cpi|ppi|pce|nfp|nonfarm|payroll|inflation|unemployment|gdp|pmi|retail sales|jobless claims)\b|เงินเฟ้อ|จ้างงาน|เศรษฐกิจ/.test(text)) {
-          pillars.econ.count++; pillars.econ.score += sc;
-        }
-        if (/\b(war|missile|military|airstrike|invasion|escalation|conflict|tariffs?|trade war|geopolitical|sanctions?|iran|pandemic|terrorist)\b|สงคราม|โจมตี|ขีปนาวุธ|กำแพงภาษี/.test(text)) {
-          pillars.geopolitics.count++; pillars.geopolitics.score += sc;
-        }
-        if (/\b(donald trump|trump|white house)\b|ทรัมป์/.test(text)) {
-          pillars.trump.count++; pillars.trump.score += sc;
-        }
-        if (/\b(jensen huang|nvidia|nvda|ai chips|ai shares|ai stocks)\b|อินวิเดีย|เจนเซน/.test(text)) {
-          pillars.nvidia_ai.count++; pillars.nvidia_ai.score += sc;
-        }
-        if (/\b(oil|crude|wti|brent|opec)\b|น้ำมัน|พลังงาน/.test(text)) {
-          pillars.oil.count++; pillars.oil.score += sc;
-        }
+        art.analysis.topics.forEach(t => {
+          if (radars[t]) {
+            radars[t].count++;
+            radars[t].score += sc;
+          }
+        });
       });
 
       const sum = totalBull + totalBear;
@@ -1222,82 +1308,98 @@
       document.getElementById('bullBar').style.width = `${bullPct}%`;
       document.getElementById('bearBar').style.width = `${bearPct}%`;
 
-      const list = Object.values(pillars);
+      // Tier Sums & Divergence Detection
+      const list = Object.values(radars);
+      const t1Net = list.filter(r => r.tier === 1).reduce((acc, r) => acc + r.score, 0);
+      const t2Net = list.filter(r => r.tier === 2).reduce((acc, r) => acc + r.score, 0);
+      const t3Net = list.filter(r => r.tier === 3).reduce((acc, r) => acc + r.score, 0);
+
+      setTierBox('tier1ScoreText', t1Net);
+      setTierBox('tier2ScoreText', t2Net);
+      setTierBox('tier3ScoreText', t3Net);
+
+      const divBadge = document.getElementById('divergenceBadge');
+      if (t1Net < -1.0 && t3Net > 1.0) {
+        divBadge.textContent = '⚠️ DIVERGENCE: Tier 1 กดดันลง สวนทาง Tier 3 หนุนขึ้น';
+        divBadge.className = 'font-bold text-amber-400';
+      } else if (t1Net > 1.0 && t3Net < -1.0) {
+        divBadge.textContent = '⚠️ DIVERGENCE: Tier 1 หนุนขึ้น สวนทาง Tier 3 กดดันลง';
+        divBadge.className = 'font-bold text-amber-400';
+      } else if (t1Net < -1.0 && t2Net < -0.5) {
+        divBadge.textContent = '🔴 ALIGNED BEAR: Tier 1 & Tier 2 กดดันลงสอดคล้องกัน';
+        divBadge.className = 'font-bold text-rose-400';
+      } else if (t1Net > 1.0 && t2Net > 0.5) {
+        divBadge.textContent = '🟢 ALIGNED BULL: Tier 1 & Tier 2 หนุนขึ้นสอดคล้องกัน';
+        divBadge.className = 'font-bold text-emerald-400';
+      } else {
+        divBadge.textContent = '⚖️ MIXED REGIME: รอปัจจัยหลักเลือกทาง';
+        divBadge.className = 'font-bold text-sky-300';
+      }
+
       const bullDrivers = list.filter(p => p.count > 0 && p.score > 0.3).sort((a, b) => b.score - a.score);
       const bearDrivers = list.filter(p => p.count > 0 && p.score < -0.3).sort((a, b) => a.score - b.score);
-
-      const activeBullCount = bullDrivers.length;
-      const activeBearCount = bearDrivers.length;
-      const alignTag = document.getElementById('macroAlignmentTag');
-
-      if (activeBullCount > activeBearCount && activeBullCount >= 2) {
-        alignTag.textContent = `ฝั่งขึ้นนำ (${activeBullCount} เรดาร์หนุน vs ${activeBearCount} กดดัน)`;
-        alignTag.className = 'font-bold text-emerald-400';
-      } else if (activeBearCount > activeBullCount && activeBearCount >= 2) {
-        alignTag.textContent = `ฝั่งลงนำ (${activeBearCount} เรดาร์กดดัน vs ${activeBullCount} หนุน)`;
-        alignTag.className = 'font-bold text-rose-400';
-      } else {
-        alignTag.textContent = `เรดาร์ผสมผสาน (ขึ้น ${activeBullCount} • ลง ${activeBearCount})`;
-        alignTag.className = 'font-bold text-amber-300';
-      }
 
       const signalBadge = document.getElementById('signalBadge');
       const reasoning = document.getElementById('aiReasoningText');
       const driverBreakdown = document.getElementById('radarDriverBreakdown');
 
-      const bullNames = bullDrivers.map(d => `${d.name} (${d.count})`).join(', ');
-      const bearNames = bearDrivers.map(d => `${d.name} (${d.count})`).join(', ');
+      const bullNames = bullDrivers.slice(0, 4).map(d => `${d.name} (${d.count})`).join(', ');
+      const bearNames = bearDrivers.slice(0, 4).map(d => `${d.name} (${d.count})`).join(', ');
 
       if (bullPct >= 56) {
         signalBadge.textContent = 'BULLISH DOMINANT (โน้มเอียงขึ้น)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
-        reasoning.textContent = `จากเรดาร์ข่าวทั่วโลก (ถ่วงน้ำหนักความสดใหม่) ฝั่งขึ้นอยู่ที่ ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'ข่าวหนุนทองคำหลายหมวด'}` +
-          (bearNames ? ` โดยมีแรงกดดันบางส่วนจาก ${bearNames}` : '');
+        reasoning.textContent = `โมเดล 3 ชั้นให้น้ำหนักฝั่งขึ้น ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'แรงหนุนหลายเรดาร์'}` +
+          (bearNames ? ` โดยมีแรงต้านจาก ${bearNames}` : '');
       } else if (bullPct >= 52) {
         signalBadge.textContent = 'BULLISH LEAN (เอียงขึ้นเล็กน้อย)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-300';
-        reasoning.textContent = `ภาพรวมเรดาร์เอียงฝั่งขึ้น ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'ปัจจัยหนุนบางส่วน'}` +
-          (bearNames ? ` โดยมีแรงกดดันหักล้างจาก ${bearNames}` : '');
+        reasoning.textContent = `ภาพรวมเอียงฝั่งขึ้นเล็กน้อย ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'ปัจจัยบวกบางส่วน'}` +
+          (bearNames ? ` ถูกถ่วงดุลด้วย ${bearNames}` : '');
       } else if (bearPct >= 56) {
         signalBadge.textContent = 'BEARISH DOMINANT (โน้มเอียงลง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
-        reasoning.textContent = `จากเรดาร์ข่าวทั่วโลก (ถ่วงน้ำหนักความสดใหม่) ฝั่งลงอยู่ที่ ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'ข่าวกดดันทองคำหลายหมวด'}` +
-          (bullNames ? ` แม้มีแรงพยุงบางส่วนจาก ${bullNames}` : '');
+        reasoning.textContent = `โมเดล 3 ชั้นให้น้ำหนักฝั่งลง ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'แรงกดดันมหภาค'}` +
+          (bullNames ? ` แม้มีแรงพยุงจาก ${bullNames}` : '');
       } else if (bearPct >= 52) {
         signalBadge.textContent = 'BEARISH LEAN (เอียงลงเล็กน้อย)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-300';
-        reasoning.textContent = `ภาพรวมเรดาร์เอียงฝั่งลง ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'ปัจจัยกดดันบางส่วน'}` +
-          (bullNames ? ` โดยมีแรงหนุนหักล้างจาก ${bullNames}` : '');
+        reasoning.textContent = `ภาพรวมเอียงฝั่งลงเล็กน้อย ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'ปัจจัยลบหลัก'}` +
+          (bullNames ? ` โดยมีแรงพยุงบางส่วนจาก ${bullNames}` : '');
       } else {
         signalBadge.textContent = 'CONTESTED / BALANCED (สมดุล)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-amber-400';
-        reasoning.textContent = `เรดาร์ทั้งสองฝั่งมีน้ำหนักใกล้เคียงกัน (${bullPct}% vs ${bearPct}%) โดยฝั่งขึ้นมี ${bullNames || 'น้อย'} ปะทะกับฝั่งลงที่มี ${bearNames || 'น้อย'}`;
+        reasoning.textContent = `แรงซื้อและแรงขายใน 12 เรดาร์คานอำนาจกันใกล้เคียง (${bullPct}% vs ${bearPct}%) โดยฝั่งขึ้นมี ${bullNames || 'น้อย'} ปะทะกับฝั่งลงที่มี ${bearNames || 'น้อย'}`;
       }
 
-      const topBull = bullDrivers[0] ? `หนุนสูงสุด: ${bullDrivers[0].name}` : 'หนุนสูงสุด: --';
-      const topBear = bearDrivers[0] ? `กดดันสูงสุด: ${bearDrivers[0].name}` : 'กดดันสูงสุด: --';
+      const topBull = bullDrivers[0] ? `หนุนแกร่งสุด: ${bullDrivers[0].name}` : 'หนุนแกร่งสุด: --';
+      const topBear = bearDrivers[0] ? `กดดันแกร่งสุด: ${bearDrivers[0].name}` : 'กดดันแกร่งสุด: --';
       driverBreakdown.textContent = `📊 ${topBull}  |  ${topBear}`;
 
-      updateRadarTile('f01Text', 'f01Tag', pillars.gold_nature);
-      updateRadarTile('f02Text', 'f02Tag', pillars.dxy);
-      updateRadarTile('f03Text', 'f03Tag', pillars.yield);
-      updateRadarTile('f04Text', 'f04Tag', pillars.fed);
-      updateRadarTile('f05Text', 'f05Tag', pillars.econ);
-      updateRadarTile('f06Text', 'f06Tag', pillars.geopolitics);
-      updateRadarTile('f07Text', 'f07Tag', pillars.trump);
-      updateRadarTile('f08Text', 'f08Tag', pillars.nvidia_ai);
-      updateRadarTile('f09OilText', 'f09OilTag', pillars.oil);
+      list.forEach(r => updateRadarTile(`${r.id}Text`, `${r.id}Tag`, r));
 
-      document.getElementById('f10InvText').textContent = `Investing.com ${investingCount} ข่าว • ขึ้น ${bullPct}% vs ลง ${bearPct}%`;
+      const readyRadars = list.filter(p => p.count > 0).length;
+      document.getElementById('readinessStatusBadge').textContent = `ความพร้อม: ${readyRadars}/12 เรดาร์ (${allArticles.length} ข่าว)`;
+    }
 
-      const readyPillars = list.filter(p => p.count > 0).length;
-      const readinessBadge = document.getElementById('readinessStatusBadge');
-      readinessBadge.textContent = `ความพร้อมวิเคราะห์: ${readyPillars}/9 เรดาร์มีข้อมูล (${allArticles.length} ข่าว)`;
+    function setTierBox(elId, net) {
+      const el = document.getElementById(elId);
+      if (net > 0.5) {
+        el.textContent = `🟢 หนุนขึ้น (+${net.toFixed(1)})`;
+        el.className = 'font-bold text-emerald-400';
+      } else if (net < -0.5) {
+        el.textContent = `🔴 กดดันลง (${net.toFixed(1)})`;
+        el.className = 'font-bold text-rose-400';
+      } else {
+        el.textContent = '🟡 สมดุล / จับตา';
+        el.className = 'font-bold text-amber-300';
+      }
     }
 
     function updateRadarTile(textId, tagId, stat) {
       const textEl = document.getElementById(textId);
       const tagEl = document.getElementById(tagId);
+      if (!textEl || !tagEl) return;
       if (stat.count === 0) {
         textEl.textContent = 'ปกติ (คลิกดูข่าว)';
         tagEl.textContent = 'CALM';
@@ -1348,13 +1450,7 @@
         if (currentCategory === 'new' && !art.isNew) return false;
         if (currentCategory === 'bullish' && art.analysis.type !== 'bullish') return false;
         if (currentCategory === 'bearish' && art.analysis.type !== 'bearish') return false;
-        if (currentCategory === 'trump' && !art.analysis.topics.includes('trump')) return false;
-        if (currentCategory === 'nvidia_ai' && !art.analysis.topics.includes('nvidia_ai')) return false;
-        if (currentCategory === 'investing' && !art.analysis.topics.includes('investing') && !/\binvesting\b/.test(hayAll)) return false;
-        if (currentCategory === 'dxy' && !/\b(dxy|dollar index|greenback|us dollar|boj|ecb|pboc|rba)\b|ดอลลาร์/.test(hayAll)) return false;
-        if (currentCategory === 'fed' && !art.analysis.topics.includes('fed')) return false;
-        if (currentCategory === 'oil' && !/\b(oil|crude|wti|brent|opec)\b|น้ำมัน|พลังงาน/.test(hayAll)) return false;
-        if (['gold_nature', 'yield', 'econ', 'geopolitics', 'thai'].includes(currentCategory)) {
+        if (['yield', 'fed', 'dxy', 'econ', 'gold_action', 'flows', 'cbanks', 'silver', 'geopolitics', 'trump', 'nvidia_ai', 'oil', 'thai'].includes(currentCategory)) {
           if (!art.analysis.topics.includes(currentCategory)) return false;
         }
         if (query && !hayAll.includes(query)) return false;
@@ -1431,8 +1527,8 @@
 
       contentEl.innerHTML = `
         <div class="p-3.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-xs text-bbGoldLight space-y-1">
-          <div><b>หมวดปัจจัยกระทบทองคำ:</b> ${art.analysis.topicLabel}</div>
-          <div><b>เหตุผลเชิงวิเคราะห์:</b> ${art.analysis.reason}</div>
+          <div><b>หมวดเรดาร์:</b> ${art.analysis.topicLabel}</div>
+          <div><b>เหตุผลเชิงวิเคราะห์ (3-Tier Engine):</b> ${art.analysis.reason}</div>
         </div>
         <div class="p-4 rounded-xl bg-bbCard border border-bbBorder space-y-2">
           <h4 class="font-bold text-white text-sm">เนื้อหาสรุปข่าว (แปลไทย):</h4>
