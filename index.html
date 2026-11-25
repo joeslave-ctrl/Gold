@@ -392,7 +392,10 @@
           🏦 Gold / Kitco / JPM / SPDR
         </button>
         <button onclick="setCategory('yield')" data-cat="yield" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-amber-300 border border-bbBorder">
-          📉 Bond Yield & DXY
+          📉 Bond Yield
+        </button>
+        <button onclick="setCategory('dxy')" data-cat="dxy" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-sky-300 border border-bbBorder">
+          💵 DXY & FX
         </button>
         <button onclick="setCategory('econ')" data-cat="econ" class="cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbCard text-slate-300 border border-bbBorder">
           📅 GDP / CPI / PCE / NFP
@@ -449,7 +452,7 @@
   </div>
 
   <script>
-    // Complete global feeds: Trump, Jensen Huang/Nvidia/AI, Investing.com (Commodities/Forex/Economy/Indicators/Politics), Kitco, War, Fed/FOMC, Macro, Yield/DXY, Oil, Thai
+    // Complete global feeds: Trump, Jensen Huang/Nvidia/AI, Investing.com (Direct + Site Wire), Kitco, War, Fed/FOMC, Macro, Yield/DXY, Oil, Thai
     const RSS_FEEDS = [
       {
         name: 'Donald Trump & White House Policy',
@@ -464,21 +467,15 @@
         lang: 'en'
       },
       {
-        name: 'Investing.com Commodities & Gold',
+        name: 'Investing.com Gold, Macro & Markets Wire',
+        topic: 'investing',
+        url: 'https://news.google.com/rss/search?q=site:investing.com+(gold+OR+XAU+OR+Federal+Reserve+OR+Treasury+yields+OR+dollar+OR+CPI+OR+GDP+OR+Trump+OR+Nvidia)+when:3d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: 'Investing.com Commodities RSS',
         topic: 'investing',
         url: 'https://www.investing.com/rss/news_11.rss',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com Forex, Economy & Indicators',
-        topic: 'investing',
-        url: 'https://www.investing.com/rss/news_14.rss',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com Economic Indicators & Politics',
-        topic: 'investing',
-        url: 'https://www.investing.com/rss/news_95.rss',
         lang: 'en'
       },
       {
@@ -542,12 +539,30 @@
     let lastKnownGoldPrice = parseFloat(localStorage.getItem('xau_last_spot') || '0') || 0;
     let liveGoldDelta = 0;
 
-    const translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
+    let translationCache = {};
+    try {
+      translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
+    } catch (e) {
+      translationCache = {};
+    }
+
+    function saveTranslationCacheSafely(key, val) {
+      translationCache[key] = val;
+      const keys = Object.keys(translationCache);
+      if (keys.length > 250) {
+        const trimmed = {};
+        keys.slice(-250).forEach(k => { trimmed[k] = translationCache[k]; });
+        translationCache = trimmed;
+      }
+      try {
+        localStorage.setItem('xau_360_cache', JSON.stringify(translationCache));
+      } catch (e) {}
+    }
+
     const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
 
     const FOMC_MEMBERS_2026_REGEX = /\b(kevin warsh|warsh|jerome powell|powell|john williams|williams|christopher waller|waller|michelle bowman|bowman|michael barr|barr|lisa cook|cook|philip jefferson|jefferson|beth hammack|hammack|neel kashkari|kashkari|lorie logan|logan|anna paulson|paulson|mary daly|daly|austan goolsbee|goolsbee|thomas barkin|barkin)\b/i;
 
-    // Word-boundary safe rules including Trump, Jensen Huang/Nvidia/AI, Direct Gold Action, PCE, Retail Sales, Rate Hike Bets
     const RULES = {
       goldBull: [
         /\bgold rises\b/, /\bgold surges\b/, /\bgold climbs\b/, /\bgold gains\b/, /\bgold jumps\b/, /\bgold advances\b/,
@@ -713,12 +728,20 @@
         } catch (e) {}
       }
 
+      if (!livePrice) {
+        try {
+          const res3 = await fetch(`https://api.metals.live/v1/spot/gold?_t=${Date.now()}`);
+          const data3 = await res3.json();
+          if (Array.isArray(data3) && data3[0]?.price > 1000) livePrice = data3[0].price;
+        } catch (e) {}
+      }
+
       if (livePrice) {
         if (lastKnownGoldPrice > 0 && livePrice !== lastKnownGoldPrice) {
           liveGoldDelta = livePrice - lastKnownGoldPrice;
         }
         lastKnownGoldPrice = livePrice;
-        localStorage.setItem('xau_last_spot', livePrice.toString());
+        try { localStorage.setItem('xau_last_spot', livePrice.toString()); } catch (e) {}
 
         const deltaStr = liveGoldDelta !== 0
           ? ` (${liveGoldDelta > 0 ? '+' : ''}${liveGoldDelta.toFixed(2)})`
@@ -972,8 +995,7 @@
         const res = await fetch(url);
         const data = await res.json();
         const translated = data[0].map(item => item[0]).join('');
-        translationCache[text] = translated;
-        localStorage.setItem('xau_360_cache', JSON.stringify(translationCache));
+        saveTranslationCacheSafely(text, translated);
         return translated;
       } catch (e) {
         return text;
@@ -1071,7 +1093,9 @@
 
       const newlyArrived = collected.filter(item => item.isNew);
       collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
-      localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-350)));
+      try {
+        localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-350)));
+      } catch (e) {}
 
       allArticles = collected;
       document.getElementById('newCountBadge').textContent = newlyArrived.length;
@@ -1113,14 +1137,18 @@
       isFirstVisitEver = false;
       icon.classList.remove('animate-spin');
 
+      // Batch translate in chunks of 8 to prevent DOM flicker/freeze
       if (autoTranslate) {
-        for (let i = 0; i < Math.min(allArticles.length, 55); i++) {
-          const art = allArticles[i];
-          if (art.lang === 'en' && art.titleTh === art.titleEn) {
+        const toTranslate = allArticles.slice(0, 48).filter(a => a.lang === 'en' && a.titleTh === a.titleEn);
+        const batchSize = 8;
+        for (let i = 0; i < toTranslate.length; i += batchSize) {
+          if (!autoTranslate) break;
+          const batch = toTranslate.slice(i, i + batchSize);
+          await Promise.all(batch.map(async (art) => {
             art.titleTh = await translateToThai(art.titleEn);
             if (art.descEn) art.descTh = await translateToThai(art.descEn);
-            renderNews();
-          }
+          }));
+          renderNews();
         }
       }
     }
@@ -1130,7 +1158,6 @@
       let totalBear = 0.25;
       let investingCount = 0;
 
-      // Factor real-time spot tick momentum slightly so live drops/rallies reflect immediately
       if (liveGoldDelta > 0.5) totalBull += Math.min(3.0, liveGoldDelta * 0.4);
       if (liveGoldDelta < -0.5) totalBear += Math.min(3.0, Math.abs(liveGoldDelta) * 0.4);
 
