@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XAUUSD Institutional 12-Radar Gold Terminal</title>
+  <title>XAUUSD Institutional 12-Radar + Live Macro Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,12 +56,12 @@
         </div>
         <div>
           <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex flex-wrap items-center gap-2">
-            XAUUSD INSTITUTIONAL 12-RADAR TERMINAL
+            XAUUSD INSTITUTIONAL MACRO TERMINAL
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 5-STAGE ENGINE
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> ZERO-CACHE BREAKING WIRE
             </span>
           </h1>
-          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">12 เรดาร์มหภาค • Tier 1 Yield/Fed/DXY/PCE • Tier 2 Flows/Banks • Tier 3 Trump/Nvidia/War/Oil</p>
+          <p id="candleSyncSubtext" class="text-[11px] text-slate-400 font-mono">12 เรดาร์ 3 ชั้น • Live Economic Surprise Engine • Zero-Cache Breaking News</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@
         </button>
 
         <button onclick="manualRefresh()" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-bbGold text-black font-semibold hover:bg-bbGoldLight transition flex items-center gap-1">
-          <span id="refreshIcon">↻</span> สแกน 12 เรดาร์
+          <span id="refreshIcon">↻</span> สแกนสดทันที
         </button>
       </div>
     </div>
@@ -198,6 +198,45 @@
       </div>
     </section>
 
+    <!-- NEW: Live Economic Release & Surprise Engine (Actual vs Forecast) -->
+    <section class="bg-bbPanel border border-amber-500/40 rounded-xl p-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-bbGold">⚡ REAL-TIME ECONOMIC SURPRISE ENGINE (ACTUAL VS FORECAST)</span>
+          <h3 class="text-sm sm:text-base font-bold text-white">บันทึก/อัปเดตตัวเลขเศรษฐกิจออกสด (ฉีดน้ำหนักเข้า Tier 1 ทันทีโดยไม่ต้องรอ RSS)</h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="econCalSyncStatus" class="text-[11px] font-mono text-emerald-400">พร้อมคำนวณ Surprise Index</span>
+          <button onclick="clearManualEconEvents()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300 border border-bbBorder">
+            ล้างรายการ
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Input Bar -->
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 mb-3">
+        <select id="econIndicatorSelect" class="sm:col-span-4 bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-bbGold">
+          <option value="Core PCE Price Index m/m|inflation">USD • Core PCE Price Index m/m (เงินเฟ้อหลัก)</option>
+          <option value="Prelim / Advance GDP q/q|growth">USD • Prelim / Advance GDP q/q (จีดีพีสหรัฐฯ)</option>
+          <option value="CPI m/m or y/y|inflation">USD • CPI Inflation (ดัชนีราคาผู้บริโภค)</option>
+          <option value="Non-Farm Payrolls (NFP)|jobs">USD • Non-Farm Payrolls (การจ้างงานนอกภาคเกษตร)</option>
+          <option value="Unemployment Rate|unemployment">USD • Unemployment Rate (อัตราว่างงาน)</option>
+          <option value="Retail Sales m/m|growth">USD • Retail Sales m/m (ยอดค้าปลีก)</option>
+          <option value="ISM / Flash PMI|growth">USD • ISM / Flash PMI (ดัชนีผู้จัดการฝ่ายจัดซื้อ)</option>
+          <option value="Fed Interest Rate Decision|fed">USD • Fed Interest Rate Decision (ดอกเบี้ยเฟด)</option>
+        </select>
+        <input id="econActualInput" type="number" step="0.01" placeholder="ตัวเลขจริง (Actual เช่น 4.3)" class="sm:col-span-2 bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5 text-xs text-emerald-300 font-mono focus:outline-none focus:border-bbGold" />
+        <input id="econForecastInput" type="number" step="0.01" placeholder="คาดการณ์ (Forecast เช่น 3.5)" class="sm:col-span-2 bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5 text-xs text-amber-300 font-mono focus:outline-none focus:border-bbGold" />
+        <input id="econPrevInput" type="number" step="0.01" placeholder="ครั้งก่อน (Prev เช่น 3.4)" class="sm:col-span-2 bg-bbBlack border border-bbBorder rounded-lg px-2.5 py-1.5 text-xs text-slate-300 font-mono focus:outline-none focus:border-bbGold" />
+        <button onclick="addManualEconRelease()" class="sm:col-span-2 py-1.5 px-3 rounded-lg bg-bbGold hover:bg-bbGoldLight text-black font-bold text-xs transition">
+          + อัปเดตผลตัวเลข
+        </button>
+      </div>
+
+      <!-- Active Economic Releases Strip -->
+      <div id="activeEconReleasesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+    </section>
+
     <!-- Institutional Decision Engine & 12-Radar Matrix -->
     <section id="summarySection" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
       <!-- Left: 5-Stage Institutional Synthesis -->
@@ -221,7 +260,7 @@
                 <span id="bullPercentText" class="text-2xl sm:text-3xl font-mono font-bold text-emerald-400 tabular-nums">50%</span>
               </div>
               <div class="text-center px-3 py-1.5 rounded-lg bg-slate-900 border border-bbBorder">
-                <span class="text-[10px] text-slate-400 block">มติจาก 12 เรดาร์</span>
+                <span class="text-[10px] text-slate-400 block">มติจาก 12 เรดาร์ + ปฏิทิน</span>
                 <span id="signalBadge" class="text-xs sm:text-sm font-mono font-bold text-amber-400">ANALYZING...</span>
               </div>
               <div class="text-right">
@@ -260,14 +299,14 @@
 
           <!-- Institutional Reasoning Box -->
           <div class="mt-2.5 p-3 rounded-lg bg-bbCard border border-bbBorder text-xs sm:text-sm text-slate-300 leading-relaxed space-y-1.5">
-            <div class="font-semibold text-bbGoldLight">🧠 บทวิเคราะห์เชิงสถาบัน (ถ่วงน้ำหนัก Tier + ความสดใหม่ + ความแรงพาดหัว):</div>
+            <div class="font-semibold text-bbGoldLight">🧠 บทวิเคราะห์เชิงสถาบัน (ถ่วงน้ำหนัก Tier + ตัวเลขเศรษฐกิจสด + ความแรงพาดหัว):</div>
             <p id="aiReasoningText">กำลังรวบรวมข้อมูลเชิงลึกจากทั่วโลก...</p>
             <p id="radarDriverBreakdown" class="text-xs text-slate-400 pt-1 border-t border-bbBorder/70">กำลังเรียงลำดับปัจจัยขับเคลื่อน...</p>
           </div>
         </div>
 
         <div class="mt-3 pt-2.5 border-t border-bbBorder flex items-center justify-between text-[11px] text-slate-400">
-          <span id="newAlertStatusText">ระบบถ่วงน้ำหนัก 3 ชั้น + Sample Guardrail</span>
+          <span id="newAlertStatusText">Zero-Cache Breaking Wire + Surprise Engine</span>
           <span id="lastUpdateText" class="font-mono">--:--</span>
         </div>
       </div>
@@ -466,14 +505,41 @@
       </div>
 
       <div class="relative w-full lg:w-52">
-        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา PCE, Yield, Trump, Nvidia..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
+        <input id="searchInput" oninput="renderNews()" type="text" placeholder="ค้นหา PCE, GDP, 4.3%, Trump..." class="w-full bg-bbBlack border border-bbBorder rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-bbGold" />
       </div>
     </section>
 
     <!-- News Feed Grid -->
     <section id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="col-span-full text-center py-12 text-slate-400 text-sm">
-        กำลังสแกนข่าวทั่วโลกเข้าสู่ 12 เรดาร์ทั้ง 3 ชั้น (Tier 1: Yield/Fed/DXY/PCE • Tier 2: Flows/Banks/Silver • Tier 3: War/Trump/Nvidia/Oil)...
+        กำลังยิง Zero-Cache Breaking Wire ทะลุแคชทั่วโลกเข้าสู่ 12 เรดาร์ทั้ง 3 ชั้น...
+      </div>
+    </section>
+
+    <!-- Embedded Live US Economic Calendar (TradingView) -->
+    <section class="bg-bbPanel border border-bbBorder rounded-xl p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-bbGold">LIVE ECONOMIC CALENDAR (USD HIGH-IMPACT)</span>
+          <h3 class="text-sm font-bold text-white">ปฏิทินตัวเลขเศรษฐกิจสหรัฐฯ สด (เวลาไทย GMT+7)</h3>
+        </div>
+        <span class="text-[11px] text-slate-400 font-mono">เห็นตัวเลขออกปุ๊บ กรอกช่องด้านบนเพื่อให้ AI คำนวณทันที</span>
+      </div>
+      <div class="h-80 w-full overflow-hidden rounded-lg border border-bbBorder">
+        <div class="tradingview-widget-container" style="height:100%;width:100%">
+          <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+          {
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "width": "100%",
+            "height": "100%",
+            "locale": "th_TH",
+            "importanceFilter": "0,1",
+            "countryFilter": "us"
+          }
+          </script>
+        </div>
       </div>
     </section>
 
@@ -509,9 +575,38 @@
   </div>
 
   <script>
-    // 14 Dedicated Global Feeds covering all 12 Institutional Radars
+    // 16 Global Feeds: Zero-Cache Breaking Feeds (bypass rss2json cache) + Standard Institutional Feeds
     const RSS_FEEDS = [
-      // TIER 1 FEEDS
+      // ZERO-CACHE BREAKING FEEDS (bypassCache: true -> goes straight to live XML proxies!)
+      {
+        name: '⚡ BREAKING: Core PCE, GDP & BEA Flash Wire',
+        topic: 'econ',
+        bypassCache: true,
+        url: 'https://news.google.com/rss/search?q=(%22Core+PCE%22+OR+%22PCE+Price+Index%22+OR+%22Prelim+GDP%22+OR+%22economy+grew%22+OR+%22GDP+grew%22+OR+%22BEA%22)+when:1d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: '⚡ BREAKING: Live Gold & XAU/USD Flash Wire',
+        topic: 'gold_action',
+        bypassCache: true,
+        url: 'https://news.google.com/rss/search?q=(%22gold+price%22+OR+%22spot+gold%22+OR+%22XAU%2FUSD%22+OR+%22gold+falls%22+OR+%22gold+rises%22+OR+%22gold+drops%22)+when:1d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: '⚡ BREAKING: US 10Y/2Y Yields & DXY Flash Wire',
+        topic: 'yield',
+        bypassCache: true,
+        url: 'https://news.google.com/rss/search?q=(%22Treasury+yields%22+OR+%2210-year+yield%22+OR+%222-year+yield%22+OR+%22DXY%22+OR+%22dollar+rises%22+OR+%22dollar+falls%22)+when:1d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      {
+        name: '⚡ BREAKING: Federal Reserve & FOMC Flash Wire',
+        topic: 'fed',
+        bypassCache: true,
+        url: 'https://news.google.com/rss/search?q=(%22Federal+Reserve%22+OR+%22FOMC%22+OR+%22rate+hike%22+OR+%22rate+cut%22+OR+%22Kevin+Warsh%22+OR+%22Jerome+Powell%22)+when:1d&hl=en-US&gl=US&ceid=US:en',
+        lang: 'en'
+      },
+      // TIER 1 MACRO FEEDS
       {
         name: 'US Treasury Yields & Real Yield Wire',
         topic: 'yield',
@@ -519,7 +614,7 @@
         lang: 'en'
       },
       {
-        name: 'Federal Reserve, FOMC & Rate Hike/Cut Odds',
+        name: 'Federal Reserve, Dot Plot & 12 FOMC Speakers',
         topic: 'fed',
         url: 'https://news.google.com/rss/search?q=(%22Federal+Reserve%22+OR+%22FOMC%22+OR+%22Dot+Plot%22+OR+%22Kevin+Warsh%22+OR+%22Jerome+Powell%22+OR+%22rate+hike%22+OR+%22rate+cut%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
@@ -531,12 +626,12 @@
         lang: 'en'
       },
       {
-        name: 'Core PCE, CPI, GDP, NFP & US Macro',
+        name: 'Core PCE, CPI, GDP, NFP & Retail Sales',
         topic: 'econ',
         url: 'https://news.google.com/rss/search?q=(%22Core+PCE%22+OR+%22PCE+inflation%22+OR+%22CPI%22+OR+%22GDP%22+OR+%22Nonfarm+Payrolls%22+OR+%22Retail+Sales%22+OR+%22PMI%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
-      // TIER 2 FEEDS
+      // TIER 2 INSTITUTIONAL FEEDS
       {
         name: 'Gold Price Action & Technical Outlook',
         topic: 'gold_action',
@@ -561,7 +656,7 @@
         url: 'https://news.google.com/rss/search?q=(%22silver+price%22+OR+%22XAG%2FUSD%22+OR+%22precious+metals%22)+AND+(rises+OR+falls+OR+surges+OR+drops+OR+gold)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
-      // TIER 3 FEEDS
+      // TIER 3 GEOPOLITICS & LIQUIDITY FEEDS
       {
         name: 'War, Iran & Geopolitical Risk Wire',
         topic: 'geopolitics',
@@ -581,21 +676,10 @@
         lang: 'en'
       },
       {
-        name: 'Crude Oil, OPEC+ & Energy Inflation',
-        topic: 'oil',
-        url: 'https://news.google.com/rss/search?q=(%22crude+oil%22+OR+%22WTI%22+OR+%22Brent+crude%22+OR+%22OPEC%22)+AND+(prices+OR+surges+OR+falls+OR+inflation)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'Investing.com Global Markets Wire',
-        topic: 'gold_action',
-        url: 'https://news.google.com/rss/search?q=site:investing.com+(gold+OR+XAU+OR+Treasury+yields+OR+Federal+Reserve+OR+DXY+OR+PCE)+when:3d&hl=en-US&gl=US&ceid=US:en',
-        lang: 'en'
-      },
-      {
-        name: 'ข่าวทองคำ ทรัมป์ ฮวง & เศรษฐกิจโลก (ไทย)',
+        name: 'ข่าวทองคำ ตัวเลขเศรษฐกิจ ทรัมป์ ฮวง (ไทย)',
         topic: 'thai',
-        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+ทรัมป์+OR+อินวิเดีย+OR+เจนเซน+ฮวง+OR+เฟด+OR+บอนด์ยีลด์+OR+เงินเฟ้อ)+when:3d&hl=th&gl=TH&ceid=TH:th',
+        bypassCache: true,
+        url: 'https://news.google.com/rss/search?q=(ราคาทองคำ+OR+XAUUSD+OR+PCE+OR+GDP+OR+ทรัมป์+OR+อินวิเดีย+OR+เฟด+OR+บอนด์ยีลด์)+when:2d&hl=th&gl=TH&ceid=TH:th',
         lang: 'th'
       }
     ];
@@ -617,6 +701,28 @@
     let lastKnownGoldPrice = parseFloat(localStorage.getItem('xau_last_spot') || '0') || 0;
     let liveGoldDelta = 0;
 
+    // Pre-seeded with today's 20:30 Thai time (8:30 PM) actual US releases (User can edit/clear anytime!)
+    let manualEconReleases = JSON.parse(localStorage.getItem('xau_manual_econ') || 'null') || [
+      {
+        id: 'init_gdp',
+        name: 'Prelim GDP q/q (Q3)',
+        category: 'growth',
+        actual: 4.3,
+        forecast: 3.5,
+        prev: 3.4,
+        timeStr: '20:30 น.'
+      },
+      {
+        id: 'init_pce',
+        name: 'Core PCE Price Index m/m',
+        category: 'inflation',
+        actual: 0.3,
+        forecast: 0.3,
+        prev: 0.3,
+        timeStr: '20:30 น.'
+      }
+    ];
+
     let translationCache = {};
     try {
       translationCache = JSON.parse(localStorage.getItem('xau_360_cache') || '{}');
@@ -637,11 +743,139 @@
       } catch (e) {}
     }
 
+    function evaluateEconRelease(ev) {
+      const diff = ev.actual - ev.forecast;
+      // For inflation, growth, jobs, fed: higher than forecast = hawkish/bearish gold; lower = bullish gold
+      // For unemployment: higher than forecast = bullish gold; lower = bearish gold
+      const isInverse = ev.category === 'unemployment';
+      const effectiveDiff = isInverse ? -diff : diff;
+
+      if (effectiveDiff > 0.05) {
+        const magnitude = Math.min(6.5, 3.2 + Math.abs(diff) * 3.5);
+        return {
+          direction: 'bearish',
+          score: -magnitude,
+          label: `🔴 กดดันทอง (สูงกว่าคาด +${diff.toFixed(2)})`,
+          badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+        };
+      } else if (effectiveDiff < -0.05) {
+        const magnitude = Math.min(6.5, 3.2 + Math.abs(diff) * 3.5);
+        return {
+          direction: 'bullish',
+          score: magnitude,
+          label: `🟢 หนุนทอง (ต่ำกว่าคาด ${diff.toFixed(2)})`,
+          badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+        };
+      } else {
+        // Inline with forecast: check sticky inflation / high level
+        if (ev.category === 'inflation' && ev.actual >= 0.3) {
+          return {
+            direction: 'bearish',
+            score: -1.8,
+            label: `🔴 กดดันทองเล็กน้อย (ตามคาดแต่ทรงตัวสูง ${ev.actual}%)`,
+            badgeClass: 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+          };
+        }
+        return {
+          direction: 'neutral',
+          score: 0,
+          label: '🟡 ตามคาดการณ์ (In-Line)',
+          badgeClass: 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+        };
+      }
+    }
+
+    function renderEconReleases() {
+      const container = document.getElementById('activeEconReleasesList');
+      if (!container) return;
+
+      if (manualEconReleases.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-xs text-slate-400 py-2">ยังไม่มีตัวเลขเศรษฐกิจที่บันทึกไว้ — เลือกตัวชี้วัดและกรอกค่า Actual vs Forecast ด้านบนเพื่อคำนวณผลกระทบทันที</div>`;
+        return;
+      }
+
+      container.innerHTML = manualEconReleases.map(ev => {
+        const evalRes = evaluateEconRelease(ev);
+        return `
+          <div class="p-2.5 rounded-lg bg-bbCard border border-bbBorder flex items-center justify-between gap-2 text-xs">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-white">${ev.name}</span>
+                <span class="text-[10px] font-mono text-slate-400">${ev.timeStr}</span>
+              </div>
+              <div class="font-mono text-[11px] mt-0.5 text-slate-300">
+                จริง: <b class="text-white">${ev.actual}%</b> • คาด: <b>${ev.forecast}%</b>${ev.prev !== null && !isNaN(ev.prev) ? ` • ก่อนหน้า: ${ev.prev}%` : ''}
+              </div>
+              <span class="inline-block mt-1 text-[10px] font-mono px-1.5 py-0.5 rounded border ${evalRes.badgeClass}">
+                ${evalRes.label}
+              </span>
+            </div>
+            <button onclick="removeEconRelease('${ev.id}')" class="text-slate-500 hover:text-rose-400 text-xs px-1.5">✕</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addManualEconRelease() {
+      const selectVal = document.getElementById('econIndicatorSelect').value.split('|');
+      const name = selectVal[0].replace('USD • ', '');
+      const category = selectVal[1];
+      const actual = parseFloat(document.getElementById('econActualInput').value);
+      const forecast = parseFloat(document.getElementById('econForecastInput').value);
+      const prev = parseFloat(document.getElementById('econPrevInput').value);
+
+      if (isNaN(actual) || isNaN(forecast)) {
+        showToastAlert('⚠️ กรอกตัวเลขไม่ครบ', 'กรุณากรอกทั้งช่อง ตัวเลขจริง (Actual) และ คาดการณ์ (Forecast)', 'urgent');
+        return;
+      }
+
+      const nowThai = new Date().toLocaleTimeString('th-TH', {
+        timeZone: 'Asia/Bangkok',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }) + ' น.';
+
+      manualEconReleases.unshift({
+        id: 'econ_' + Date.now(),
+        name,
+        category,
+        actual,
+        forecast,
+        prev: isNaN(prev) ? null : prev,
+        timeStr: nowThai
+      });
+
+      try { localStorage.setItem('xau_manual_econ', JSON.stringify(manualEconReleases)); } catch (e) {}
+      document.getElementById('econActualInput').value = '';
+      document.getElementById('econForecastInput').value = '';
+      document.getElementById('econPrevInput').value = '';
+
+      renderEconReleases();
+      updateSignalDashboard();
+      highlightSummaryCard();
+      playAlertBeep(true);
+      showToastAlert('⚡ อัปเดตตัวเลขเศรษฐกิจเข้า Tier 1 แล้ว', `${name}: จริง ${actual}% vs คาด ${forecast}%`, 'urgent');
+    }
+
+    function removeEconRelease(id) {
+      manualEconReleases = manualEconReleases.filter(e => e.id !== id);
+      try { localStorage.setItem('xau_manual_econ', JSON.stringify(manualEconReleases)); } catch (e) {}
+      renderEconReleases();
+      updateSignalDashboard();
+    }
+
+    function clearManualEconEvents() {
+      manualEconReleases = [];
+      try { localStorage.setItem('xau_manual_econ', JSON.stringify(manualEconReleases)); } catch (e) {}
+      renderEconReleases();
+      updateSignalDashboard();
+    }
+
     const IRRELEVANT_NOISE = /indian rupee|indonesian rupiah|philippine peso|turkish lira|brazilian real|mexican peso|naira|rand|aud\/usd|nzd\/usd|usd\/cad|usd\/chf/i;
 
     const FOMC_MEMBERS_2026_REGEX = /\b(kevin warsh|warsh|jerome powell|powell|john williams|williams|christopher waller|waller|michelle bowman|bowman|michael barr|barr|lisa cook|cook|philip jefferson|jefferson|beth hammack|hammack|neel kashkari|kashkari|lorie logan|logan|anna paulson|paulson|mary daly|daly|austan goolsbee|goolsbee|thomas barkin|barkin)\b/i;
 
-    // 5-Stage Institutional Rules with Expectation Gap (Beat vs Miss) & Second-Order Effects
     const RULES = {
       yieldBull: [
         /\byields fall\b/, /\byields drop\b/, /\byields slide\b/, /\byields slip\b/, /\byields ease\b/, /\byields retreat\b/,
@@ -683,8 +917,8 @@
       econBear: [
         /\bpce accelerates\b/, /\bpce rises\b/, /\bpce beats\b/, /\bhot pce\b/, /\bsticky inflation\b/, /\bhot inflation\b/,
         /\bcpi rises\b/, /\bcpi beats\b/, /\bnfp beats\b/, /\bpayrolls beat\b/, /\bstrong jobs\b/,
-        /\bgdp beats\b/, /\bgdp rises\b/, /\bpmi rises\b/, /\bpmi beats\b/, /\bretail sales beat\b/, /\bresilient economy\b/,
-        /เงินเฟ้อพุ่ง/, /เงินเฟ้อเร่งตัว/, /จ้างงานสูงกว่าคาด/, /gdp สูงกว่าคาด/, /pmi สูงกว่าคาด/
+        /\bgdp beats\b/, /\bgdp rises\b/, /\bgdp grew\b/, /\beconomy grew\b/, /\b4\.3%\b/, /\bpmi rises\b/, /\bpmi beats\b/, /\bretail sales beat\b/, /\bresilient economy\b/,
+        /เงินเฟ้อพุ่ง/, /เงินเฟ้อเร่งตัว/, /จ้างงานสูงกว่าคาด/, /gdp สูงกว่าคาด/, /gdp พุ่ง/, /pmi สูงกว่าคาด/
       ],
       goldActionBull: [
         /\bgold rises\b/, /\bgold surges\b/, /\bgold climbs\b/, /\bgold gains\b/, /\bgold rebounds\b/, /\bgold recovers\b/,
@@ -740,7 +974,6 @@
         /\btrump\b.*\b(deal|peace|delay|deregulation|tax cut|pro-business|boosts stocks)\b/,
         /ทรัมป์.*(ข้อตกลง|สันติภาพ|เลื่อนภาษี|หนุนหุ้น)/
       ],
-      // Second-Order AI/Nvidia rule: AI rally lifts stocks & eases cash-crunch selling on gold, OR pulls money to stocks; AI crash can cause cash squeeze or safe haven
       aiBull: [
         /\b(nvidia|jensen huang|ai)\b.*\b(boosts sentiment|eases cash|safe haven|bubble fears)\b/
       ],
@@ -751,7 +984,6 @@
         /\boil surges\b/, /\boil rises\b/, /\boil climbs\b/, /\bsupply disruption\b/, /\bopec cuts\b/,
         /น้ำมันพุ่ง/, /น้ำมันขึ้น/
       ],
-      // Second-order effect: Oil surge feeding inflation -> Fed rate hike pressure is Bearish for gold!
       oilInflationBear: [
         /\boil\b.*\binflation\b/, /\benergy costs fed into inflation\b/, /\boil plunges\b/, /\boil falls\b/, /\boil drops\b/,
         /น้ำมันร่วง/, /น้ำมันลง/, /น้ำมันดันเงินเฟ้อ/
@@ -773,7 +1005,7 @@
     }
 
     function getConvictionMultiplier(lowerText) {
-      if (/\b(plunges|surges|soars|crashes|emergency|96%|100%|50 bps|half-point|worst week)\b/.test(lowerText)) return 1.35;
+      if (/\b(plunges|surges|soars|crashes|emergency|96%|100%|50 bps|half-point|worst week|4\.3%)\b/.test(lowerText)) return 1.35;
       if (/\b(edges|steadies|eyes|awaits|little changed)\b/.test(lowerText)) return 0.75;
       return 1.0;
     }
@@ -881,7 +1113,7 @@
         hour12: false
       });
       const tfLabel = refreshSeconds === 300 ? 'M5' : refreshSeconds === 900 ? 'M15' : refreshSeconds === 180 ? 'M3' : 'M1';
-      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. • 12-Radar 3-Tier Engine`;
+      document.getElementById('candleSyncSubtext').textContent = `ซิงก์ปิดแท่ง ${tfLabel} ถัดไป: ${nextCloseThai} น. • Zero-Cache Breaking Engine`;
 
       if (lastTriggeredCandleSlot !== null && currentSlot > lastTriggeredCandleSlot) {
         lastTriggeredCandleSlot = currentSlot;
@@ -963,7 +1195,6 @@
       if (soundEnabled) playAlertBeep(false);
     }
 
-    // 5-Stage Institutional Classifier
     function classifyAndScore(text, sourceName, defaultTopic, pubMs = 0) {
       const lower = `${text} ${sourceName}`.toLowerCase();
       let rawBull = 0;
@@ -985,7 +1216,7 @@
       if (/\b(yield|treasury|10-year|2-year|5-year|30-year|real yield|bond)\b|บอนด์ยีลด์|พันธบัตร/.test(lower)) detectedTopics.add('yield');
       if (/\b(dot plot|fomc|federal reserve|fed|rate cut|rate hike|fedwatch)\b|เฟด|ดอกเบี้ย/.test(lower) || isFomcSpeaker) detectedTopics.add('fed');
       if (/\b(dxy|dollar index|greenback|us dollar)\b|ดอลลาร์/.test(lower)) detectedTopics.add('dxy');
-      if (/\b(cpi|ppi|pce|nfp|nonfarm|payroll|inflation|unemployment|gdp|pmi|retail sales|jobless claims)\b|เงินเฟ้อ|จ้างงาน|เศรษฐกิจ/.test(lower)) detectedTopics.add('econ');
+      if (/\b(cpi|ppi|pce|nfp|nonfarm|payroll|inflation|unemployment|gdp|pmi|retail sales|jobless claims|bea)\b|เงินเฟ้อ|จ้างงาน|เศรษฐกิจ/.test(lower)) detectedTopics.add('econ');
       if (/\b(gold price|spot gold|xau|kitco|support|resistance|uptrend)\b|ราคาทอง/.test(lower)) detectedTopics.add('gold_action');
       if (/\b(goldman|jpmorgan|ubs|bank of america|blackrock|spdr|etf|cot report|forecast)\b|กองทุนทอง/.test(lower)) detectedTopics.add('flows');
       if (/\b(pboc|boj|bank of japan|ecb|rba|central bank|yen|yuan)\b|ธนาคารกลาง/.test(lower)) detectedTopics.add('cbanks');
@@ -993,7 +1224,6 @@
       if (/\b(war|missile|military|airstrike|invasion|escalation|conflict|geopolitical|sanctions?|iran|middle east)\b|สงคราม|อิหร่าน|ขีปนาวุธ/.test(lower)) detectedTopics.add('geopolitics');
       if (/\b(oil|crude|wti|brent|opec)\b|น้ำมัน|พลังงาน/.test(lower)) detectedTopics.add('oil');
 
-      // Tier 1 Multipliers (Higher institutional weight: 1.45x)
       const T1 = 1.45;
       RULES.yieldBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.4 * T1; reasons.push('[T1] Bond Yield ย่อลงหนุนทอง'); } });
       RULES.yieldBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.5 * T1; reasons.push('[T1] Bond Yield พุ่งกดดันทอง'); } });
@@ -1007,7 +1237,6 @@
       RULES.econBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.2 * T1; reasons.push('[T1] PCE/CPI/GDP ชะลอหนุนทอง'); } });
       RULES.econBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.3 * T1; reasons.push('[T1] PCE/CPI/GDP ร้อนแรงกดดันทอง'); } });
 
-      // Tier 2 Multipliers (Institutional flows: 1.15x)
       const T2 = 1.15;
       RULES.goldActionBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0 * T2; reasons.push('[T2] ราคาทองรีบาวด์/แรงซื้อแนวรับ'); } });
       RULES.goldActionBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 2.2 * T2; reasons.push('[T2] ราคาทองหลุดแนวรับ/แรงเทขาย'); } });
@@ -1021,7 +1250,6 @@
       RULES.silverBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 1.5 * T2; reasons.push('[T2] โลหะเงิน (Silver) พุ่งตาม'); } });
       RULES.silverBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.5 * T2; reasons.push('[T2] โลหะเงิน (Silver) ร่วงกดดัน'); } });
 
-      // Tier 3 Multipliers (Geopolitics/Politics/Liquidity: 1.0x)
       RULES.geoBull.forEach(k => { if (matchesRule(lower, k)) { rawBull += 2.0; reasons.push('[T3] ความเสี่ยงสงคราม/ตะวันออกกลาง'); } });
       RULES.geoBear.forEach(k => { if (matchesRule(lower, k)) { rawBear += 1.8; reasons.push('[T3] ความตึงเครียดผ่อนคลาย'); } });
 
@@ -1055,7 +1283,7 @@
         thai: '🇹🇭 ข่าวไทย'
       };
 
-      const priorityOrder = ['yield', 'fed', 'dxy', 'econ', 'flows', 'cbanks', 'trump', 'nvidia_ai', 'geopolitics', 'silver', 'oil', 'gold_action'];
+      const priorityOrder = ['econ', 'yield', 'fed', 'dxy', 'flows', 'cbanks', 'trump', 'nvidia_ai', 'geopolitics', 'silver', 'oil', 'gold_action'];
       const primaryTopic = priorityOrder.find(t => detectedTopics.has(t)) || defaultTopic;
       const ageTag = decay >= 3.0 ? ' [สด ≤6ชม.]' : decay >= 1.8 ? ' [≤24ชม.]' : '';
 
@@ -1115,9 +1343,42 @@
       return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
     }
 
+    async function fetchViaXmlProxies(feedUrl) {
+      const cacheBustedUrl = `${feedUrl}&_cb=${Math.floor(Date.now() / 60000)}`;
+      for (const proxyBase of [
+        'https://api.allorigins.win/raw?url=',
+        'https://corsproxy.io/?',
+        'https://api.codetabs.com/v1/proxy?quest='
+      ]) {
+        try {
+          const res = await fetch(`${proxyBase}${encodeURIComponent(cacheBustedUrl)}`);
+          const xmlText = await res.text();
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+          const items = [...xmlDoc.querySelectorAll('item')];
+          if (items.length > 0) {
+            return items.map(node => ({
+              title: node.querySelector('title')?.textContent || '',
+              description: node.querySelector('description')?.textContent || '',
+              link: node.querySelector('link')?.textContent || '',
+              pubDate: node.querySelector('pubDate')?.textContent || new Date().toISOString()
+            }));
+          }
+        } catch (e) {}
+      }
+      return [];
+    }
+
     async function fetchSingleFeedItems(feed) {
+      // Zero-Cache Breaking Feeds bypass rss2json's 30-min server cache completely!
+      if (feed.bypassCache) {
+        const liveItems = await fetchViaXmlProxies(feed.url);
+        if (liveItems.length > 0) return liveItems;
+      }
+
+      // Standard Feeds: Try rss2json first, fallback to XML proxies
       try {
-        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&_t=${Date.now()}`;
+        const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
         const res = await fetch(apiUrl);
         const data = await res.json();
         if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
@@ -1125,22 +1386,7 @@
         }
       } catch (e) {}
 
-      try {
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feed.url)}`;
-        const res = await fetch(proxyUrl);
-        const xmlText = await res.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        const items = [...xmlDoc.querySelectorAll('item')];
-        return items.map(node => ({
-          title: node.querySelector('title')?.textContent || '',
-          description: node.querySelector('description')?.textContent || '',
-          link: node.querySelector('link')?.textContent || '',
-          pubDate: node.querySelector('pubDate')?.textContent || new Date().toISOString()
-        }));
-      } catch (e) {}
-
-      return [];
+      return await fetchViaXmlProxies(feed.url);
     }
 
     async function fetchAllFeeds(isCycleRefresh = false) {
@@ -1155,39 +1401,45 @@
 
       let collected = [];
 
-      await Promise.allSettled(RSS_FEEDS.map(async (feed) => {
-        try {
-          const items = await fetchSingleFeedItems(feed);
-          items.slice(0, 8).forEach(item => {
-            const titleEn = cleanHtml(item.title);
-            const descEn = cleanHtml(item.description).slice(0, 240);
+      // Fetch in 2 staggered waves (8 feeds per wave)
+      const waves = [RSS_FEEDS.slice(0, 8), RSS_FEEDS.slice(8)];
+      for (let w = 0; w < waves.length; w++) {
+        await Promise.allSettled(waves[w].map(async (feed) => {
+          try {
+            const items = await fetchSingleFeedItems(feed);
+            items.slice(0, 12).forEach(item => {
+              const titleEn = cleanHtml(item.title);
+              const descEn = cleanHtml(item.description).slice(0, 240);
 
-            if (!titleEn || IRRELEVANT_NOISE.test(titleEn)) return;
+              if (!titleEn || IRRELEVANT_NOISE.test(titleEn)) return;
 
-            const pubMs = parsePubDateMs(item.pubDate);
-            const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.name, feed.topic, pubMs);
-            const uniqueKey = titleEn.slice(0, 52).toLowerCase();
+              const pubMs = parsePubDateMs(item.pubDate);
+              const analysis = classifyAndScore(`${titleEn} ${descEn}`, feed.name, feed.topic, pubMs);
+              const uniqueKey = titleEn.slice(0, 52).toLowerCase();
 
-            collected.push({
-              id: Math.random().toString(36).slice(2),
-              uniqueKey,
-              isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
-              source: feed.name,
-              lang: feed.lang,
-              titleEn,
-              titleTh: feed.lang === 'th' ? titleEn : (translationCache[titleEn] || titleEn),
-              descEn,
-              descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
-              link: item.link,
-              pubDate: item.pubDate,
-              pubMs,
-              analysis
+              collected.push({
+                id: Math.random().toString(36).slice(2),
+                uniqueKey,
+                isNew: !isFirstVisitEver && !knownArticleKeys.has(uniqueKey),
+                isBreaking: Boolean(feed.bypassCache),
+                source: feed.name,
+                lang: feed.lang,
+                titleEn,
+                titleTh: feed.lang === 'th' ? titleEn : (translationCache[titleEn] || titleEn),
+                descEn,
+                descTh: feed.lang === 'th' ? descEn : (translationCache[descEn] || descEn),
+                link: item.link,
+                pubDate: item.pubDate,
+                pubMs,
+                analysis
+              });
             });
-          });
-        } catch (err) {
-          console.warn('Feed error:', feed.name, err);
-        }
-      }));
+          } catch (err) {
+            console.warn('Feed error:', feed.name, err);
+          }
+        }));
+        if (w === 0) await new Promise(r => setTimeout(r, 300));
+      }
 
       const seen = new Set();
       collected = collected.filter(item => {
@@ -1201,7 +1453,7 @@
       const newlyArrived = collected.filter(item => item.isNew);
       collected.forEach(item => knownArticleKeys.add(item.uniqueKey));
       try {
-        localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-400)));
+        localStorage.setItem('xau_known_keys', JSON.stringify([...knownArticleKeys].slice(-450)));
       } catch (e) {}
 
       allArticles = collected;
@@ -1245,7 +1497,7 @@
       icon.classList.remove('animate-spin');
 
       if (autoTranslate) {
-        const toTranslate = allArticles.slice(0, 60).filter(a => a.lang === 'en' && a.titleTh === a.titleEn);
+        const toTranslate = allArticles.slice(0, 75).filter(a => a.lang === 'en' && a.titleTh === a.titleEn);
         const batchSize = 10;
         for (let i = 0; i < toTranslate.length; i += batchSize) {
           if (!autoTranslate) break;
@@ -1260,8 +1512,7 @@
     }
 
     function updateSignalDashboard() {
-      // Sample Guardrail: prevents extreme skew when sample size is small
-      const guardrailBase = allArticles.length < 18 ? 4.0 : 1.0;
+      const guardrailBase = allArticles.length < 18 ? 3.5 : 1.0;
       let totalBull = guardrailBase;
       let totalBear = guardrailBase;
 
@@ -1283,6 +1534,16 @@
         oil: { id: 'r12', tier: 3, name: '12. Crude Oil', count: 0, score: 0 }
       };
 
+      // 1. Inject Live Economic Releases directly into Radar 04 (Tier 1)
+      manualEconReleases.forEach(ev => {
+        const evalRes = evaluateEconRelease(ev);
+        radars.econ.count++;
+        radars.econ.score += evalRes.score;
+        if (evalRes.score > 0) totalBull += evalRes.score;
+        if (evalRes.score < 0) totalBear += Math.abs(evalRes.score);
+      });
+
+      // 2. Score all scanned global news articles
       allArticles.forEach(art => {
         const sc = art.analysis.score;
         if (sc > 0) totalBull += sc;
@@ -1302,13 +1563,12 @@
       latestBullPct = bullPct;
       latestBearPct = bearPct;
 
-      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าวทั่วโลก`;
+      document.getElementById('analyzedCountBadge').textContent = `สแกน ${allArticles.length} ข่าว + ${manualEconReleases.length} ตัวเลขสด`;
       document.getElementById('bullPercentText').textContent = `${bullPct}%`;
       document.getElementById('bearPercentText').textContent = `${bearPct}%`;
       document.getElementById('bullBar').style.width = `${bullPct}%`;
       document.getElementById('bearBar').style.width = `${bearPct}%`;
 
-      // Tier Sums & Divergence Detection
       const list = Object.values(radars);
       const t1Net = list.filter(r => r.tier === 1).reduce((acc, r) => acc + r.score, 0);
       const t2Net = list.filter(r => r.tier === 2).reduce((acc, r) => acc + r.score, 0);
@@ -1349,7 +1609,7 @@
       if (bullPct >= 56) {
         signalBadge.textContent = 'BULLISH DOMINANT (โน้มเอียงขึ้น)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-emerald-400';
-        reasoning.textContent = `โมเดล 3 ชั้นให้น้ำหนักฝั่งขึ้น ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'แรงหนุนหลายเรดาร์'}` +
+        reasoning.textContent = `โมเดล 3 ชั้น + ตัวเลขเศรษฐกิจสดให้น้ำหนักฝั่งขึ้น ${bullPct}% ต่อ ${bearPct}% นำโดย ${bullNames || 'แรงหนุนหลายเรดาร์'}` +
           (bearNames ? ` โดยมีแรงต้านจาก ${bearNames}` : '');
       } else if (bullPct >= 52) {
         signalBadge.textContent = 'BULLISH LEAN (เอียงขึ้นเล็กน้อย)';
@@ -1359,7 +1619,7 @@
       } else if (bearPct >= 56) {
         signalBadge.textContent = 'BEARISH DOMINANT (โน้มเอียงลง)';
         signalBadge.className = 'text-xs sm:text-sm font-mono font-bold text-rose-400';
-        reasoning.textContent = `โมเดล 3 ชั้นให้น้ำหนักฝั่งลง ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'แรงกดดันมหภาค'}` +
+        reasoning.textContent = `โมเดล 3 ชั้น + ตัวเลขเศรษฐกิจสดให้น้ำหนักฝั่งลง ${bearPct}% ต่อ ${bullPct}% นำโดย ${bearNames || 'แรงกดดันมหภาค'}` +
           (bullNames ? ` แม้มีแรงพยุงจาก ${bullNames}` : '');
       } else if (bearPct >= 52) {
         signalBadge.textContent = 'BEARISH LEAN (เอียงลงเล็กน้อย)';
@@ -1407,15 +1667,15 @@
         return;
       }
       if (stat.score > 0.3) {
-        textEl.textContent = `${stat.count} ข่าว (หนุนทอง)`;
+        textEl.textContent = `${stat.count} ข้อมูล (หนุนทอง)`;
         tagEl.textContent = 'BULL +';
         tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-emerald-500/20 text-emerald-400 shrink-0';
       } else if (stat.score < -0.3) {
-        textEl.textContent = `${stat.count} ข่าว (กดดันทอง)`;
+        textEl.textContent = `${stat.count} ข้อมูล (กดดันทอง)`;
         tagEl.textContent = 'BEAR -';
         tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-rose-500/20 text-rose-400 shrink-0';
       } else {
-        textEl.textContent = `${stat.count} ข่าว (จับตา)`;
+        textEl.textContent = `${stat.count} ข้อมูล (จับตา)`;
         tagEl.textContent = 'WATCH';
         tagEl.className = 'px-1.5 py-0.5 rounded font-mono text-[10px] bg-amber-500/20 text-amber-400 shrink-0';
       }
@@ -1473,6 +1733,7 @@
               <div class="flex flex-wrap items-center justify-between gap-1.5 mb-2">
                 <div class="flex items-center gap-1">
                   ${art.isNew ? '<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500 text-black font-bold">NEW</span>' : ''}
+                  ${art.isBreaking ? '<span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">⚡ LIVE</span>' : ''}
                   <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400">${art.analysis.topicLabel}</span>
                 </div>
                 <span class="text-[10px] font-mono px-2 py-0.5 rounded border ${art.analysis.badgeClass}">
@@ -1547,6 +1808,7 @@
       document.getElementById('readerModal').classList.add('hidden');
     }
 
+    renderEconReleases();
     fetchAllFeeds(false);
     startCountdownTimer();
   </script>
