@@ -105,8 +105,7 @@
             { "proName": "OANDA:XAUUSD", "title": "Gold (XAU/USD)" },
             { "proName": "OANDA:XAGUSD", "title": "Silver (XAG/USD)" },
             { "proName": "CAPITALCOM:DXY", "title": "DXY (US Dollar)" },
-            { "proName": "TVC:US10Y", "title": "US 10Y Yield" },
-            { "proName": "TVC:US02Y", "title": "US 2Y Yield" },
+            { "proName": "AMEX:IEF", "title": "7-10Y US Bond ETF (IEF)" },
             { "proName": "NASDAQ:NVDA", "title": "Nvidia (NVDA)" },
             { "proName": "TVC:USOIL", "title": "WTI Crude Oil" }
           ],
@@ -166,7 +165,7 @@
           <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
           {
-            "symbol": "TVC:US10Y",
+            "symbol": "AMEX:IEF",
             "width": "100%",
             "height": "100%",
             "locale": "th_TH",
@@ -198,7 +197,7 @@
       </div>
     </section>
 
-    <!-- NEW: Live Economic Release & Surprise Engine (Actual vs Forecast) -->
+    <!-- Live Economic Release & Surprise Engine (Actual vs Forecast) -->
     <section class="bg-bbPanel border border-amber-500/40 rounded-xl p-4">
       <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
         <div>
@@ -577,7 +576,6 @@
   <script>
     // 16 Global Feeds: Zero-Cache Breaking Feeds (bypass rss2json cache) + Standard Institutional Feeds
     const RSS_FEEDS = [
-      // ZERO-CACHE BREAKING FEEDS (bypassCache: true -> goes straight to live XML proxies!)
       {
         name: '⚡ BREAKING: Core PCE, GDP & BEA Flash Wire',
         topic: 'econ',
@@ -606,7 +604,6 @@
         url: 'https://news.google.com/rss/search?q=(%22Federal+Reserve%22+OR+%22FOMC%22+OR+%22rate+hike%22+OR+%22rate+cut%22+OR+%22Kevin+Warsh%22+OR+%22Jerome+Powell%22)+when:1d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
-      // TIER 1 MACRO FEEDS
       {
         name: 'US Treasury Yields & Real Yield Wire',
         topic: 'yield',
@@ -631,7 +628,6 @@
         url: 'https://news.google.com/rss/search?q=(%22Core+PCE%22+OR+%22PCE+inflation%22+OR+%22CPI%22+OR+%22GDP%22+OR+%22Nonfarm+Payrolls%22+OR+%22Retail+Sales%22+OR+%22PMI%22)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
-      // TIER 2 INSTITUTIONAL FEEDS
       {
         name: 'Gold Price Action & Technical Outlook',
         topic: 'gold_action',
@@ -656,7 +652,6 @@
         url: 'https://news.google.com/rss/search?q=(%22silver+price%22+OR+%22XAG%2FUSD%22+OR+%22precious+metals%22)+AND+(rises+OR+falls+OR+surges+OR+drops+OR+gold)+when:3d&hl=en-US&gl=US&ceid=US:en',
         lang: 'en'
       },
-      // TIER 3 GEOPOLITICS & LIQUIDITY FEEDS
       {
         name: 'War, Iran & Geopolitical Risk Wire',
         topic: 'geopolitics',
@@ -698,10 +693,9 @@
     let timerHandle = null;
     let lastTriggeredCandleSlot = null;
 
-    let lastKnownGoldPrice = parseFloat(localStorage.getItem('xau_last_spot') || '0') || 0;
+    let lastKnownGoldPrice = 0;
     let liveGoldDelta = 0;
 
-    // Pre-seeded with today's 20:30 Thai time (8:30 PM) actual US releases (User can edit/clear anytime!)
     let manualEconReleases = JSON.parse(localStorage.getItem('xau_manual_econ') || 'null') || [
       {
         id: 'init_gdp',
@@ -745,8 +739,6 @@
 
     function evaluateEconRelease(ev) {
       const diff = ev.actual - ev.forecast;
-      // For inflation, growth, jobs, fed: higher than forecast = hawkish/bearish gold; lower = bullish gold
-      // For unemployment: higher than forecast = bullish gold; lower = bearish gold
       const isInverse = ev.category === 'unemployment';
       const effectiveDiff = isInverse ? -diff : diff;
 
@@ -767,7 +759,6 @@
           badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
         };
       } else {
-        // Inline with forecast: check sticky inflation / high level
         if (ev.category === 'inflation' && ev.actual >= 0.3) {
           return {
             direction: 'bearish',
@@ -1041,50 +1032,47 @@
       }) + ' น.';
     }
 
+    // Fixed Live Gold Spot Feed (Binance PAXGUSDT 24h real-time + Swissquote XAU/USD fallback; no stale cross-day localStorage delta)
     async function fetchLiveGoldSpotMomentum() {
       const tagEl = document.getElementById('liveGoldSpotTag');
       let livePrice = null;
+      let dailyChange = 0;
 
       try {
-        const res1 = await fetch(`https://api.gold-api.com/price/XAU?_t=${Date.now()}`);
+        const res1 = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=PAXGUSDT`);
         const data1 = await res1.json();
-        if (data1 && typeof data1.price === 'number' && data1.price > 1000) livePrice = data1.price;
+        if (data1 && parseFloat(data1.lastPrice) > 1000) {
+          livePrice = parseFloat(data1.lastPrice);
+          dailyChange = parseFloat(data1.priceChange);
+        }
       } catch (e) {}
 
       if (!livePrice) {
         try {
-          const res2 = await fetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xau.json?_t=${Date.now()}`);
+          const res2 = await fetch(`https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/XAU/USD`);
           const data2 = await res2.json();
-          if (data2?.xau?.usd > 1000) livePrice = data2.xau.usd;
-        } catch (e) {}
-      }
-
-      if (!livePrice) {
-        try {
-          const res3 = await fetch(`https://api.metals.live/v1/spot/gold?_t=${Date.now()}`);
-          const data3 = await res3.json();
-          if (Array.isArray(data3) && data3[0]?.price > 1000) livePrice = data3[0].price;
+          const bid = data2?.[0]?.spreadProfilePrices?.[0]?.bid;
+          if (bid > 1000) livePrice = bid;
         } catch (e) {}
       }
 
       if (livePrice) {
-        if (lastKnownGoldPrice > 0 && livePrice !== lastKnownGoldPrice) {
+        if (lastKnownGoldPrice > 0) {
           liveGoldDelta = livePrice - lastKnownGoldPrice;
         }
         lastKnownGoldPrice = livePrice;
-        try { localStorage.setItem('xau_last_spot', livePrice.toString()); } catch (e) {}
 
-        const deltaStr = liveGoldDelta !== 0
-          ? ` (${liveGoldDelta > 0 ? '+' : ''}${liveGoldDelta.toFixed(2)})`
+        const changeDisplay = dailyChange !== 0
+          ? ` (24ชม: ${dailyChange > 0 ? '+' : ''}${dailyChange.toFixed(2)})`
           : '';
-        tagEl.textContent = `💰 XAUUSD สด: $${livePrice.toFixed(2)}${deltaStr}`;
-        tagEl.className = liveGoldDelta > 0.2
+        tagEl.textContent = `💰 XAUUSD สด: $${livePrice.toFixed(2)}${changeDisplay}`;
+        tagEl.className = dailyChange > 0
           ? 'font-bold text-emerald-400'
-          : liveGoldDelta < -0.2
+          : dailyChange < 0
             ? 'font-bold text-rose-400'
             : 'font-bold text-bbGoldLight';
       } else {
-        tagEl.textContent = '💰 XAUUSD สด: ดูกราฟด้านบน';
+        tagEl.textContent = '💰 XAUUSD สด: อ้างอิง OANDA ด้านบน';
       }
     }
 
@@ -1370,13 +1358,11 @@
     }
 
     async function fetchSingleFeedItems(feed) {
-      // Zero-Cache Breaking Feeds bypass rss2json's 30-min server cache completely!
       if (feed.bypassCache) {
         const liveItems = await fetchViaXmlProxies(feed.url);
         if (liveItems.length > 0) return liveItems;
       }
 
-      // Standard Feeds: Try rss2json first, fallback to XML proxies
       try {
         const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
         const res = await fetch(apiUrl);
@@ -1401,7 +1387,6 @@
 
       let collected = [];
 
-      // Fetch in 2 staggered waves (8 feeds per wave)
       const waves = [RSS_FEEDS.slice(0, 8), RSS_FEEDS.slice(8)];
       for (let w = 0; w < waves.length; w++) {
         await Promise.allSettled(waves[w].map(async (feed) => {
@@ -1516,8 +1501,8 @@
       let totalBull = guardrailBase;
       let totalBear = guardrailBase;
 
-      if (liveGoldDelta > 0.5) totalBull += Math.min(3.5, liveGoldDelta * 0.45);
-      if (liveGoldDelta < -0.5) totalBear += Math.min(3.5, Math.abs(liveGoldDelta) * 0.45);
+      if (liveGoldDelta > 0.5) totalBull += Math.min(2.5, liveGoldDelta * 0.35);
+      if (liveGoldDelta < -0.5) totalBear += Math.min(2.5, Math.abs(liveGoldDelta) * 0.35);
 
       const radars = {
         yield: { id: 'r01', tier: 1, name: '01. Bond Yields', count: 0, score: 0 },
@@ -1534,7 +1519,6 @@
         oil: { id: 'r12', tier: 3, name: '12. Crude Oil', count: 0, score: 0 }
       };
 
-      // 1. Inject Live Economic Releases directly into Radar 04 (Tier 1)
       manualEconReleases.forEach(ev => {
         const evalRes = evaluateEconRelease(ev);
         radars.econ.count++;
@@ -1543,7 +1527,6 @@
         if (evalRes.score < 0) totalBear += Math.abs(evalRes.score);
       });
 
-      // 2. Score all scanned global news articles
       allArticles.forEach(art => {
         const sc = art.analysis.score;
         if (sc > 0) totalBull += sc;
